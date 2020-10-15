@@ -1,0 +1,25 @@
+{
+  "name": "icpc",
+  "version": "1.0.0",
+  "description": "ICPC Dhaka Regional Contest 2021",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "client": "npm start --prefix client",
+    "client-install": "npm i --prefix client",
+    "server": "nodemon index",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
+  "keywords": [
+    "MERN"
+  ],
+  "author": "MD. Sakib Khan, Hussain MD Safwan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.5"
+  }
+}

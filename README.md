@@ -1,1 +1,1 @@
-# ICPC-Dhaka-Regional-2021
+# ICPC Dhaka Regional 2021
