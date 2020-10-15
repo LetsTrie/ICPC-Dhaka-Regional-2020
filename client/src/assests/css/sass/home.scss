@@ -1,0 +1,95 @@
+@import '_main';
+
+.Home {
+  &__navbar {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    // url(../images/icpc_img1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+
+    .Home__banner_text {
+      padding: 10rem;
+      padding-top: 16vh;
+      text-align: center;
+      color: white;
+
+      &-primary {
+        h1 {
+          font-size: 9rem;
+          padding-bottom: 0.5rem;
+          letter-spacing: 0.4px;
+          font-weight: 400;
+          user-select: none;
+          text-transform: uppercase;
+          font-family: 'Roboto', sans-serif;
+        }
+      }
+
+      &-secondary {
+        h3 {
+          font-size: 4.4rem;
+          letter-spacing: 1.5px;
+          font-weight: 400;
+          padding-bottom: 3.3rem;
+          user-select: none;
+          font-family: 'Roboto', sans-serif;
+
+          span {
+          }
+        }
+      }
+    }
+  }
+}
+
+.Home__banner_countdown {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+  > div {
+    height: 16rem;
+    width: 16rem;
+    margin: 1rem 2rem;
+
+    display: flex;
+    border-radius: 50%;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    font-size: 3.4rem;
+    font-family: 'Roboto';
+    > p{
+      &:last-child {
+        font-size: 1.75rem;
+      }
+    }
+
+    &:nth-child(1) {
+      border-top: 7px solid #311d3f;
+      border-bottom: 7px solid #311d3f;
+      border-left: 7px solid #311d3f;
+      border-right: 7px solid #311d3f;
+    }
+    &:nth-child(2) {
+      border-right: 7px solid #311d3f;
+      border-top: 7px solid #311d3f;
+      border-bottom: 7px solid #311d3f;
+      border-left: 7px solid #311d3f;
+    }
+    &:nth-child(3) {
+      border-top: 7px solid #311d3f;
+      border-bottom: 7px solid #311d3f;
+      border-left: 7px solid #311d3f;
+      border-right: 7px solid #311d3f;
+    }
+    &:nth-child(4) {
+      border-right: 7px solid #311d3f;
+      border-top: 7px solid #311d3f;
+      border-bottom: 7px solid #311d3f;
+      border-left: 7px solid #311d3f;
+    }
+  }
+}

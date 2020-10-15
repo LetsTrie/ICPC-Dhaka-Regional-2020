@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const CI = require('../controller/committee.js');
+const CM = require('../controller/committee.js');
 
-router.get('/file/:slug', CI.sendFile);
+router.get('/file/:slug', CM.sendFile);
 
 module.exports = router;

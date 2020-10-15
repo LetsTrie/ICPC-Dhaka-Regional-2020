@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import NavBarData from '../../data/navbar';
 
+import Header from '../ui/Header';
+
 const MENU = 'Contest Info';
 
 function ContestInfo(props) {
@@ -15,8 +17,8 @@ function ContestInfo(props) {
     let { urlRedirect } = subMenu;
     window.location.replace(urlRedirect);
     return null;
-  } 
-  
+  }
+
   // Redirect to PDF
   else if (subMenu.pdfRedirect) {
     axios(`/api/v1/contest-info/file/${urlParams}.pdf`, {
@@ -32,11 +34,16 @@ function ContestInfo(props) {
         console.log(error);
       });
     return null;
-  } 
-  
+  }
+
   // Pages
   else {
-    return <h1> Contest Info </h1>;
+    return (
+      <div className='contest-info'>
+        <Header />
+        <h1>Contest Info</h1>
+      </div>
+    );
   }
 }
 

@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './components/ui/Theme';
-import Header from './components/ui/Header';
+
+import Home from './components/pages/Home';
 import ContestInfo from './components/pages/ContestInfo';
 import Committee from './components/pages/Committee';
 
@@ -12,12 +13,11 @@ function App() {
     <div className='App'>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Header />
           <div
             style={{ background: 'white', height: '300vh', fontSize: '20px' }}
           >
             <Switch>
-              <Route exact path='/' component={() => <div>Home</div>} />
+              <Route exact path='/' component={Home} />
               <Route
                 exact
                 path='/gallery'

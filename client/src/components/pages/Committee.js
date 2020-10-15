@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import NavBarData from '../../data/navbar';
+import Header from '../ui/Header';
 
 const MENU = 'Committee';
 function Committee(props) {
@@ -35,7 +36,12 @@ function Committee(props) {
 
   // Pages
   else {
-    return <h1> Committee </h1>;
+    return (
+      <div className='committee'>
+        <Header />
+        <h1>Committee</h1>
+      </div>
+    );
   }
 }
 
