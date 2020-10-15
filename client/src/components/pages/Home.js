@@ -30,7 +30,7 @@ function Home() {
           </div>
           <div className='Home__banner_text-secondary'>
             <h3>
-              Oranized by <span>University of Dhaka</span>
+              Organized by <span>University of Dhaka</span>
             </h3>
           </div>
           <Countdown />

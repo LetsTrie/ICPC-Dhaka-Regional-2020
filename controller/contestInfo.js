@@ -6,6 +6,5 @@ exports.sendFile = async (req, res, next) => {
   const pdf = await fs.readFile(
     path.join(__dirname, '..', 'data', 'contestInfo', `${slug}`)
   );
-  res.contentType = 'application/pdf';
   res.send(pdf);
 };
