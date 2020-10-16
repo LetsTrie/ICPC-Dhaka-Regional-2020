@@ -48,6 +48,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 3.5rem;
+  user-select: none;
   > div {
     height: 16rem;
     width: 16rem;

@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 10,
     marginLeft: '25px',
     color: 'white',
-    fontSize: '1.2rem',
+    fontSize: '1.7rem',
     opacity: 0.8,
   },
   selectedTab: {
@@ -77,9 +77,9 @@ const useStyles = makeStyles((theme) => ({
   login: {
     marginLeft: '40px',
     marginRight: '25px',
-    fontSize: '1.45rem',
-    paddingLeft: '1.4rem',
-    paddingRight: '1.4rem',
+    fontSize: '2rem',
+    paddingLeft: '2.2rem',
+    paddingRight: '2.2rem',
     textTransform: 'none',
   },
   logoContainer: {
@@ -98,9 +98,8 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     ...theme.typography.tab,
-    fontSize: '1.2rem',
-    padding: '1rem',
-    paddingRight: '1.3rem',
+    fontSize: '1.4rem',
+    padding: '1rem 1.6rem',
 
     opacity: 0.7,
     '&:hover': {

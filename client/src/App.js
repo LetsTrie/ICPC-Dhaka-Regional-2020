@@ -5,24 +5,20 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from './components/ui/Theme';
 
 import Home from './components/pages/Home';
+import Gallery from './components/pages/Gallery';
 import ContestInfo from './components/pages/ContestInfo';
 import Committee from './components/pages/Committee';
+import Footer from './components/ui/Footer';
 
 function App() {
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <div
-            style={{ background: 'white', height: '300vh', fontSize: '20px' }}
-          >
+          <div>
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route
-                exact
-                path='/gallery'
-                component={() => <div>Gallery</div>}
-              />
+              <Route exact path='/gallery' component={Gallery} />
               <Route
                 exact
                 path='/registration'
@@ -54,6 +50,8 @@ function App() {
           </div>
         </BrowserRouter>
       </ThemeProvider>
+
+      <Footer />
     </div>
   );
 }
