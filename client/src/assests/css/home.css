@@ -55,10 +55,10 @@ ul {
 
 .Home__navbar {
   min-height: 100vh;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5)));
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url(../images/icpc_img1.jpg);
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/icpc_img1.jpg);
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/icpc_img1.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/icpc_img1.jpg);
   -webkit-background-size: cover;
           background-size: cover;
   background-repeat: no-repeat;
@@ -106,7 +106,7 @@ ul {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -116,7 +116,7 @@ ul {
 .Home__banner_countdown > div {
   height: 16rem;
   width: 16rem;
-  margin: 1rem 2rem;
+  margin: 0.5rem 2rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -131,40 +131,122 @@ ul {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: white;
-  color: black;
-  font-size: 3.4rem;
+  background: #fff;
+  /* fallback for old browsers */
+  color: #333;
+  font-size: 3.6rem;
   font-family: 'Roboto';
+  font-weight: bold;
+  border: 6px solid #0f3057;
 }
 
 .Home__banner_countdown > div > p:last-child {
   font-size: 1.75rem;
+  font-weight: normal;
 }
 
-.Home__banner_countdown > div:nth-child(1) {
-  border-top: 7px solid #311d3f;
-  border-bottom: 7px solid #311d3f;
-  border-left: 7px solid #311d3f;
-  border-right: 7px solid #311d3f;
+.sponsor {
+  padding-bottom: 3rem;
 }
 
-.Home__banner_countdown > div:nth-child(2) {
-  border-right: 7px solid #311d3f;
-  border-top: 7px solid #311d3f;
-  border-bottom: 7px solid #311d3f;
-  border-left: 7px solid #311d3f;
+.sponsor__heading {
+  padding-top: 2rem;
+  padding-bottom: 2.1rem;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.Home__banner_countdown > div:nth-child(3) {
-  border-top: 7px solid #311d3f;
-  border-bottom: 7px solid #311d3f;
-  border-left: 7px solid #311d3f;
-  border-right: 7px solid #311d3f;
+.sponsor__heading h2 {
+  font-family: 'Libre Franklin', sans-serif;
+  padding: 1.5rem 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 5.1rem;
+  color: #0c3970;
+  display: inline-block;
+  position: relative;
 }
 
-.Home__banner_countdown > div:nth-child(4) {
-  border-right: 7px solid #311d3f;
-  border-top: 7px solid #311d3f;
-  border-bottom: 7px solid #311d3f;
-  border-left: 7px solid #311d3f;
+@media (max-width: 750px) {
+  .sponsor__heading h2 {
+    font-size: 4rem;
+    padding: 0.8rem 0.2rem 2.2rem 0.2rem;
+  }
+}
+
+.sponsor__heading h2:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin: 0 auto;
+  width: 43%;
+  height: 6px;
+  background: #0c3970;
+  border-radius: 100px;
+}
+
+.sponsors {
+  max-width: 95rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+
+.sponsors .sponsor_img {
+  width: 20%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+}
+
+@media (max-width: 750px) {
+  .sponsors .sponsor_img {
+    width: 25%;
+  }
+}
+
+@media (max-width: 500px) {
+  .sponsors .sponsor_img {
+    width: 33%;
+  }
+}
+
+.sponsors .sponsor_img img {
+  width: 80%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.sponsors .sponsor_img img:not(:first-child) {
+  margin-left: 1rem;
 }

@@ -3,8 +3,8 @@
 .Home {
   &__navbar {
     min-height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-    // url(../images/icpc_img1.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(../images/icpc_img1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
@@ -47,50 +47,98 @@
 .Home__banner_countdown {
   display: flex;
   justify-content: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
   user-select: none;
   > div {
     height: 16rem;
     width: 16rem;
-    margin: 1rem 2rem;
+    margin: 0.5rem 2rem;
 
     display: flex;
     border-radius: 50%;
     flex-direction: column;
     justify-content: center;
-    background-color: white;
-    color: black;
-    font-size: 3.4rem;
+    background: #fff; /* fallback for old browsers */
+
+    color: #333;
+    font-size: 3.6rem;
     font-family: 'Roboto';
-    > p{
+    font-weight: bold;
+    > p {
       &:last-child {
         font-size: 1.75rem;
+        font-weight: normal;
       }
     }
+    border: 6px solid #0f3057;
+  }
+}
 
-    &:nth-child(1) {
-      border-top: 7px solid #311d3f;
-      border-bottom: 7px solid #311d3f;
-      border-left: 7px solid #311d3f;
-      border-right: 7px solid #311d3f;
+.sponsor {
+  padding-bottom: 3rem;
+  &__heading {
+    padding-top: 2rem;
+    padding-bottom: 2.1rem;
+    text-align: center;
+    user-select: none;
+    h2 {
+      font-family: 'Libre Franklin', sans-serif;
+      padding: 1.5rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 5.1rem;
+      color: #0c3970;
+      display: inline-block;
+
+      @media (max-width: 750px) {
+        font-size: 4rem;
+        padding: 0.8rem 0.2rem 2.2rem 0.2rem;
+      }
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        top: 100%;
+        margin: 0 auto;
+        width: 43%;
+        height: 6px;
+        background: #0c3970;
+        border-radius: 100px;
+      }
     }
-    &:nth-child(2) {
-      border-right: 7px solid #311d3f;
-      border-top: 7px solid #311d3f;
-      border-bottom: 7px solid #311d3f;
-      border-left: 7px solid #311d3f;
+  }
+}
+.sponsors {
+  max-width: 95rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  .sponsor_img {
+    width: 20%;
+
+    @media(max-width: 750px) {
+      width: 25%;
     }
-    &:nth-child(3) {
-      border-top: 7px solid #311d3f;
-      border-bottom: 7px solid #311d3f;
-      border-left: 7px solid #311d3f;
-      border-right: 7px solid #311d3f;
+    @media(max-width: 500px) {
+      width: 33%;
     }
-    &:nth-child(4) {
-      border-right: 7px solid #311d3f;
-      border-top: 7px solid #311d3f;
-      border-bottom: 7px solid #311d3f;
-      border-left: 7px solid #311d3f;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    img {
+      width: 80%;
+      height: auto;
+      margin-bottom: 1.5rem;
+      &:not(:first-child) {
+        margin-left: 1rem;
+      }
     }
   }
 }

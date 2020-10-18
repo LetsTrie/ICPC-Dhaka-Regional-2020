@@ -4,7 +4,7 @@ import Header from '../ui/Header';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Countdown from '../ui/CountDown';
-
+import Sponsors from '../ui/Sponsors';
 
 const useStyles = makeStyles({
   root: {
@@ -42,6 +42,8 @@ function Home() {
           </div>
         </div>
       </div>
+
+      <Sponsors />
     </div>
   );
 }

@@ -161,10 +161,13 @@
   p {
     &:first-child {
       font-size: 1.5rem;
-      letter-spacing: .5px;
+      letter-spacing: 0.5px;
       padding-bottom: 1.25rem;
       font-weight: 600;
 
+      @media (max-width: 420px) {
+        line-height: 150%;
+      }
     }
     &:last-child {
       font-size: 1.35rem;
