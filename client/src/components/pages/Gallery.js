@@ -7,12 +7,11 @@ import '../../assests/css/gallery.css';
 function Gallery() {
   const _20Image = () => {
     return [...Array(12)].map((e, i) => (
-      <div className='gallery_img_wrapper'>
-        <img
-          src={gImg}
-          alt='Gallery'
-          key={`${Math.ceil(i * 10000 * Math.random())}`}
-        />
+      <div
+        key={`${Math.ceil(i * 10000 * Math.random())}`}
+        className='gallery_img_wrapper'
+      >
+        <img src={gImg} alt='Gallery' />
       </div>
     ));
   };

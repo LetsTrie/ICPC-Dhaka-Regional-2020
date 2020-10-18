@@ -9,6 +9,7 @@ import Gallery from './components/pages/Gallery';
 import ContestInfo from './components/pages/ContestInfo';
 import Committee from './components/pages/Committee';
 import Footer from './components/ui/Footer';
+import ContactUs from './components/pages/ContactUs';
 
 function App() {
   return (
@@ -40,11 +41,7 @@ function App() {
                 component={ContestInfo}
               />
               <Route exact path='/committee/:subMenu' component={Committee} />
-              <Route
-                exact
-                path='/contact'
-                component={() => <div>Contact us</div>}
-              />
+              <Route exact path='/contact' component={ContactUs} />
               <Route exact path='/login' component={() => <div>Login</div>} />
             </Switch>
           </div>

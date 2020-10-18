@@ -68,11 +68,11 @@ const Footer = () => {
                   src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.522405186198!2d90.39688885102359!3d23.728743495443645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8ef3976bbbd%3A0x1b3140066a1d7bb8!2sDepartment%20of%20Computer%20Science%20and%20Engineering%20and%20Department%20of%20Microbiology!5e0!3m2!1sen!2sbd!4v1602825316789!5m2!1sen!2sbd'
                   width='600'
                   height='450'
-                  frameborder='0'
+                  frameBorder='0'
                   style={{ border: '0' }}
-                  allowfullscreen=''
+                  allowFullScreen=''
                   aria-hidden='false'
-                  tabindex='0'
+                  tabIndex='0'
                   title='Google Map Location'
                 ></iframe>
               </div>
@@ -119,7 +119,7 @@ const Footer = () => {
           </div>
         </div>
         <div className='copyright'>
-          <p>Copyright © Department of CSE, University of Dhaka</p>
+          <p>Copyright © 2021. Department of CSE, University of Dhaka</p>
           <p>
             Developed by{' '}
             <a
