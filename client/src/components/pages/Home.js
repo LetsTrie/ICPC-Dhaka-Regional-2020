@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Countdown from '../ui/CountDown';
 import { useHistory } from 'react-router-dom';
-
+import Sponsors from '../ui/Sponsors';
 
 const useStyles = makeStyles({
   root: {
@@ -72,6 +72,8 @@ const handleRegister = e => {
           </div>
         </div>
       </div>
+
+      <Sponsors />
     </div>
   );
 }

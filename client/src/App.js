@@ -11,6 +11,7 @@ import Committee from './components/pages/Committee';
 import Footer from './components/ui/Footer';
 import Login from './components/pages/Login'
 import Register from './components/pages/Register'
+import ContactUs from './components/pages/ContactUs';
 
 function App() {
   return (

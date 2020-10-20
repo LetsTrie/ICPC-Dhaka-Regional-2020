@@ -23,7 +23,7 @@ exports.postRegister = async (req, res) => {
       const hashed = await bcrypt.hash(password, 10)
       req.body.password = hashed
       const user = new User(req.body)
-      // await user.save()
+      await user.save()
       console.log('User saved', user)
       res.json({
         status: true,

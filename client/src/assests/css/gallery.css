@@ -45,6 +45,10 @@ ul {
   padding: 0px;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .gallery {
   padding-bottom: 4rem;
 }
@@ -107,8 +111,8 @@ ul {
   -webkit-box-shadow: 4px 6px 8px #b6b6b6;
           box-shadow: 4px 6px 8px #b6b6b6;
   overflow: hidden;
-  border-radius: 4px;
-  padding: 0.8rem;
+  border-radius: 6px;
+  padding: 0.6rem 0.6rem 0.4rem 0.6rem;
 }
 
 @media (max-width: 1550px) {

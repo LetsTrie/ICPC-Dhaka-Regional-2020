@@ -188,7 +188,7 @@
   font-family: 'Open sans', sans-serif;
   text-align: center;
   background: rgba(0, 0, 0, 0.3);
-  line-height: 160%;
+  line-height: 170%;
   padding: 1.5rem;
   padding-top: 1.9rem;
   padding-bottom: 1.8rem;
@@ -197,9 +197,15 @@
 
 .copyright p:first-child {
   font-size: 1.5rem;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   padding-bottom: 1.25rem;
   font-weight: 600;
+}
+
+@media (max-width: 420px) {
+  .copyright p:first-child {
+    line-height: 150%;
+  }
 }
 
 .copyright p:last-child {
