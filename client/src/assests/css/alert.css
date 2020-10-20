@@ -1,0 +1,15 @@
+.Alert {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.green {
+  border: 1px solid lightseagreen;
+  color: lightseagreen;
+}
+
+.red {
+  border: 1px solid red;
+  color: red;
+}
+/*# sourceMappingURL=alert.css.map */

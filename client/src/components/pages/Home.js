@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../assests/css/home.css';
 import Header from '../ui/Header';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Countdown from '../ui/CountDown';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
@@ -18,12 +19,41 @@ const useStyles = makeStyles({
     fontSize: '17.5px',
   },
 });
+
 function Home() {
   const classes = useStyles();
+
+    /* -- Authentication manager -- */
+  const history = useHistory()
+  const logout = e => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    console.log('logged out')
+    window.location.reload(false)
+  }
+  const [isLoggedIn, setLoggedIn] = useState(false)
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      setLoggedIn(true)
+    }
+  }, [ ])
+  /* -- Ends --*/
+
+const handleRegister = e => {
+  history.push('/registration/online')
+}
+
   return (
     <div className='Home'>
       <div className='Home__navbar'>
         <Header />
+        { 
+          // Dummy logout button 
+          isLoggedIn ? <p style={{fontSize: '25px', cursor: 'pointer', textAlign: 'right'}} onClick={logout}>
+          Logout
+          </p> : <div> </div>
+        }
         <div className='Home__banner_text'>
           <div className='Home__banner_text-primary'>
             <h1>ICPC Dhaka Regional 2021</h1>
@@ -36,7 +66,7 @@ function Home() {
           <Countdown />
 
           <div className='Home_banner_button'>
-            <Button variant='contained' className={classes.root}>
+            <Button variant='contained' className={classes.root} onClick={handleRegister}>
               Register your team
             </Button>
           </div>

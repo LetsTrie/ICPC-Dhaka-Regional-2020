@@ -9,6 +9,8 @@ import Gallery from './components/pages/Gallery';
 import ContestInfo from './components/pages/ContestInfo';
 import Committee from './components/pages/Committee';
 import Footer from './components/ui/Footer';
+import Login from './components/pages/Login'
+import Register from './components/pages/Register'
 
 function App() {
   return (
@@ -27,7 +29,7 @@ function App() {
               <Route
                 exact
                 path='/registration/online'
-                component={() => <div>Online Registration</div>}
+                component={Register}
               />
               <Route
                 exact
@@ -45,7 +47,7 @@ function App() {
                 path='/contact'
                 component={() => <div>Contact us</div>}
               />
-              <Route exact path='/login' component={() => <div>Login</div>} />
+              <Route exact path='/login' component={Login} />
             </Switch>
           </div>
         </BrowserRouter>
