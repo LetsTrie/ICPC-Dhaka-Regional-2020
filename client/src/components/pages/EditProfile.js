@@ -9,34 +9,20 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import Alert from '@material-ui/lab/Alert'
 import { Link, useHistory } from 'react-router-dom'
 
-import '../../assests/css/auth.css'
+import '../../assests/css/editProfile.css'
 import logo from '../../assests/images/icpc_logo.png'
-import validate from '../../utils/RegValidation'
+import validate from '../../utils/UpdateValidation'
+import Alert from '../ui/Alert'
 import Header from '../ui/Header'
-import { register } from '../../action/index'
+import { updateProfile } from '../../action/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { Fade } from '@material-ui/core'
 
-const Register = () => {
+const EditProfile = (props) => {
+const User = props.location.user
 const auth = useSelector(state => state.auth)
-
-useEffect(() => {
-  if (auth.user) {
-    history.push('/')
-  }
-  if (auth.error == true) {
-    setAlert(auth)
-    setDisable(false)
-  } else if (auth.error == false) {
-    setAlert(auth)
-    setTimeout(() => {
-      history.push('/login')
-    }, 3000)
-  }
-})
 
 const addMember = e => {
   if (membersInfo.length < 3) {
@@ -73,6 +59,18 @@ const [membersInfo, setMembersInfo] = useState([
     image: null
   }
 ])
+
+useEffect(() => {
+  let mInfo = [...membersInfo]
+  mInfo = User.membersInfo
+  setMembersInfo(mInfo)
+
+  let tInfo = {...teamInfo}
+  tInfo = User
+  delete tInfo['membersInfo']
+  setTeamInfo(tInfo)
+}, [])
+
 const [images, setImages] = useState([ ])
 const [alert, setAlert] = useState(null)
 const [btnDisable, setDisable] = useState(false)
@@ -86,20 +84,19 @@ const submit = (e) => {
   }
   console.log(membersInfo)
   const check = validate(data)
+  setAlert(check)
   if (!check.error) {
     const team = {
       teamName: teamInfo.teamName,
       coachName: teamInfo.coachName,
       university: teamInfo.university,
       email: teamInfo.email,
-      password: teamInfo.password,
-      conPassword: teamInfo.conPassword,
       membersInfo,
   }
-  dispatch(register(team))
-  setDisable(true)
-  } else {
-    setAlert(check)
+  console.log(team)
+  dispatch(updateProfile(team))
+  setDisable(true) 
+  history.push('/')
   }
 }
 const textStyles = {
@@ -116,7 +113,7 @@ const handleInputs = (e, i) => {
   setMembersInfo(info)
 }
 const handleTeamInfo = (e) => {
-  const team = teamInfo
+  const team = {...teamInfo}
   team[e.target.name] = e.target.value
   setTeamInfo(team)
 }
@@ -132,35 +129,30 @@ const handleImageInputs = (e, i) => {
   return (
       <div>
         <Header />
-            <div className='Register'>
+            <div className='EditProfile'>
       <div className='logo'>
-        <img src={logo} />
+        <h1 style={{textAlign: 'center'}}>Update Profile</h1>
       </div>
       <div className='register-box'>
         <div className='colum left'> 
       {
-        alert ? <Alert variant='filled' severity={alert.error ? 'error' : 'success'}> 
-          { alert.msg }
-        </Alert> : <div></div>
+        alert ? <Alert reason={alert.error} msg={alert.msg} /> : <div></div>
       }
       <div className='side'>
           <TextField style={{width: '48%'}} name='teamName'  variant='outlined' label='Team Name'
           onChange={e => handleTeamInfo(e)} 
+          value={teamInfo.teamName}
           />
           <TextField style={{width: '48%'}} name='coachName'  variant='outlined' label='Coach Name'
-          onChange={e => handleTeamInfo(e)}/>
+          onChange={e => handleTeamInfo(e)}
+          value={teamInfo.coachName}
+          />
         </div> <br />
       <div className='side'>
           <TextField style={{width: '48%'}} name='university' variant='outlined' label='University'
-          onChange={e => handleTeamInfo(e)} / >
-          <TextField style={{width: '48%'}} name='email' variant='outlined' label='Team Email'
-          onChange={e => handleTeamInfo(e)} / >
-      </div>
-      <div className='side'>
-            <TextField style={{width: '48%'}} type='password' name='password' variant='outlined' label='Password'
-            onChange={e => handleTeamInfo(e)} / >
-            <TextField style={{width: '48%'}} type='password' name='conPassword' variant='outlined' label='Confirm password'
-            onChange={e => handleTeamInfo(e)} / >
+          onChange={e => handleTeamInfo(e)}
+          value={teamInfo.university}
+          / >
       </div>
       <div className='team-holder'>
       {
@@ -183,7 +175,8 @@ const handleImageInputs = (e, i) => {
               value={member.memberSemester} />
           </div>
           <div className='side'>
-              <select name='tshirtSize' onChange={e => handleInputs(e, i)}>
+              <select name='tshirtSize' onChange={e => handleInputs(e, i)}
+              value={member.tshirtSize}>
                 <option value={''}>Tshirt size</option>
                 <option value={'S'}>S</option>
                 <option value={'M'}>M</option>
@@ -201,44 +194,14 @@ const handleImageInputs = (e, i) => {
         )
       }
       <Button style={{marginTop: '10px'}} variant='contained' onClick={addMember}>Add Member</Button>
+      <br />
+      <Button style={{marginTop: '10px'}} color='secondary' variant='contained' onClick={submit}>Save Changes</Button>
       </div>
-
-      <p>Have an account? <Link style={linkStyles} to='/login'>Sign in</Link></p>
-        </div>
-        <div className='colum right'>
-            <h3>Payment</h3>
-            <div className='lines'>
-              <div className='line'>
-                <span className=''>Registration fees</span>
-                <span>2000/-</span>
-              </div>
-              <div className='line'>
-                <span className=''>Charges</span>
-                <span>50/-</span>
-              </div>
-              <hr />
-              <div className='line' style={{color: '#f50057'}}>
-                <span className='bold'>Total</span>
-                <span>2050/-</span>
-              </div>
-            </div>
-            <div className='payment-options'>
-                <FormControl style={{marginTop: '50px'}} component="fieldset">
-                <FormLabel component="legend"><h4>Payment Method</h4></FormLabel>
-                <RadioGroup aria-label="gender" name="gender1">
-                  <FormControlLabel value="bkash" control={<Radio />} label="bKash" />
-                  <FormControlLabel value="sslcommerz" control={<Radio />} label="SSLCommerz" />
-                </RadioGroup>
-              </FormControl>
-            </div>
-            <p style={{textAlign: 'center'}}>
-            <Button style={{ marginTop: '120px', width: '50%', }} variant='contained' onClick={submit} disabled={btnDisable} color='secondary'>Submit</Button>
-            </p>
-        </div>
+        </div>      
       </div>
      </div> 
       </div>
   )
 } 
 
-export default Register
+export default EditProfile

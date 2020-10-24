@@ -6,7 +6,7 @@ import logo from '../../assests/images/icpclogo_big.png'
 import { Link } from 'react-router-dom'
 import { login } from '../../action/index'
 import { useHistory } from 'react-router-dom'
-import Alert from '../ui/Alert'
+import Alert from '@material-ui/lab/Alert'
 import '../../assests/css/auth.css'
 import Header from '../ui/Header'
 
@@ -21,7 +21,6 @@ const Login = () => {
   const auth = useSelector(state => state.auth)
 
   useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem('user'))
       if (auth.error) {
         setIsError(auth)
         console.log('[Login]', auth)
@@ -64,7 +63,7 @@ const Login = () => {
         </div>
         <div className='header'><p>Team Account Login</p></div>
         {
-          isError ? <Alert reason={true} msg={auth.msg} /> : <div></div> 
+          isError ? <Alert variant='filled' severity='error'> {isError.msg} </Alert> : <div></div> 
         }
         <TextField style={textStyles} name='email'  variant='outlined' label='Team Email'
         onChange={e => handleInput(e)} 

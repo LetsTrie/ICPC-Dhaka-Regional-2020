@@ -10,7 +10,9 @@ const User = mongoose.Schema({
   membersInfo: [{
       memberName: String,
       memberYear: String,
-      memberSemester: String
+      memberSemester: String,
+      tshirtSize: String,
+      image: String
     }]
 })
 

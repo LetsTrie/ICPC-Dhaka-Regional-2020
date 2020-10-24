@@ -28,15 +28,11 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -87,7 +83,6 @@ ul {
 .contactUsForm_flx {
   background: white;
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   border-radius: 10px;
@@ -101,7 +96,6 @@ ul {
   .contactUsForm_flx {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
-    -webkit-flex-direction: column-reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
   }
@@ -134,8 +128,6 @@ ul {
   border: none;
   outline: none;
   background: -webkit-gradient(linear, left top, right top, from(#7ed56f), to(#28b485));
-  background: -webkit-linear-gradient(left, #7ed56f, #28b485);
-  background: -o-linear-gradient(left, #7ed56f, #28b485);
   background: linear-gradient(to right, #7ed56f, #28b485);
   color: white;
   border-radius: 4px;
@@ -178,13 +170,6 @@ ul {
   font-family: 'Open Sans';
 }
 
-.contactUsForm_flx_form form .textbox input::-moz-placeholder,
-.contactUsForm_flx_form form .textarea input::-moz-placeholder {
-  font-size: 1.6rem;
-  color: #bbbbbb;
-  font-family: 'Open Sans';
-}
-
 .contactUsForm_flx_form form .textbox input:-ms-input-placeholder,
 .contactUsForm_flx_form form .textarea input:-ms-input-placeholder {
   font-size: 1.6rem;
@@ -208,13 +193,6 @@ ul {
 
 .contactUsForm_flx_form form .textbox textarea::-webkit-input-placeholder,
 .contactUsForm_flx_form form .textarea textarea::-webkit-input-placeholder {
-  font-size: 1.35rem;
-  color: #bbbbbb;
-  font-family: 'Open Sans';
-}
-
-.contactUsForm_flx_form form .textbox textarea::-moz-placeholder,
-.contactUsForm_flx_form form .textarea textarea::-moz-placeholder {
   font-size: 1.35rem;
   color: #bbbbbb;
   font-family: 'Open Sans';
@@ -253,7 +231,6 @@ ul {
   border: none;
   border-bottom: 2px solid #ccc;
   -webkit-transition: border-bottom 0.25s ease;
-  -o-transition: border-bottom 0.25s ease;
   transition: border-bottom 0.25s ease;
   color: #333;
 }
@@ -274,8 +251,6 @@ ul {
   width: 50%;
   padding: 4rem 5.3rem;
   background-image: -webkit-gradient(linear, right top, left top, from(#7ed56f), to(#28b485));
-  background-image: -webkit-linear-gradient(right, #7ed56f, #28b485);
-  background-image: -o-linear-gradient(right, #7ed56f, #28b485);
   background-image: linear-gradient(to left, #7ed56f, #28b485);
   border-radius: 0 10px 10px 0;
   color: white;
@@ -307,11 +282,9 @@ ul {
 
 .contactUsForm_flx_contact_info {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   margin-bottom: 3rem;
@@ -321,11 +294,9 @@ ul {
   margin-right: 1.5rem;
   font-size: 2.4rem;
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: start;
-  -webkit-align-items: flex-start;
       -ms-flex-align: start;
           align-items: flex-start;
   padding-top: 2px;
@@ -336,9 +307,8 @@ ul {
 }
 
 .contactUsForm_flx_contact_info_des {
-  -webkit-align-self: flex-end;
-      -ms-flex-item-align: end;
-          align-self: flex-end;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
   padding-left: 5px;
 }
 
@@ -349,3 +319,4 @@ ul {
 .contactUsForm_flx_contact_info_des_phone {
   max-width: 300px;
 }
+/*# sourceMappingURL=contact.css.map */

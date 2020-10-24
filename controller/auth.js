@@ -5,9 +5,12 @@ const { object } = require('@hapi/joi')
 
 exports.postRegister = async (req, res) => {
   console.log('[backend/register]: ',req.body)
-  const { password, conPassword } = req.body
+  const { password, conPassword, email } = req.body
   const {validateRegCredentials} = require('../config/validateRegCredentials')
   const { error } = validateRegCredentials(req.body)
+
+  const existingUser = await User.findOne({ email: email })
+
   if (error) {
     res.json({
       status: false,
@@ -18,6 +21,11 @@ exports.postRegister = async (req, res) => {
       status: false,
       msg: 'Passwords do not match'
     })
+   } else if (existingUser) {
+    res.json({
+      status: false,
+      msg: 'Email already in use. Please try a different one'
+    })
    } else {
       delete req.body['conPassword']
       const hashed = await bcrypt.hash(password, 10)
@@ -27,7 +35,7 @@ exports.postRegister = async (req, res) => {
       console.log('User saved', user)
       res.json({
         status: true,
-        msg: 'user saved',
+        msg: 'Your team has successfully been registered!',
       })
     }
   }
@@ -45,8 +53,9 @@ exports.postRegister = async (req, res) => {
       const isMatch = await bcrypt.compare(password, user.password)
       if (isMatch) {
         const token = await jwt.sign(
-          { id: user._id, exp: Math.floor(Date.now() / 1000) + (60 * 60) }, 
-          process.env.JWT_SECRET
+          { id: user._id}, 
+          process.env.JWT_SECRET,
+          { expiresIn: '3h' }
           )
         res.json({
           status: true,
@@ -75,3 +84,8 @@ exports.createPost = async (req, res) => {
     id: req.user
   })
 }
+
+exports.uploadImage = async (req, res) => {
+  console.log('uploaded')
+  res.send('uploaded')
+} 

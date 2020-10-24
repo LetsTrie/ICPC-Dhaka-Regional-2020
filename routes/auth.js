@@ -1,15 +1,16 @@
 const { Router } = require("express");
 const router = require('express').Router()
 const { auth } = require('../middlewares/auth.js')
+
 const multer = require('multer')
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log('here');
+    console.log('[server]', req.files);
     cb(null, 'public/');
   },
   filename: (req, file, cb) => {
-    const filename = req.body.filename;
+    const filename = 'image.jpeg';
     cb(null, filename);
   },
 });
@@ -24,19 +25,21 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-const upload = multer({
+uploads = multer({
   storage: storage,
   fileFilter: fileFilter,
-}).array('images', 3);
+}).fields([{name: 'image'}])
 
 const {
   postRegister,
   postLogin,
-  createPost
+  createPost,
+  uploadImage
 } = require('../controller/auth.js')
 
-router.post('/register', upload, postRegister)
+router.post('/register', postRegister)
 router.post('/login', postLogin)
 router.post('/create', auth, createPost)
+router.post('/upload', uploads, uploadImage)
 
 module.exports = router

@@ -1,0 +1,142 @@
+html {
+  // font-size: 80%;
+}
+.Profile {
+  background-color: #eee;
+  .contentWrapper {
+    width: 60%;
+    margin: auto;
+    padding: 50px 0;
+
+    @media (max-width: 1200px) {
+      width: 75%;
+    }
+    @media (max-width: 900px) {
+      padding: 20px;
+      width: 85%;
+    }
+
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      @media (max-width: 900px) {
+        flex-direction: column;
+      }
+      .left {
+        width: 28%;
+        display: inline-block;
+        // height: 230px;
+        background-color: #fff;
+        @media (max-width: 900px) {
+          width: 90%;
+          margin: auto;
+        }
+        .team-name {
+          padding: 0 20px;
+          p {
+            color: gray;
+          }
+        }
+      }
+
+      .right {
+        width: 70%;
+        background-color: #fff;
+        border-top: 3px solid #ffba60;
+        @media (max-width: 900px) {
+          width: 90%;
+          margin: auto;
+          margin-top: 20px;
+        }
+        .info-container {
+          padding: 25px 15px;
+
+          .section-header {
+            display: flex;
+            width: 95%;
+            margin: auto;
+            font-size: 16.5px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            h4 {
+              padding: 0 10px;
+            }
+          }
+          .section-body {
+            padding: 15px 0;
+            .row {
+              display: flex;
+              justify-content: space-between;
+              width: 90%;
+              margin: auto;
+              padding: 10px 0;
+              @media (max-width: 900px) {
+                flex-direction: column;
+                padding: 0;
+              }
+
+              .field {
+                width: 45%;
+                white-space: nowrap;
+                @media (max-width: 900px) {
+                  width: 100%;
+                  padding: 5px 0;
+                }
+                .field-name {
+                  color: gray;
+                  font-size: 13.5px;
+                  @media (max-width: 900px) {
+                    font-size: 12px;
+                  }
+                }
+                .field-value {
+                  color: #333;
+                  font-size: 16.5px;
+                  padding: 5px 0;
+                  @media (max-width: 900px) {
+                    font-size: 15px;
+                  }
+                }
+              }
+            }
+
+            .each-user {
+              display: flex;
+              width: 90%;
+              margin: auto;
+              padding: 15px 0;
+              @media (max-width: 900px) {
+                justify-content: space-around;
+              }
+              .image {
+                width: 17.5%;
+              }
+              .texts {
+                padding: 13.5px 0;
+                white-space: nowrap;
+                @media (max-width: 900px) {
+                  padding: 0;
+                }
+                .name {
+                  font-size: 16.5px;
+                  @media (max-width: 900px) {
+                    font-size: 13.5px;
+                  }
+                }
+                .about {
+                  color: gray;
+                  font-size: 13.5px;
+                  @media (max-width: 900px) {
+                    font-size: 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

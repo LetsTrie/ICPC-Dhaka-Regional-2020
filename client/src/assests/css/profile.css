@@ -1,0 +1,210 @@
+.Profile {
+  background-color: #eee;
+}
+
+.Profile .contentWrapper {
+  width: 60%;
+  margin: auto;
+  padding: 50px 0;
+}
+
+@media (max-width: 1200px) {
+  .Profile .contentWrapper {
+    width: 75%;
+  }
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper {
+    padding: 20px;
+    width: 85%;
+  }
+}
+
+.Profile .contentWrapper .container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.Profile .contentWrapper .container .left {
+  width: 28%;
+  display: inline-block;
+  background-color: #fff;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .left {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+.Profile .contentWrapper .container .left .team-name {
+  padding: 0 20px;
+}
+
+.Profile .contentWrapper .container .left .team-name p {
+  color: gray;
+}
+
+.Profile .contentWrapper .container .right {
+  width: 70%;
+  background-color: #fff;
+  border-top: 3px solid #ffba60;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container {
+  padding: 25px 15px;
+}
+
+.Profile .contentWrapper .container .right .info-container .section-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 95%;
+  margin: auto;
+  font-size: 16.5px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.Profile .contentWrapper .container .right .info-container .section-header h4 {
+  padding: 0 10px;
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body {
+  padding: 15px 0;
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 90%;
+  margin: auto;
+  padding: 10px 0;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 0;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .row .field {
+  width: 45%;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .row .field {
+    width: 100%;
+    padding: 5px 0;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .row .field .field-name {
+  color: gray;
+  font-size: 13.5px;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .row .field .field-name {
+    font-size: 12px;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .row .field .field-value {
+  color: #333;
+  font-size: 16.5px;
+  padding: 5px 0;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .row .field .field-value {
+    font-size: 15px;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .each-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 90%;
+  margin: auto;
+  padding: 15px 0;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .each-user {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .each-user .image {
+  width: 17.5%;
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .each-user .texts {
+  padding: 13.5px 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .each-user .texts {
+    padding: 0;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .each-user .texts .name {
+  font-size: 16.5px;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .each-user .texts .name {
+    font-size: 13.5px;
+  }
+}
+
+.Profile .contentWrapper .container .right .info-container .section-body .each-user .texts .about {
+  color: gray;
+  font-size: 13.5px;
+}
+
+@media (max-width: 900px) {
+  .Profile .contentWrapper .container .right .info-container .section-body .each-user .texts .about {
+    font-size: 10px;
+  }
+}
+/*# sourceMappingURL=profile.css.map */

@@ -15,6 +15,13 @@ const authReducer = (state = {
         msg: ''
       }
 
+    case 'REGISTER_ERROR':
+        return {
+          ...state,
+          error: !action.payload.status,
+          msg: action.payload.msg
+        }
+
     case 'LOGIN_ERROR':
       console.log('login error')
       return {
