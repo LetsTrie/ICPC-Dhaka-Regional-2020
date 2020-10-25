@@ -111,7 +111,9 @@ const Login = () => {
           />
 
           <p className='login_forget_password'>
-            <Link style={styles.linkStyles} to='#'>Forgot password?</Link>
+            <Link style={styles.linkStyles} to='#'>
+              Forgot password?
+            </Link>
           </p>
           <Button
             variant='contained'

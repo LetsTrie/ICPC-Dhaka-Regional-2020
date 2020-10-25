@@ -134,7 +134,7 @@ ul {
 }
 
 .Register .register-box .left .file-input {
-  width: 43%;
+  width: 48%;
   padding: 15px;
   cursor: pointer;
   border: 1px solid #bbb;
@@ -152,6 +152,7 @@ ul {
   .Register .register-box .right {
     width: 100%;
     margin: auto;
+    margin-top: 30px;
   }
 }
 

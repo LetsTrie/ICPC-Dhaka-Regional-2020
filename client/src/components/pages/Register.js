@@ -226,24 +226,29 @@ const Register = () => {
                   />{' '}
                   <br />
                   <div className='side'>
-                    <TextField
-                      type='number'
+                    <select
                       name='memberYear'
-                      style={{ width: '48%' }}
                       onChange={(e) => handleInputs(e, i)}
-                      variant='outlined'
-                      label='Year'
-                      value={member.memberYear}
-                    />
-                    <TextField
-                      type='number'
-                      style={{ width: '48%' }}
+                    >
+                      <option value={''}>Year</option>
+                      <option value={'1st'}>1st</option>
+                      <option value={'2nd'}>2nd</option>
+                      <option value={'3rd'}>3rd</option>
+                      <option value={'4th'}>4th</option>
+                      <option value={'Masters'}>Masters</option>
+                      <option value={'Others'}>Others</option>
+                    </select>
+
+                    <select
                       name='memberSemester'
                       onChange={(e) => handleInputs(e, i)}
-                      variant='outlined'
-                      label='Semester'
-                      value={member.memberSemester}
-                    />
+                    >
+                      <option value={''}>Semester</option>
+                      <option value={'1st'}>1st</option>
+                      <option value={'2nd'}>2nd</option>
+                      <option value={'3rd'}>3rd</option>
+                      <option value={'4th'}>4th</option>
+                    </select>
                   </div>
                   <div className='side'>
                     <select
