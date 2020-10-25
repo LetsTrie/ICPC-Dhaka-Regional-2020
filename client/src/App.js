@@ -65,7 +65,7 @@ function App() {
               <Route
                 exact
                 path='/contact'
-                component={() => <div>Contact us</div>}
+                component={ContactUs}
               />
               <Route exact path='/login' component={Login} />
               <Route exact path='/upload' component={Upload} />
