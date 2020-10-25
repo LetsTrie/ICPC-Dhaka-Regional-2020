@@ -1,5 +1,56 @@
-html, body {
-  color: #666;
+*,
+*::before,
+*::after {
+  margin: 0px;
+  padding: 0px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+@media only screen and (max-width: 68.75em) {
+  html {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+li {
+  list-style: none;
+}
+
+button:focus {
+  -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+       -o-transform: translateY(0px);
+          transform: translateY(0px);
+}
+
+button:active {
+  -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+       -o-transform: translateY(3px);
+          transform: translateY(3px);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .Register {
@@ -38,10 +89,12 @@ html, body {
 
 .Register .register-box {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -50,6 +103,7 @@ html, body {
   .Register .register-box {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -121,9 +175,11 @@ html, body {
 
 .Register .register-box .right .lines .line {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -144,9 +200,11 @@ html, body {
 .Register .side {
   margin-top: 15px;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -157,62 +215,82 @@ html, body {
   font-size: 20px;
 }
 
-.Login {
-  width: 30%;
+.login_wrapper {
+  min-height: 90vh;
+}
+
+@media (max-width: 600px) {
+  .login_wrapper {
+    background-color: white;
+  }
+}
+
+.login {
+  max-width: 55rem;
   margin: auto;
-  padding: 50px 0 150px 0;
+  padding-top: 5rem;
+  margin-top: 6.5rem;
 }
 
-@media (max-width: 1200px) {
-  .Login {
-    width: 50%;
+@media (max-width: 600px) {
+  .login {
+    padding-top: 0.5rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
   }
 }
 
-@media (max-width: 900px) {
-  .Login {
-    width: 80%;
-  }
-}
-
-.Login .login-box {
-  padding: 15px 50px;
+.login .login_container {
+  padding: 1.5rem 5rem;
   background-color: #fff;
   border: 2px solid #eee;
   border-radius: 10px;
+  padding-bottom: 3.4rem;
 }
 
-@media (max-width: 900px) {
-  .Login .login-box {
-    padding: 0;
+@media (max-width: 600px) {
+  .login .login_container {
+    padding: 0.8rem 2rem;
     border: none;
   }
 }
 
-.Login .login-box .login-logo {
+.login .login_container .login_logo {
   width: 50%;
   margin: auto;
   padding: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.Login .login-box .login-logo img {
+.login .login_container .login_logo img {
   width: 100%;
 }
 
-.Login .login-box .header p {
-  text-align: center;
-  color: #aaa;
-  font-size: 20px;
+.login .login_container .login_header {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.Login .login-box p {
+.login .login_container .login_header p {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  color: #777;
+}
+
+.login .login_container p {
   color: #666;
   padding: 10px 0;
 }
 
-.Login .login-box .right {
+.login .login_container .login_forget_password {
   text-align: right;
   font-size: 15px;
   padding: 0;
 }
-/*# sourceMappingURL=auth.css.map */

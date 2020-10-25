@@ -1,6 +1,5 @@
-html, body {
-  color: #666;
-}
+@import '_main';
+
 .Register {
   margin: auto;
   width: 60%;
@@ -111,49 +110,65 @@ html, body {
     font-size: 20px;
   }
 }
- .Login {
-   width: 30%;
-   margin: auto;
-   padding: 50px 0 150px 0;
-   @media (max-width: 1200px) {
-     width: 50%;
-   }
-   @media (max-width: 900px) {
-    width: 80%;
+
+.login_wrapper {
+  min-height: 90vh;
+
+  @media (max-width: 600px) {
+    background-color: white;
+  }
+}
+.login {
+  max-width: 55rem;
+  margin: auto;
+  padding-top: 5rem;
+  margin-top: 6.5rem;
+
+  @media (max-width: 600px) {
+    padding-top: 0.5rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
   }
 
-  .login-box {
-    padding: 15px 50px;
+  .login_container {
+    padding: 1.5rem 5rem;
     background-color: #fff;
     border: 2px solid #eee;
     border-radius: 10px;
-    @media (max-width: 900px) {
-      padding: 0;
+    padding-bottom: 3.4rem;
+
+    @media (max-width: 600px) {
+      padding: 0.8rem 2rem;
       border: none;
     }
-    .login-logo {
+
+    .login_logo {
       width: 50%;
       margin: auto;
       padding: 10px;
+      user-select: none;
       img {
         width: 100%;
       }
     }
-    .header {
+    .login_header {
+      user-select: none;
       p {
         text-align: center;
-        color: #aaa;
-        font-size: 20px;
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+        color: #777;
       }
     }
     p {
       color: #666;
       padding: 10px 0;
     }
-    .right {
+    .login_forget_password {
       text-align: right;
       font-size: 15px;
       padding: 0;
     }
   }
- }
+}

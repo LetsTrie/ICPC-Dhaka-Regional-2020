@@ -24,9 +24,11 @@
 .Profile .contentWrapper .container {
   width: 100%;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -35,6 +37,7 @@
   .Profile .contentWrapper .container {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -81,6 +84,7 @@
 
 .Profile .contentWrapper .container .right .info-container .section-header {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 95%;
@@ -101,9 +105,11 @@
 
 .Profile .contentWrapper .container .right .info-container .section-body .row {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 90%;
@@ -115,6 +121,7 @@
   .Profile .contentWrapper .container .right .info-container .section-body .row {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
     padding: 0;
@@ -158,6 +165,7 @@
 
 .Profile .contentWrapper .container .right .info-container .section-body .each-user {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 90%;
@@ -167,8 +175,9 @@
 
 @media (max-width: 900px) {
   .Profile .contentWrapper .container .right .info-container .section-body .each-user {
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
   }
 }
 
@@ -207,4 +216,3 @@
     font-size: 10px;
   }
 }
-/*# sourceMappingURL=profile.css.map */
