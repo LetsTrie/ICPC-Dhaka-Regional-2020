@@ -28,11 +28,15 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -48,4 +52,3 @@ ul {
 .text-center {
   text-align: center;
 }
-/*# sourceMappingURL=index.css.map */

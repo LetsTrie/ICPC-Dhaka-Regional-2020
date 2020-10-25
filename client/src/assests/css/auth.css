@@ -38,10 +38,12 @@ html, body {
 
 .Register .register-box {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -50,6 +52,7 @@ html, body {
   .Register .register-box {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -80,7 +83,7 @@ html, body {
 }
 
 .Register .register-box .left .file-input {
-  width: 43%;
+  width: 48%;
   padding: 15px;
   cursor: pointer;
   border: 1px solid #bbb;
@@ -98,6 +101,7 @@ html, body {
   .Register .register-box .right {
     width: 100%;
     margin: auto;
+    margin-top: 30px;
   }
 }
 
@@ -121,9 +125,11 @@ html, body {
 
 .Register .register-box .right .lines .line {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -144,9 +150,11 @@ html, body {
 .Register .side {
   margin-top: 15px;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -215,4 +223,3 @@ html, body {
   font-size: 15px;
   padding: 0;
 }
-/*# sourceMappingURL=auth.css.map */

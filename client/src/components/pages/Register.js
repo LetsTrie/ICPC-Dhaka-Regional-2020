@@ -173,14 +173,23 @@ const handleImageInputs = (e, i) => {
           <TextField style={textStyles} name='memberName' onChange={e => handleInputs(e, i)} variant='outlined' label='Name of the participent'
           value={member.memberName} /> <br />
           <div className='side'>
-              <TextField type='number' name='memberYear' style={{width: '48%'}}  
-              onChange={e => handleInputs(e, i)}
-              variant='outlined' label='Year'
-              value={member.memberYear} /> 
-              <TextField type='number' style={{width: '48%'}} name='memberSemester' 
-              onChange={e => handleInputs(e, i)}
-              variant='outlined' label='Semester'
-              value={member.memberSemester} />
+          <select name='memberYear' onChange={e => handleInputs(e, i)}>
+                <option value={''}>Year</option>
+                <option value={'1st'}>1st</option>
+                <option value={'2nd'}>2nd</option>
+                <option value={'3rd'}>3rd</option>
+                <option value={'4th'}>4th</option>
+                <option value={'Masters'}>Masters</option>
+                <option value={'Others'}>Others</option>
+              </select> 
+              
+              <select name='memberSemester' onChange={e => handleInputs(e, i)}>
+                <option value={''}>Semester</option>
+                <option value={'1st'}>1st</option>
+                <option value={'2nd'}>2nd</option>
+                <option value={'3rd'}>3rd</option>
+                <option value={'4th'}>4th</option>
+              </select>
           </div>
           <div className='side'>
               <select name='tshirtSize' onChange={e => handleInputs(e, i)}>
