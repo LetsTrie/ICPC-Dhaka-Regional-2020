@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     color: '#333',
     marginTop: '1.7rem',
     padding: '1rem',
-    fontSize: '1.5rem',
+    fontSize: '1.7rem',
   },
 });
 
@@ -66,7 +66,7 @@ const Login = () => {
   const styles = {
     linkStyles: {
       textDecoration: 'none',
-      color: '#5499C7',
+      color: '#3576a2',
     },
     askForRegister: {
       marginTop: '1rem',

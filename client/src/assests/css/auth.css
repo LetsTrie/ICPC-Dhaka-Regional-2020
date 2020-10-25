@@ -220,6 +220,15 @@ ul {
   min-height: 90vh;
 }
 
+@media (min-width: 600px) {
+  .login_wrapper {
+    background: url(../images/25331.jpg);
+    -webkit-background-size: cover;
+            background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
 @media (max-width: 600px) {
   .login_wrapper {
     background-color: white;
@@ -244,15 +253,17 @@ ul {
 .login .login_container {
   padding: 1.5rem 5rem;
   background-color: #fff;
-  border: 2px solid #eee;
   border-radius: 10px;
   padding-bottom: 3.4rem;
+  -webkit-box-shadow: 2px 5px 10px gray;
+          box-shadow: 2px 5px 10px gray;
 }
 
 @media (max-width: 600px) {
   .login .login_container {
     padding: 0.8rem 2rem;
-    border: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
 }
 
@@ -280,9 +291,9 @@ ul {
 .login .login_container .login_header p {
   text-align: center;
   margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.7rem;
   font-size: 2.5rem;
-  color: #777;
+  color: #646464;
 }
 
 .login .login_container p {
