@@ -1,109 +1,208 @@
 @import '_main';
 
-.Register {
-  margin: auto;
-  width: 60%;
-  padding: 30px 0;
+.register_wrapper {
+  min-height: 100vh;
+  padding-bottom: 5rem;
 
-  @media (max-width: 1200px) {
-    width: 75%;
+  @media (min-width: 600px) {
+    background: url(../images/25331.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
   }
-  @media (max-width: 900px) {
-    width: 90%;
+
+  @media (max-width: 600px) {
+    background-color: white;
   }
-  .logo {
-    width: 40%;
+  .register {
+    max-width: 150rem;
     margin: auto;
-    padding: 50px 0;
-    @media (max-width: 900px) {
-      width: 70%;
+    padding-top: 2rem;
+    margin-top: 6.5rem;
+
+    @media (max-width: 600px) {
+      padding-top: 0.5rem;
+      margin-top: 2rem;
+      padding-bottom: 1rem;
     }
-    img {
-      width: 100%;
-    }
-  }
-  .register-box {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    @media (max-width: 900px) {
-      flex-direction: column;
-    }
-    .colum {
-      // display: flex;
-    }
-    .left {
-      width: 60%;
-      @media (max-width: 900px) {
-        width: 100%;
-        margin: auto;
-      }
-      select {
-        width: 48%;
-        padding: 17.5px;
-        border: 1px solid #bbb;
-        border-radius: 5px;
-        background-color: #fff;
-        cursor: pointer;
-      }
-      input[type='file'] {
-        display: none;
-      }
-      .file-input {
-        width: 48%;
-        padding: 15px;
-        cursor: pointer;
-        border: 1px solid #bbb;
-        border-radius: 5px;
+    &_container {
+      padding: 0.8rem 5rem 1.5rem 5rem;
+      background-color: #fff;
+      border-radius: 10px;
+      padding-bottom: 3.4rem;
+      box-shadow: 2px 5px 10px gray;
+
+      @media (max-width: 600px) {
+        padding: 0.8rem 2rem;
+        box-shadow: none;
       }
     }
-    .right {
-      width: 35%;
-      border: 1px solid #ddd;
-      border-radius: 7.5px;
-      height: 450px;
-      @media (max-width: 900px) {
-        width: 100%;
-        margin: auto;
-        margin-top: 30px;
+
+    &_logo {
+      // width: 50%;
+      text-align: center;
+      margin: auto;
+      padding: 10px;
+      user-select: none;
+      img {
+        // width: 100%;
       }
-      h3 {
-        width: 80%;
-        margin: auto;
+    }
+    &_your_team {
+      user-select: none;
+      p {
         text-align: center;
-        padding: 15px 0;
-        border-bottom: 1px solid #ddd;
-      }
-      .lines {
-        width: 80%;
-        margin: auto;
-        margin-top: 30px;
-        hr {
-          border: 0.25px solid #eee;
-        }
-        .line {
-          display: flex;
-          justify-content: space-between;
-          span {
-            padding: 5px;
-          }
-          .bold {
-            font-weight: bolder;
-          }
-        }
-      }
-      .payment-options {
-        width: 80%;
-        margin: auto;
+        margin-top: 0.2rem;
+        margin-bottom: 1.7rem;
+        font-size: 2.5rem;
+        color: #646464;
+        padding-bottom: 2rem;
       }
     }
-  }
-  .side {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
   }
 }
+
+.register_flex {
+  display: flex;
+  justify-content: space-between;
+
+  &_left {
+    width: 68%;
+  }
+
+  &_right {
+    width: 28%;
+  }
+
+  .secondary_heading {
+    font-size: 1.8rem;
+    letter-spacing: .5px;
+    padding-bottom: 2rem;
+    p {
+      font-weight: bold;
+      color: #333;
+    }
+  }
+
+  .flex_row {
+    display: flex;
+  }
+}
+
+.team_members {
+  .member_count {
+    font-size: 1.4rem;
+    padding-bottom: 1.4rem;
+    p {
+      font-weight: bold;
+      color: rgb(65, 65, 65);
+    }
+  }
+}
+
+// .Register {
+//   margin: auto;
+//   width: 60%;
+//   padding: 30px 0;
+
+//   @media (max-width: 1200px) {
+//     width: 75%;
+//   }
+//   @media (max-width: 900px) {
+//     width: 90%;
+//   }
+//   .logo {
+//     width: 40%;
+//     margin: auto;
+//     padding: 50px 0;
+//     @media (max-width: 900px) {
+//       width: 70%;
+//     }
+//     img {
+//       width: 100%;
+//     }
+//   }
+//   .register-box {
+//     display: flex;
+//     width: 100%;
+//     justify-content: space-between;
+//     @media (max-width: 900px) {
+//       flex-direction: column;
+//     }
+//     .colum {
+//       // display: flex;
+//     }
+//     .left {
+//       width: 60%;
+//       @media (max-width: 900px) {
+//         width: 100%;
+//         margin: auto;
+//       }
+//       select {
+//         width: 48%;
+//         padding: 17.5px;
+//         border: 1px solid #bbb;
+//         border-radius: 5px;
+//         background-color: #fff;
+//         cursor: pointer;
+//       }
+//       input[type='file'] {
+//         display: none;
+//       }
+//       .file-input {
+//         width: 48%;
+//         padding: 15px;
+//         cursor: pointer;
+//         border: 1px solid #bbb;
+//         border-radius: 5px;
+//       }
+//     }
+//     .right {
+//       width: 35%;
+//       border: 1px solid #ddd;
+//       border-radius: 7.5px;
+//       height: 450px;
+//       @media (max-width: 900px) {
+//         width: 100%;
+//         margin: auto;
+//         margin-top: 30px;
+//       }
+//       h3 {
+//         width: 80%;
+//         margin: auto;
+//         text-align: center;
+//         padding: 15px 0;
+//         border-bottom: 1px solid #ddd;
+//       }
+//       .lines {
+//         width: 80%;
+//         margin: auto;
+//         margin-top: 30px;
+//         hr {
+//           border: 0.25px solid #eee;
+//         }
+//         .line {
+//           display: flex;
+//           justify-content: space-between;
+//           span {
+//             padding: 5px;
+//           }
+//           .bold {
+//             font-weight: bolder;
+//           }
+//         }
+//       }
+//       .payment-options {
+//         width: 80%;
+//         margin: auto;
+//       }
+//     }
+//   }
+//   .side {
+//     margin-top: 15px;
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// }
 .header {
   p {
     text-align: center;

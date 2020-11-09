@@ -53,128 +53,85 @@ ul {
   text-align: center;
 }
 
-.Register {
+.register_wrapper {
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 600px) {
+  .register_wrapper {
+    background: url(../images/25331.jpg);
+    -webkit-background-size: cover;
+            background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 600px) {
+  .register_wrapper {
+    background-color: white;
+  }
+}
+
+.register_wrapper .register {
+  max-width: 150rem;
   margin: auto;
-  width: 60%;
-  padding: 30px 0;
+  padding-top: 2rem;
+  margin-top: 6.5rem;
 }
 
-@media (max-width: 1200px) {
-  .Register {
-    width: 75%;
+@media (max-width: 600px) {
+  .register_wrapper .register {
+    padding-top: 0.5rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
   }
 }
 
-@media (max-width: 900px) {
-  .Register {
-    width: 90%;
-  }
-}
-
-.Register .logo {
-  width: 40%;
-  margin: auto;
-  padding: 50px 0;
-}
-
-@media (max-width: 900px) {
-  .Register .logo {
-    width: 70%;
-  }
-}
-
-.Register .logo img {
-  width: 100%;
-}
-
-.Register .register-box {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-@media (max-width: 900px) {
-  .Register .register-box {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-}
-
-.Register .register-box .left {
-  width: 60%;
-}
-
-@media (max-width: 900px) {
-  .Register .register-box .left {
-    width: 100%;
-    margin: auto;
-  }
-}
-
-.Register .register-box .left select {
-  width: 48%;
-  padding: 17.5px;
-  border: 1px solid #bbb;
-  border-radius: 5px;
+.register_wrapper .register_container {
+  padding: 0.8rem 5rem 1.5rem 5rem;
   background-color: #fff;
-  cursor: pointer;
+  border-radius: 10px;
+  padding-bottom: 3.4rem;
+  -webkit-box-shadow: 2px 5px 10px gray;
+          box-shadow: 2px 5px 10px gray;
 }
 
-.Register .register-box .left input[type='file'] {
-  display: none;
-}
-
-.Register .register-box .left .file-input {
-  width: 48%;
-  padding: 15px;
-  cursor: pointer;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-}
-
-.Register .register-box .right {
-  width: 35%;
-  border: 1px solid #ddd;
-  border-radius: 7.5px;
-  height: 450px;
-}
-
-@media (max-width: 900px) {
-  .Register .register-box .right {
-    width: 100%;
-    margin: auto;
-    margin-top: 30px;
+@media (max-width: 600px) {
+  .register_wrapper .register_container {
+    padding: 0.8rem 2rem;
+    -webkit-box-shadow: none;
+            box-shadow: none;
   }
 }
 
-.Register .register-box .right h3 {
-  width: 80%;
-  margin: auto;
+.register_wrapper .register_logo {
   text-align: center;
-  padding: 15px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.Register .register-box .right .lines {
-  width: 80%;
   margin: auto;
-  margin-top: 30px;
+  padding: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.Register .register-box .right .lines hr {
-  border: 0.25px solid #eee;
+.register_wrapper .register_your_team {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.Register .register-box .right .lines .line {
+.register_wrapper .register_your_team p {
+  text-align: center;
+  margin-top: 0.2rem;
+  margin-bottom: 1.7rem;
+  font-size: 2.5rem;
+  color: #646464;
+  padding-bottom: 2rem;
+}
+
+.register_flex {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -185,29 +142,40 @@ ul {
           justify-content: space-between;
 }
 
-.Register .register-box .right .lines .line span {
-  padding: 5px;
+.register_flex_left {
+  width: 68%;
 }
 
-.Register .register-box .right .lines .line .bold {
-  font-weight: bolder;
+.register_flex_right {
+  width: 28%;
 }
 
-.Register .register-box .right .payment-options {
-  width: 80%;
-  margin: auto;
+.register_flex .secondary_heading {
+  font-size: 1.8rem;
+  letter-spacing: .5px;
+  padding-bottom: 2rem;
 }
 
-.Register .side {
-  margin-top: 15px;
+.register_flex .secondary_heading p {
+  font-weight: bold;
+  color: #333;
+}
+
+.register_flex .flex_row {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+}
+
+.team_members .member_count {
+  font-size: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+
+.team_members .member_count p {
+  font-weight: bold;
+  color: #414141;
 }
 
 .header p {

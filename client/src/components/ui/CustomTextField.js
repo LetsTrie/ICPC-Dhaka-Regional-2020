@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 
-function CustomTextField({ className, name, label, onChange, type }) {
+function CustomTextField({ className, name, label, onChange, type}) {
   return (
     <Fragment>
       <TextField

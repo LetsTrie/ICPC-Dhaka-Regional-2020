@@ -17,6 +17,7 @@ export default createMuiTheme({
     },
   },
   typography: {
+    htmlFontSize: 10,
     tab: {
       fontFamily: 'Raleway',
       textTransform: 'none',

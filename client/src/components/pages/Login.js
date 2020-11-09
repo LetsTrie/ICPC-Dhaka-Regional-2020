@@ -82,7 +82,7 @@ const Login = () => {
       <div className='login'>
         <div className='login_container'>
           <div className='login_logo'>
-            <img src={logo} alt='icpc' />
+            <img src={logo} alt='icpc logo' />
           </div>
           <div className='login_header'>
             <p>Team Account Login</p>
@@ -95,7 +95,7 @@ const Login = () => {
           <CustomTextField
             className={classes.TextField}
             name='email'
-            label='Team Email'
+            label='Team name'
             onChange={(e) => handleInput(e)}
             type='text'
           />
