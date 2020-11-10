@@ -5,11 +5,11 @@ const { object } = require('@hapi/joi')
 
 exports.postRegister = async (req, res) => {
   console.log('[backend/register]: ',req.body)
-  const { password, conPassword, email } = req.body
-  const {validateRegCredentials} = require('../config/validateRegCredentials')
+  const { password, conPassword, teamName } = req.body
+  const {validateRegCredentials} = require('../validations/validateRegCredentials.js')
   const { error } = validateRegCredentials(req.body)
 
-  const existingUser = await User.findOne({ email: email })
+  const existingUser = await User.findOne({ teamName: teamName })
 
   if (error) {
     res.json({
@@ -24,7 +24,7 @@ exports.postRegister = async (req, res) => {
    } else if (existingUser) {
     res.json({
       status: false,
-      msg: 'Email already in use. Please try a different one'
+      msg: 'Team name already in use. Please try a different one'
     })
    } else {
       delete req.body['conPassword']
@@ -46,7 +46,7 @@ exports.postRegister = async (req, res) => {
       email,
       password
     } = req.body
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ teamName: email })
 
     if (user) {
       console.log(user)
@@ -74,7 +74,7 @@ exports.postRegister = async (req, res) => {
     } else {
       res.json({
         status: false,
-        msg: 'Email not found'
+        msg: 'Team name not found'
       })
     }
   }

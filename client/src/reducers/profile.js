@@ -4,12 +4,16 @@ const profileReducer = (state = {
   user: null
 }, action) => {
   switch (action.type) {
-    case 'GET_STATE':
-      return state
+    case 'RESET_PROFILE':
+      return {
+        ...state,
+        error: null
+      }
     
     case 'SET_USER':
       return {
         ...state,
+        error: false,
         user: action.payload
       }
 
@@ -21,7 +25,6 @@ const profileReducer = (state = {
       }
 
     case 'UPDATE_PROFILE':
-      console.log('[update]', action.payload)
       return {
         ...state,
         error: !action.payload.status,

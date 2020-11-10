@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const { admin } = require('../config/admin')
 
 exports.auth = async (req, res, next) => {
 try {
@@ -13,6 +14,7 @@ try {
   
   const verified = jwt.verify(token, process.env.JWT_SECRET)
   if (!verified) {
+    console.log('not verified')
     res.json({
       status: false,
       msg: 'Please log in to continue'

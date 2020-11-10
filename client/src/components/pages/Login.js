@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import logo from '../../assests/images/icpclogo_big.png';
 import { Link } from 'react-router-dom';
-import { login } from '../../action/index';
+import { login, adminLogin } from '../../action/index';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import '../../assests/css/auth.css';
@@ -25,7 +25,8 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = () => {
+const Login = (props) => {
+
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -85,12 +86,14 @@ const Login = () => {
             <img src={logo} alt='icpc' />
           </div>
           <div className='login_header'>
-            <p>Team Account Login</p>
+              <p>Team Account Login </p>
           </div>
           {isError && (
-            <Alert variant='filled' severity='error'>
-              {isError.msg}
-            </Alert>
+            <div style={{padding: '15px 0'}}>
+              <Alert variant='filled' severity='error'>
+                  {isError.msg}
+              </Alert>
+            </div>
           )}
           <CustomTextField
             className={classes.TextField}

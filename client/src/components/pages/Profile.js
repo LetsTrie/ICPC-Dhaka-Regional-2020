@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../assests/css/profile.css'
 import Header from '../ui/Header'
+import { v4 as uuid } from 'uuid'
 
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
@@ -14,6 +15,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import EditProfile from './EditProfile'
 
 import gravatar from '../../assests/images/gravatar.png'
 import userImg from '../../assests/images/gallery1.jpg'
@@ -60,6 +62,7 @@ export const Profile = () => {
   const dispatch = useDispatch()
   const [User, setCurrentUser] = useState('empty')
   const [members, setMembers] = useState([])
+  const [editMode, setEditMode] = useState(false)
 
   const auth = useSelector(state => state.auth.user)
   const profileObject = useSelector(state => state.profile)
@@ -150,12 +153,7 @@ export const Profile = () => {
             <Divider />
 
             <List component='nav' aria-label="main mailbox folders">
-            <ListItem button onClick={( ) => { history.push(
-              {
-                pathname: '/profile/edit',
-                user: User
-              }
-              ) }} >
+            <ListItem button onClick={() => {setEditMode(!editMode)}} >
                     <ListItemIcon>
                         <Edit />
                     </ListItemIcon>
@@ -202,7 +200,13 @@ export const Profile = () => {
                   </Collapse>
               </List>
           </div>
-          <div className='right'>
+          {
+            editMode ? 
+            <div className='right'>
+              <EditProfile props={User} />
+            </div> : 
+            (
+              <div className='right'>
             <div className='info-container'>
               <div className='section-header'>
                 <Info style={{fontSize: 22, color: 'ffba60'}} />
@@ -224,7 +228,7 @@ export const Profile = () => {
                       Coach Name
                     </div>
                     <div className='field-value'>
-                      { User.coachName }
+                      { User.coachFirstName + ' ' + User.coachLastName }
                     </div>
                   </div>
                 </div>
@@ -257,17 +261,17 @@ export const Profile = () => {
               <div className='section-body'>
                 {
                  User.membersInfo.map(member => (
-                    <div className='each-user'>
+                    <div className='each-user' key={ uuid() }>
                       <div className='image'>
                         <Avatar src={userImg} className={
                           mobileDevice ? avatarClasses.large : avatarClasses.small
                           } />
                       </div>
                     <div className='texts'>
-                      <div className='name'>{member.memberName}</div>
+                      <div className='name'>{member.memberFirstName + ' ' + member.memberLastName}</div>
                       <div className='about'>
                         {
-                          member.memberYear + ' Year, ' + member.memberSemester + ' Semester' + ' • Tshirt: ' + member.tshirtSize
+                          member.memberEmail 
                         }
                       </div>
                     </div>
@@ -277,6 +281,8 @@ export const Profile = () => {
               </div>
             </div>
           </div>
+            )
+          }
         </div>
       </div>
       )

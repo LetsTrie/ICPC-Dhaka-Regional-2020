@@ -11,6 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Alert from '@material-ui/lab/Alert';
 import { Link, useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'
 
 import '../../assests/css/auth.css';
 import logo from '../../assests/images/icpc_logo.png';
@@ -43,9 +44,12 @@ const Register = () => {
       setMembersInfo([
         ...membersInfo,
         {
-          memberName: '',
+          memberFirstName: '',
+          memberLastName: '',
           memberYear: '',
           memberSemester: '',
+          memberEmail: '',
+          tshirtSize: ''
         },
       ]);
     }
@@ -69,9 +73,11 @@ const Register = () => {
   });
   const [membersInfo, setMembersInfo] = useState([
     {
-      memberName: '',
+      memberFirstName: '',
+      memberLastName: '',
       memberYear: '',
       memberSemester: '',
+      memberEmail: '',
       tshirtSize: '',
       image: null,
     },
@@ -82,23 +88,23 @@ const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const submit = (e) => {
-    console.log(membersInfo);
     const data = {
       teamInfo,
       membersInfo,
     };
-    console.log(membersInfo);
     const check = validate(data);
     if (!check.error) {
       const team = {
         teamName: teamInfo.teamName,
-        coachName: teamInfo.coachName,
+        coachFirstName: teamInfo.coachFirstName,
+        coachLastName: teamInfo.coachLastName,
         university: teamInfo.university,
         email: teamInfo.email,
         password: teamInfo.password,
         conPassword: teamInfo.conPassword,
         membersInfo,
       };
+      console.log(team)
       dispatch(register(team));
       setDisable(true);
     } else {
@@ -142,28 +148,37 @@ const Register = () => {
         <div className='register-box'>
           <div className='colum left'>
             {alert ? (
-              <Alert
-                variant='filled'
-                severity={alert.error ? 'error' : 'success'}
-              >
-                {alert.msg}
-              </Alert>
+              <div style={{padding: '10px 0'}}>
+                <Alert
+                  variant='filled'
+                  severity={alert.error ? 'error' : 'success'}
+                >
+                  {alert.msg}
+                </Alert>
+              </div>
             ) : (
               <div></div>
             )}
-            <div className='side'>
-              <TextField
-                style={{ width: '48%' }}
+            <TextField
+                style={{ width: '100%' }}
                 name='teamName'
                 variant='outlined'
                 label='Team Name'
                 onChange={(e) => handleTeamInfo(e)}
               />
+            <div className='side'>
               <TextField
                 style={{ width: '48%' }}
-                name='coachName'
+                name='coachFirstName'
                 variant='outlined'
-                label='Coach Name'
+                label='Coach (First Name)'
+                onChange={(e) => handleTeamInfo(e)}
+              />
+              <TextField
+                style={{ width: '48%' }}
+                name='coachLastName'
+                variant='outlined'
+                label='Coach (Last Name)'
                 onChange={(e) => handleTeamInfo(e)}
               />
             </div>{' '}
@@ -204,7 +219,7 @@ const Register = () => {
             </div>
             <div className='team-holder'>
               {membersInfo.map((member, i) => (
-                <div>
+                <div >
                   <div className='side'>
                     <h3>Participent {i + 1}</h3>
                     <DeleteIcon
@@ -216,14 +231,23 @@ const Register = () => {
                       }}
                     />
                   </div>
-                  <TextField
-                    style={textStyles}
-                    name='memberName'
-                    onChange={(e) => handleInputs(e, i)}
-                    variant='outlined'
-                    label='Name of the participent'
-                    value={member.memberName}
-                  />{' '}
+                  <div className='side'>
+              <TextField
+                style={{ width: '48%' }}
+                name='memberFirstName'
+                variant='outlined'
+                label='First name of the participent'
+                onChange={(e) =>  handleInputs(e, i)}
+                value={membersInfo.memberFirstName}
+              />
+              <TextField
+                style={{ width: '48%' }}
+                name='memberLastName'
+                variant='outlined'
+                label='Last name of the participent'
+                onChange={(e) => handleInputs(e, i)}
+              />
+            </div>
                   <br />
                   <div className='side'>
                     <select
@@ -251,7 +275,14 @@ const Register = () => {
                     </select>
                   </div>
                   <div className='side'>
-                    <select
+                  <TextField
+                style={{ width: '48%' }}
+                name='memberEmail'
+                variant='outlined'
+                label='Email address of the participent'
+                onChange={(e) =>  handleInputs(e, i)}
+              />
+              <select
                       name='tshirtSize'
                       onChange={(e) => handleInputs(e, i)}
                     >
@@ -261,7 +292,9 @@ const Register = () => {
                       <option value={'L'}>L</option>
                       <option value={'XL'}>XL</option>
                     </select>
-                    <label className='file-input'>
+                  </div>
+                  <div className='side'>
+                  <label className='file-input'>
                       Upload Image
                       <input
                         type='file'

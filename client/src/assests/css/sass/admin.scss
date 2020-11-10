@@ -1,0 +1,69 @@
+.Admin {
+  .container {
+    display: flex;
+    
+    .active {
+      background-color: #eee;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 0;
+      .header {
+        padding: 3px 0;
+        h3 {
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+          padding: 5px 0;
+        }
+      }
+      .numbers {
+        display: flex;
+      }
+    }
+    .left {
+      width: 15%;
+      padding: 0 10px;
+    }
+    .right {
+      width: 70%;
+      padding: 30px 0;
+    }
+  }
+}
+
+.AdminGallery {
+  input[type='file'] {
+    display: none;
+  }
+    .upload-btn {}
+  
+}
+
+.AdminClusterEmail {
+.mail-box {
+  width: 80%;
+  margin: auto;
+  select {
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  .main-body {
+    margin-top: 30px;
+    textarea {
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #fff;
+      background-color: #eee;
+      border-radius: 5px;
+    }
+    textarea:focus {
+      outline: none;
+    }
+  }
+}
+}

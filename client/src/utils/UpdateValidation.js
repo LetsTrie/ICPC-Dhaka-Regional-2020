@@ -10,7 +10,10 @@ const validate = data => {
   if (check(teamInfo.teamName)) {
     error = true
     msg = 'Enter the name of the team'
-  } else if (check(teamInfo.coachName)) {
+  } else if (check(teamInfo.coachFirstName)) {
+    error = true
+    msg = 'Enter the name of the coach'
+  } else if (check(teamInfo.coachLastName)) {
     error = true
     msg = 'Enter the name of the coach'
   } else if (check(teamInfo.university)) {
@@ -24,15 +27,21 @@ const validate = data => {
     msg = 'At least 2 members required to form a team'
   }else {
     for (let member of membersInfo) {
-      if (check(member.memberName)) {
+      if (check(member.memberFirstName)) {
         error = true
-        msg = 'Enter names of each member'
+        msg = 'Enter the first name for each member'
+      } else if (check(member.memberLastName)) {
+        error = true
+        msg = 'Enter the first name for each member'
       } else if (check(member.memberYear)) {
         error = true
-        msg = 'Enter current year for each member'
+        msg = 'Enter the current year for each member'
       } else if (check(member.memberSemester)) {
         error = true
-        msg = 'Enter current semester for each member'
+        msg = 'Enter the current semester for each member'
+      } else if (check(member.memberEmail) || !/\S+@\S+\.\S+/.test(member.memberEmail)) {
+        error = true
+        msg = 'Enter the email address for each member'
       } else if (check(member.tshirtSize)) {
         error = true
         msg = 'Enter the tshirt size for each member'

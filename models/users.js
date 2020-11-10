@@ -3,14 +3,17 @@ const { string } = require('@hapi/joi')
 
 const User = mongoose.Schema({
   teamName: String,
-  coachName: String,
+  coachFirstName: String,
+  coachLastName: String,
   university: String,
   email: String,
   password: String,
   membersInfo: [{
-      memberName: String,
+      memberFirstName: String,
+      memberLastName: String,
       memberYear: String,
       memberSemester: String,
+      memberEmail: String,
       tshirtSize: String,
       image: String
     }]

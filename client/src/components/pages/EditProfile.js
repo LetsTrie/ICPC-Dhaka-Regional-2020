@@ -10,18 +10,21 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Link, useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import Edit from '@material-ui/icons/Edit'
 
 import '../../assests/css/editProfile.css'
 import logo from '../../assests/images/icpc_logo.png'
 import validate from '../../utils/UpdateValidation'
-import Alert from '../ui/Alert'
+import Alert from '@material-ui/lab/Alert'
 import Header from '../ui/Header'
 import { updateProfile } from '../../action/index'
 import { useDispatch, useSelector } from 'react-redux'
 import { Fade } from '@material-ui/core'
+import { v4 as uuid } from 'uuid'
 
 const EditProfile = (props) => {
-const User = props.location.user
+const User = props.props
 const auth = useSelector(state => state.auth)
 
 const addMember = e => {
@@ -44,7 +47,8 @@ if (membersInfo.length > 1) {
 
 const [teamInfo, setTeamInfo] = useState({
   teamName: '',
-  coachName: '',
+  coachFirstName: '',
+  coachLastName: '',
   university: '',
   email: '',
   password: '',
@@ -52,9 +56,11 @@ const [teamInfo, setTeamInfo] = useState({
 })
 const [membersInfo, setMembersInfo] = useState([
   {
-    memberName: '',
+    memberFirstName: '',
+    memberLastName: '',
     memberYear: '',
     memberSemester: '',
+    memberEmail: '',
     tshirtSize: '',
     image: null
   }
@@ -76,29 +82,30 @@ const [alert, setAlert] = useState(null)
 const [btnDisable, setDisable] = useState(false)
 const history = useHistory()
 const dispatch = useDispatch()
+
 const submit = (e) => {
-  console.log(membersInfo)
+  window.scrollTo(0, 0)
   const data = {
     teamInfo,
     membersInfo
   }
-  console.log(membersInfo)
   const check = validate(data)
   setAlert(check)
   if (!check.error) {
     const team = {
       teamName: teamInfo.teamName,
-      coachName: teamInfo.coachName,
+      coachFirstName: teamInfo.coachFirstName,
+      coachLastName: teamInfo.coachLastName,
       university: teamInfo.university,
       email: teamInfo.email,
       membersInfo,
   }
-  console.log(team)
   dispatch(updateProfile(team))
   setDisable(true) 
   history.push('/')
   }
 }
+
 const textStyles = {
   width: '100%',
   marginTop: '15px'
@@ -106,6 +113,10 @@ const textStyles = {
  const linkStyles = {
   textDecoration: 'none',
   color: '#5499C7'
+}
+const iconStyles = {
+  color: '#ffba60',
+  fontSize: '20px' ,
 }
 const handleInputs = (e, i) => {
   const info = [...membersInfo]
@@ -131,39 +142,53 @@ const handleImageInputs = (e, i) => {
         <Header />
             <div className='EditProfile'>
       <div className='logo'>
-        <h1 style={{textAlign: 'center'}}>Update Profile</h1>
+        <Edit style={iconStyles} />
+        <h1>Update Profile</h1>
       </div>
       <div className='register-box'>
-        <div className='colum left'> 
+        <div className='colum'> 
       {
-        alert ? <Alert reason={alert.error} msg={alert.msg} /> : <div></div>
+        alert ? 
+        <Alert severity={alert.error ? 'error' :  'success'} variant='filled'>
+           { alert.msg }   
+         </Alert> :
+          <div></div>
       }
       <div className='side'>
           <TextField style={{width: '48%'}} name='teamName'  variant='outlined' label='Team Name'
           onChange={e => handleTeamInfo(e)} 
           value={teamInfo.teamName}
           />
-          <TextField style={{width: '48%'}} name='coachName'  variant='outlined' label='Coach Name'
-          onChange={e => handleTeamInfo(e)}
-          value={teamInfo.coachName}
-          />
-        </div> <br />
-      <div className='side'>
-          <TextField style={{width: '48%'}} name='university' variant='outlined' label='University'
+          <TextField style={{width: '48%'}} name='university'  variant='outlined' label='University'
           onChange={e => handleTeamInfo(e)}
           value={teamInfo.university}
-          / >
-      </div>
+          />
+        </div> <br />
+        <div className='side'>
+          <TextField style={{width: '48%'}} name='coachFirstName'  variant='outlined' label='Coach (First Name)'
+          onChange={e => handleTeamInfo(e)} 
+          value={teamInfo.coachFirstName}
+          />
+          <TextField style={{width: '48%'}} name='coachLastName'  variant='outlined' label='Coach (Last Name)'
+          onChange={e => handleTeamInfo(e)}
+          value={teamInfo.coachLastName}
+          />
+        </div> <br />
       <div className='team-holder'>
       {
         membersInfo.map((member, i) => (
-        <div>
+        <div key={ uuid() }>
           <div className='side'>
               <h3>Participent {i+1}</h3> 
               <DeleteIcon onClick={e => deleteMember(e, i)} style={{marginTop: '10px', cursor: 'pointer', color: 'red'}} />
           </div>
-          <TextField style={textStyles} name='memberName' onChange={e => handleInputs(e, i)} variant='outlined' label='Name of the participent'
-          value={member.memberName} /> <br />
+          <div className='side'>
+            <TextField style={{width: '48%'}} name='memberFirstName' onChange={e => handleInputs(e, i)} variant='outlined' label='First name of the participent'
+            value={member.memberFirstName} />
+            <TextField style={{width: '48%'}} name='memberLastName' onChange={e => handleInputs(e, i)} variant='outlined' label='Last name of the participent'
+          value={member.memberLastName} />
+          </div>
+           <br />
           <div className='side'>
           <select name='memberYear' onChange={e => handleInputs(e, i)} value={member.memberYear}>
                 <option value={''}>Year</option>
@@ -184,6 +209,8 @@ const handleImageInputs = (e, i) => {
               </select>
           </div>
           <div className='side'>
+            <TextField style={{width: '48%'}} name='memberEmail' onChange={e => handleInputs(e, i)} variant='outlined' label='Email address of the participent'
+                value={member.memberEmail} />
               <select name='tshirtSize' onChange={e => handleInputs(e, i)}
               value={member.tshirtSize}>
                 <option value={''}>Tshirt size</option>
@@ -192,11 +219,13 @@ const handleImageInputs = (e, i) => {
                 <option value={'L'}>L</option>
                 <option value={'XL'}>XL</option>
               </select>
-              <label className='file-input'>
+          </div>
+          <div className='side'>
+            <label className='file-input'>
               Upload Image
                   <input type='file' name='image' onChange={e => handleImageInputs(e, i)} />
               </label>
-          </div>
+            </div>
            <br />
           </div>
         )

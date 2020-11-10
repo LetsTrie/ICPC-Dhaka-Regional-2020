@@ -1,8 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../ui/Header';
 import '../../assests/css/contact.css';
 
+import { useDispatch, useSelector } from 'react-redux'
+import Alert from '@material-ui/lab/Alert'
+import { contactUs } from '../../action/index'
+
 function ContactUs() {
+
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch() 
+
+  const [states, setStates] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+
+  const [alert, setAlert] = useState(null)
+  const [disable, setDisable] = useState(false)
+
+  useEffect(() => {
+    if (user.error != null) {
+      setAlert(user)
+    }
+    if (user.error == false) {
+      setTimeout(() => {
+        window.location.reload(false)
+      }, 3000)
+    }
+  }, [user])
+  
+  const check = data => {
+    return data == '' || data == null || data == undefined
+  } 
+
+  const handleChange = e => {
+    let temp = {...states}
+    temp[e.target.name] = e.target.value
+    setStates(temp)
+  }
+
+  const handleSubmit = e => {
+    if (check(states.name)) {
+      setAlert({
+        error: true,
+        msg: 'Please enter your name'
+      })
+    } else if (check(states.email)) {
+      setAlert({
+        error: true,
+        msg: 'Please enter your email'
+      })
+    } else if (check(states.message)) {
+      setAlert({
+        error: true,
+        msg: 'Please enter the message'
+      })
+    } else {
+      setAlert(null)
+      setDisable(true)
+      dispatch(contactUs(states))
+    }
+  }
+
   return (
     <div>
       <div className='contact'>
@@ -16,6 +77,9 @@ function ContactUs() {
 
         <section>
           <div className='contactUsForm'>
+            {
+              alert && <Alert variant='filled' severity={ alert.error ? 'error' : 'success'}> { alert.msg } </Alert>
+            }
             <div className='contactUsForm_flx'>
               <div className='contactUsForm_flx_form'>
                 <form action='#' onSubmit={(e) => e.preventDefault()}>
@@ -26,6 +90,8 @@ function ContactUs() {
                       placeholder='Your full name'
                       autoComplete='off'
                       id='nameID'
+                      name='name'
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -36,6 +102,8 @@ function ContactUs() {
                       placeholder='Your email address'
                       autoComplete='off'
                       id='emailID'
+                      name='email'
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -45,11 +113,13 @@ function ContactUs() {
                       id='messageID'
                       rows='4'
                       placeholder='Write down your message in details'
+                      name='message'
+                      onChange={handleChange}
                     ></textarea>
                   </div>
 
                   <div className='submitButton text-center'>
-                    <button>Submit</button>
+                    <button onClick={handleSubmit} disabled={disable}>Submit</button>
                   </div>
                 </form>
               </div>

@@ -1,11 +1,19 @@
 const User = require('../models/users.js')
 const bcrypt = require('bcryptjs')
+const { admin } = require('../config/admin')
 
 const check = data => {
   return data == '' || data == undefined || data == null
 }
 
 exports.getUser = async (req, res) => {
+  if (req.user == admin.id) {
+    res.json({
+      status: true,
+      msg: 'Admin logged in',
+      user: admin
+    })
+  }
   const user = await User.findOne({ _id: req.user })
   console.log('get user recvd')
   res.send({
