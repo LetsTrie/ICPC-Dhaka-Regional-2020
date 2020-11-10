@@ -64,7 +64,7 @@ ul {
 
 .contact__header h1 {
   font-family: 'Libre Franklin', sans-serif;
-  padding: 1.5rem 0.5rem;
+  padding: 1.5rem 0.5rem 1.2rem 0.5rem;
   text-align: center;
   font-weight: 600;
   font-size: 6rem;
@@ -154,7 +154,7 @@ ul {
 .contactUsForm_flx_form form .textbox,
 .contactUsForm_flx_form form .textarea {
   margin-bottom: 1.5rem;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 
 .contactUsForm_flx_form form .textbox label,
@@ -246,7 +246,7 @@ ul {
 .contactUsForm_flx_form form .textarea input,
 .contactUsForm_flx_form form .textarea textarea {
   background-color: inherit;
-  margin-top: .7rem;
+  margin-top: 0.7rem;
   width: 95%;
   font-size: 2rem;
   padding: 5px 10px 5px 3px;
