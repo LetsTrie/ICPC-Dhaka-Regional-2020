@@ -6,6 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Countdown from '../ui/CountDown';
 import { useHistory } from 'react-router-dom';
 import Sponsors from '../ui/Sponsors';
+import ImportantInfos from '../ui/ImportantInfos';
+import Organizer from '../ui/Organizer';
+
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +59,7 @@ const handleRegister = e => {
         }
         <div className='Home__banner_text'>
           <div className='Home__banner_text-primary'>
-            <h1>ICPC Dhaka Regional 2021</h1>
+            <h1>ICPC Dhaka Regional 2020</h1>
           </div>
           <div className='Home__banner_text-secondary'>
             <h3>
@@ -72,7 +75,8 @@ const handleRegister = e => {
           </div>
         </div>
       </div>
-
+      <Organizer />
+      <ImportantInfos />
       <Sponsors />
     </div>
   );

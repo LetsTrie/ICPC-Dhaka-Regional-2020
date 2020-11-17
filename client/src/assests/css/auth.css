@@ -91,7 +91,7 @@ ul {
 .register_wrapper .register_container {
   padding: 0.8rem 5rem 1.5rem 5rem;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 7px;
   padding-bottom: 3.4rem;
   -webkit-box-shadow: 2px 5px 10px gray;
           box-shadow: 2px 5px 10px gray;
@@ -124,10 +124,9 @@ ul {
 
 .register_wrapper .register_your_team p {
   text-align: center;
-  margin-top: 0.2rem;
   margin-bottom: 1.7rem;
-  font-size: 2.5rem;
-  color: #646464;
+  font-size: 2.9rem;
+  color: #555555;
   padding-bottom: 2rem;
 }
 
@@ -151,13 +150,13 @@ ul {
 }
 
 .register_flex .secondary_heading {
-  font-size: 1.8rem;
-  letter-spacing: .5px;
   padding-bottom: 2rem;
 }
 
 .register_flex .secondary_heading p {
-  font-weight: bold;
+  font-size: 3.3rem;
+  font-weight: 300;
+  line-height: 1.2;
   color: #333;
 }
 
@@ -168,13 +167,40 @@ ul {
   display: flex;
 }
 
+.payment_methods {
+  margin-top: 2rem;
+  height: 350px;
+  width: 100%;
+  background: gray;
+  font-size: 5rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+}
+
 .team_members .member_count {
-  font-size: 1.4rem;
-  padding-bottom: 1.4rem;
+  padding-top: .5rem;
+  padding-bottom: 1.8rem;
 }
 
 .team_members .member_count p {
-  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 1.2;
   color: #414141;
 }
 
@@ -274,4 +300,17 @@ ul {
   text-align: right;
   font-size: 15px;
   padding: 0;
+}
+
+.login_option {
+  font-family: 'Open sans', 'Roboto', sans-serif;
+  letter-spacing: .2px;
+  color: #333;
+  font-size: 1.6rem;
+}
+
+.login_option a {
+  padding-left: 0.5rem;
+  font-weight: bold;
+  font-family: 'Lato';
 }
