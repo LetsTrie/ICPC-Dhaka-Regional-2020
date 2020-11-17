@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import AOS from 'aos';
+import "aos/dist/aos.css";
 
 const ImportantInfos = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+  
   return (
     <div className='importantInfosWrappers'>
       <div className='important_infos'>
-        <div className='flex_child'>
+        <div className='flex_child' data-aos="zoom-in-up" data-aos-duration="800">
           <div className='flex_child_header'>
             <p> Latest Information </p>
           </div>
@@ -21,7 +27,7 @@ const ImportantInfos = () => {
             <a href='#'>Payment</a>
           </div>
         </div>
-        <div className='flex_child'>
+        <div className='flex_child' data-aos="zoom-in-up" data-aos-duration="1000">
           <div className='flex_child_header'>
             <p> Important Links  </p>
           </div>
@@ -35,17 +41,15 @@ const ImportantInfos = () => {
             <a href='#'>Visit Bangladesh 2016</a>
           </div>
         </div>
-        <div className='flex_child'>
+        <div className='flex_child' data-aos="zoom-in-up" data-aos-duration="1200">
           <div className='flex_child_header'>
             <p>Important Dates </p>
           </div>
-          <div className='flex_child_list'>
-            <a href='#'>Date and Venue</a>
-            <a href='#'>Date and Venue</a>
-            <a href='#'>Date and Venue</a>
-            <a href='#'>Date and Venue</a>
-            <a href='#'>Date and Venue</a>
-            <a href='#'>Date and Venue</a>
+          <div className='flex_child_list imp_dates'>
+            <div className="each_imp_dates">
+              <p>August 31, 2020</p>
+              <p>OnSite Contest & Prize Giving Ceremony</p>
+            </div>
           </div>
         </div>
       </div>

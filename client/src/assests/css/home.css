@@ -63,6 +63,7 @@ ul {
           background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
+  background-attachment: fixed;
 }
 
 .Home__navbar .Home__banner_text {
@@ -292,7 +293,14 @@ ul {
 }
 
 .importantInfosWrappers {
-  background: #ebebeb;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url(../images/importantLinks.jpg);
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/importantLinks.jpg);
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/importantLinks.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/importantLinks.jpg);
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+          background-size: cover;
+  background-attachment: fixed;
   padding: 3rem 1rem;
 }
 
@@ -441,10 +449,10 @@ ul {
 
 .organizer_info_left_see_more a {
   font-size: 1.6rem;
-  color: #55c57a;
+  color: #0f4a92;
   display: inline-block;
   text-decoration: none;
-  border-bottom: 1px solid #55c57a;
+  border-bottom: 1px solid #0c3970;
   padding: 3px;
   -webkit-transition: all 0.2s;
   -o-transition: all 0.2s;
@@ -452,7 +460,7 @@ ul {
 }
 
 .organizer_info_left_see_more a:hover {
-  background-color: #55c57a;
+  background-color: #0c3970;
   color: #fff;
 }
 

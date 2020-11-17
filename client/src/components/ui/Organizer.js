@@ -5,7 +5,7 @@ import Org3 from '../../assests/images/org3.jpg';
 
 const Organizer = () => {
   return (
-    <div>
+    <div style={{background: 'white'}}>
       <div className='organizer'>
         <div className='organizer_header'>
           <h2> Organizer </h2>
