@@ -14,7 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import registerInitialState from '../../data/registerInitialState';
-const axios = require('axios');
+import axios from 'axios';
+import validator from 'validator';
 
 const useStyles = makeStyles({
   TextField: {
@@ -48,6 +49,10 @@ function useFormFields(initialValues) {
   return { formFields, createChangeHandler };
 }
 
+function validation(formFields) {
+  return null;
+}
+
 const Register = () => {
   // MUI Class
   const classes = useStyles();
@@ -57,26 +62,59 @@ const Register = () => {
   // Initial State
   let initialState = registerInitialState(numberOfParticipants);
   const { formFields, createChangeHandler } = useFormFields(initialState);
+  const [alert, setAlert] = useState(null);
 
   const handleSubmit = (e) => {
+    console.log('form submitted!');
     e.preventDefault();
-    const reqBody = {};
-    const reqFiles = new FormData();
-    for (let key in formFields) {
-      if (formFields[key] instanceof File) {
-        reqFiles.append(key, formFields[key]);
-      } else {
-        reqBody[key] = formFields[key];
+    const error = validation(formFields);
+    if (error) {
+      // Need Client Side Validation
+      // Password === confirm Password
+    } else {
+      console.log('no validation error!');
+      const reqBody = {};
+      const reqFiles = new FormData();
+      for (let key in formFields) {
+        if (formFields[key] instanceof File) {
+          reqFiles.append(key, formFields[key]);
+        } else {
+          reqBody[key] = formFields[key];
+        }
       }
-    }
-    const API = `http://localhost:5000/api/v1/auth/register`;
+      let coachInfo = {};
+      let participants = [{}, {}, {}];
+      const formatKey = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 
-    axios.post(`${API}/info`, reqBody).then((res) => {
-      console.log(res);
-      axios.post(`${API}/upload`, reqFiles).then((uploaded) => {
-        console.log(uploaded);
+      for (let key in reqBody) {
+        if (key.startsWith('coach')) {
+          let newKey = formatKey(key.split('coach')[1]);
+          coachInfo[newKey] = reqBody[key];
+          delete reqBody[key];
+        }
+        Array.from({ length: numberOfParticipants }, (_, i) => i + 1).map(
+          (el, i) => {
+            if (key.startsWith(`p${el}`)) {
+              let newKey = formatKey(key.split(`p${el}`)[1]);
+              participants[el - 1][newKey] = reqBody[key];
+              delete reqBody[key];
+            }
+          }
+        );
+      }
+      reqBody.coach = coachInfo;
+      reqBody.participants = participants;
+      reqBody.participants.length = numberOfParticipants;
+
+      const API = `http://localhost:5000/api/v1/auth/register`;
+
+      axios.post(`${API}/info`, reqBody).then((res) => {
+        console.log(res);
+        // axios.post(`${API}/upload`, reqFiles).then((uploaded) => {
+        //   console.log(uploaded);
+        // });
       });
-    });
+    }
   };
 
   // const auth = useSelector((state) => state.auth);
@@ -108,18 +146,18 @@ const Register = () => {
   };
 
   return (
-    <div className="register_wrapper">
+    <div className='register_wrapper'>
       <Header />
-      <div className="register">
-        <div className="register_container">
-          <div className="register_logo">
-            <img src={logo} alt="icpc logo" />
+      <div className='register'>
+        <div className='register_container'>
+          <div className='register_logo'>
+            <img src={logo} alt='icpc logo' />
           </div>
-          <div className="register_your_team">
+          <div className='register_your_team'>
             <p>Register Your Team</p>
           </div>
-          <div className="register_flex">
-            <div className="register_flex_left">
+          <div className='register_flex'>
+            <div className='register_flex_left'>
               {/* {alert && (
                 <Alert
                   variant='filled'
@@ -129,103 +167,103 @@ const Register = () => {
                 </Alert>
               )} */}
               <form onSubmit={handleSubmit}>
-                <div className="secondary_heading">
+                <div className='secondary_heading'>
                   <p> Team Information </p>
                 </div>
-                <div className="flex_row">
+                <div className='flex_row'>
                   <CustomTextField
                     className={classes.TextField}
-                    name="teamName"
-                    label="Team name"
-                    onChange={createChangeHandler('teamName')}
-                    type="text"
-                    required="true"
+                    name='team'
+                    label='Team name'
+                    onChange={createChangeHandler('team')}
+                    type='text'
+                    required='true'
                   />
                   <CustomTextField
                     className={classes.TextField}
-                    name="university"
-                    label="University"
+                    name='university'
+                    label='University'
                     onChange={createChangeHandler('university')}
-                    type="text"
-                    required="true"
+                    type='text'
+                    required='true'
                   />
                 </div>
-                <div className="flex_row">
+                <div className='flex_row'>
                   <CustomTextField
                     className={classes.TextField}
-                    name="password"
-                    label="Password"
+                    name='password'
+                    label='Password'
                     onChange={createChangeHandler('password')}
-                    type="password"
-                    required="true"
+                    type='password'
+                    required='true'
                   />
                   <CustomTextField
                     className={classes.TextField}
-                    name="confirmPassword"
-                    label="Confirm password"
+                    name='confirmPassword'
+                    label='Confirm password'
                     onChange={createChangeHandler('confirmPassword')}
-                    type="password"
-                    required="true"
+                    type='password'
+                    required='true'
                   />
                 </div>
 
                 <div
-                  className="secondary_heading"
+                  className='secondary_heading'
                   style={{ paddingTop: '2.2rem' }}
                 >
                   <p> Coach Information </p>
                 </div>
-                <div className="flex_row">
+                <div className='flex_row'>
                   <CustomTextField
                     className={classes.TextField}
-                    name="coachFirstName"
+                    name='coachFirstname'
                     label={'First name'}
-                    onChange={createChangeHandler('coachFirstName')}
-                    type="text"
-                    required="true"
+                    onChange={createChangeHandler('coachFirstname')}
+                    type='text'
+                    required='true'
                   />
                   <CustomTextField
                     className={classes.TextField}
-                    name="coachLastName"
+                    name='coachLastname'
                     label={'Last name'}
-                    onChange={createChangeHandler('coachLastName')}
-                    type="text"
-                    required="true"
+                    onChange={createChangeHandler('coachLastname')}
+                    type='text'
+                    required='true'
                   />
                 </div>
-                <div className="flex_row">
+                <div className='flex_row'>
                   <CustomTextField
                     className={classes.TextField}
-                    name="coachEmail"
-                    label="Email"
+                    name='coachEmail'
+                    label='Email'
                     onChange={createChangeHandler('coachEmail')}
-                    type="text"
-                    required="true"
+                    type='text'
+                    required='true'
                   />
                   <CustomTextField
                     className={classes.TextField}
-                    name="coachAffiliation"
-                    label="Affiliation"
+                    name='coachAffiliation'
+                    label='Affiliation'
                     onChange={createChangeHandler('coachAffiliation')}
-                    type="text"
-                    required="true"
+                    type='text'
+                    required='true'
                   />
                 </div>
-                <div className="flex_row">
+                <div className='flex_row'>
                   <CustomTextField
                     className={classes.TextField}
-                    name="coachDesignation"
-                    label="Designation"
+                    name='coachDesignation'
+                    label='Designation'
                     onChange={createChangeHandler('coachDesignation')}
-                    type="text"
-                    required="true"
+                    type='text'
+                    required='true'
                   />
                   <FormControl
-                    variant="outlined"
+                    variant='outlined'
                     className={classes.formControl}
                   >
                     <InputLabel
-                      htmlFor="coachTshirtSizeId"
+                      htmlFor='coachTshirtSizeId'
                       className={classes.label}
                     >
                       Tshirt size
@@ -234,7 +272,7 @@ const Register = () => {
                       native
                       value={formFields.coachTshirtSize}
                       onChange={createChangeHandler('coachTshirtSize')}
-                      label="Tshirt Size"
+                      label='Tshirt Size'
                       inputProps={{
                         name: 'coachTshirtSize',
                         id: 'coachTshirtSizeId',
@@ -247,9 +285,9 @@ const Register = () => {
                           paddingRight: '5px',
                         },
                       }}
-                      required="true"
+                      required='true'
                     >
-                      <option aria-label="None" value="" />
+                      <option aria-label='None' value='' />
                       <option value={'XS'}>XS</option>
                       <option value={'S'}>S</option>
                       <option value={'M'}>M</option>
@@ -262,18 +300,18 @@ const Register = () => {
 
                 <div>
                   <input
-                    accept="image/*"
+                    accept='image/*'
                     className={classes.input}
-                    id="coachDpId"
-                    type="file"
-                    name="coachDp"
+                    id='coachDpId'
+                    type='file'
+                    name='coachDp'
                     onChange={createChangeHandler('coachDp', true)}
                   />
-                  <label htmlFor="coachDpId">
+                  <label htmlFor='coachDpId'>
                     <Button
                       raised
-                      variant="contained"
-                      component="span"
+                      variant='contained'
+                      component='span'
                       className={classes.button}
                       startIcon={<CloudUploadIcon />}
                     >
@@ -283,12 +321,12 @@ const Register = () => {
                 </div>
 
                 <div
-                  className="secondary_heading"
+                  className='secondary_heading'
                   style={{ paddingTop: '3.8rem' }}
                 >
                   <p> Participant's Information </p>
                 </div>
-                <div className="team_members">
+                <div className='team_members'>
                   {Array(numberOfParticipants)
                     .fill()
                     .map((_, i) => (
@@ -296,38 +334,38 @@ const Register = () => {
                         key={`participant-${i}`}
                         style={{ paddingBottom: '3.5rem' }}
                       >
-                        <div className="member_count">
+                        <div className='member_count'>
                           <p>Participant {i + 1}</p>
                         </div>
-                        <div className="flex_row">
+                        <div className='flex_row'>
                           <CustomTextField
                             className={classes.TextField}
                             name={`p${i + 1}Firstname`}
                             label={'First name'}
                             onChange={createChangeHandler(`p${i + 1}Firstname`)}
-                            type="text"
-                            required="true"
+                            type='text'
+                            required='true'
                           />
                           <CustomTextField
                             className={classes.TextField}
                             name={`p${i + 1}Lastname`}
                             label={'Last name'}
                             onChange={createChangeHandler(`p${i + 1}Lastname`)}
-                            type="text"
-                            required="true"
+                            type='text'
+                            required='true'
                           />
                         </div>
-                        <div className="flex_row">
+                        <div className='flex_row'>
                           <CustomTextField
                             className={classes.TextField}
                             name={`p${i + 1}Email`}
-                            label="Email"
+                            label='Email'
                             onChange={createChangeHandler(`p${i + 1}Email`)}
-                            type="text"
-                            required="true"
+                            type='text'
+                            required='true'
                           />
                           <FormControl
-                            variant="outlined"
+                            variant='outlined'
                             className={classes.formControl}
                           >
                             <InputLabel
@@ -340,7 +378,7 @@ const Register = () => {
                               native
                               value={formFields[`p${i + 1}Year`]}
                               onChange={createChangeHandler(`p${i + 1}Year`)}
-                              label="Year"
+                              label='Year'
                               inputProps={{
                                 name: `p${i + 1}Year`,
                                 id: `p${i + 1}YearId`,
@@ -353,9 +391,9 @@ const Register = () => {
                                   paddingRight: '5px',
                                 },
                               }}
-                              required="true"
+                              required='true'
                             >
-                              <option aria-label="None" value="" />
+                              <option aria-label='None' value='' />
                               <option value={'1st'}>1st</option>
                               <option value={'2nd'}>2nd</option>
                               <option value={'3rd'}>3rd</option>
@@ -365,9 +403,9 @@ const Register = () => {
                             </Select>
                           </FormControl>
                         </div>
-                        <div className="flex_row">
+                        <div className='flex_row'>
                           <FormControl
-                            variant="outlined"
+                            variant='outlined'
                             className={classes.formControl}
                           >
                             <InputLabel
@@ -395,9 +433,9 @@ const Register = () => {
                                   paddingRight: '5px',
                                 },
                               }}
-                              required="true"
+                              required='true'
                             >
-                              <option aria-label="None" value="" />
+                              <option aria-label='None' value='' />
                               <option value={'1st'}>1st</option>
                               <option value={'2nd'}>2nd</option>
                               <option value={'3rd'}>3rd</option>
@@ -406,7 +444,7 @@ const Register = () => {
                           </FormControl>
 
                           <FormControl
-                            variant="outlined"
+                            variant='outlined'
                             className={classes.formControl}
                           >
                             <InputLabel
@@ -434,9 +472,9 @@ const Register = () => {
                                   paddingRight: '5px',
                                 },
                               }}
-                              required="true"
+                              required='true'
                             >
-                              <option aria-label="None" value="" />
+                              <option aria-label='None' value='' />
                               <option value={'S'}>S</option>
                               <option value={'M'}>M</option>
                               <option value={'XL'}>XL</option>
@@ -444,7 +482,7 @@ const Register = () => {
                             </Select>
                           </FormControl>
                         </div>
-                        <div className="flex_row">
+                        <div className='flex_row'>
                           <CustomTextField
                             className={classes.TextFieldFullWidth}
                             name={`p${i + 1}Affiliation`}
@@ -452,24 +490,24 @@ const Register = () => {
                             onChange={createChangeHandler(
                               `p${i + 1}Affiliation`
                             )}
-                            type="text"
-                            required="true"
+                            type='text'
+                            required='true'
                           />
                         </div>
                         <div>
                           <input
-                            accept="image/*"
+                            accept='image/*'
                             className={classes.input}
                             id={`p${i + 1}DpId`}
-                            type="file"
+                            type='file'
                             onChange={createChangeHandler(`p${i + 1}Dp`, true)}
-                            required="true"
+                            required='true'
                           />
                           <label htmlFor={`p${i + 1}DpId`}>
                             <Button
                               raised
-                              variant="contained"
-                              component="span"
+                              variant='contained'
+                              component='span'
                               className={classes.button}
                               startIcon={<CloudUploadIcon />}
                             >
@@ -480,23 +518,23 @@ const Register = () => {
                       </div>
                     ))}
                 </div>
-                <Button type="submit"> SUBMIT </Button>
+                <Button type='submit'> SUBMIT </Button>
               </form>
             </div>
-            <div className="register_flex_right">
-              <div className="payment_methods">
+            <div className='register_flex_right'>
+              <div className='payment_methods'>
                 <p>Payment</p>
               </div>
             </div>
           </div>
 
-          <div className="submit_login" style={{ textAlign: 'center' }}>
-            <div className="submit_btn">
+          <div className='submit_login' style={{ textAlign: 'center' }}>
+            <div className='submit_btn'>
               <Button
-                variant="contained"
+                variant='contained'
                 onClick={submit}
                 disabled={btnDisable}
-                color="secondary"
+                color='secondary'
                 style={{
                   padding: '1rem 4rem',
                   fontSize: '1.85rem',
@@ -506,10 +544,10 @@ const Register = () => {
                 Submit
               </Button>
             </div>
-            <div className="login_option">
+            <div className='login_option'>
               <p>
                 Already registered your team?
-                <Link style={linkStyles} to="/login">
+                <Link style={linkStyles} to='/login'>
                   Click here!
                 </Link>
               </p>

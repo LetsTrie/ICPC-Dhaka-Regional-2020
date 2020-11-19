@@ -15,13 +15,12 @@ export default function (numberOfParticipants) {
   }
 
   return {
-    numberOfParticipants,
-    teamName: '',
+    team: '',
     university: '',
     password: '',
     confirmPassword: '',
-    coachFirstName: '',
-    coachLastName: '',
+    coachFirstname: '',
+    coachLastname: '',
     coachEmail: '',
     coachAffiliation: '',
     coachDesignation: '',

@@ -2,10 +2,28 @@ const User = require('../models/users.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { object } = require('@hapi/joi');
-
+const { registerValidation } = require('../validations/team.js');
 
 exports.registerInfo = async (req, res) => {
-  return res.json(req.body);
+  const RB = req.body;
+  console.log(RB);
+  const { error } = registerValidation(RB);
+  if (error) {
+    console.log('Found Error!');
+    console.log(error.details[0].message);
+    return res.status(400).json({
+      message: error.details[0].message,
+    });
+  }
+  if (RB.password !== RB.confirmPassword) {
+    console.log('passowrd not matching');
+    return res.status(400).json({
+      message: 'Password is not matching!',
+    });
+  }
+  return res.json({
+    success: true
+  });
 };
 
 exports.registerUpload = async (req, res) => {
