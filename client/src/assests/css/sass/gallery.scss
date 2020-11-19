@@ -29,7 +29,7 @@
   }
 
   &__photos {
-    max-width: 90%;
+    max-width: 88%;
     @media (max-width: 1700px) {
       max-width: 98%;
     }
@@ -38,7 +38,7 @@
     justify-content: center;
     flex-wrap: wrap;
     .gallery_img_wrapper {
-      width: 32%;
+      width: 30%;
       margin: 1rem;
       // border: 1px solid #f1f1f1;
       box-shadow: 4px 6px 8px #b6b6b6;

@@ -7,7 +7,7 @@ import ICPC_Foundation from '../../assests/images/ICPC-Foundation.png';
 function Sponsors() {
   return (
     <div>
-      <section className='sponsor'>
+      <section className='sponsor' data-aos="zoom-in-down" data-aos-duration="1000">
         <div className='sponsor__heading'>
           <h2> Our Sponsors </h2>
         </div>

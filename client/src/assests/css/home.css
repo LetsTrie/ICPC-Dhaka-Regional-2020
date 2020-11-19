@@ -304,6 +304,34 @@ ul {
   padding: 3rem 1rem;
 }
 
+.imp_dates .each_imp_dates {
+  border-bottom: 1px solid #999;
+  margin-bottom: 1rem;
+}
+
+.imp_dates .each_imp_dates p {
+  padding-bottom: 0.5rem;
+  font-weight: 300;
+  margin-bottom: 0;
+  padding-bottom: 2px;
+}
+
+.imp_dates .each_imp_dates p:hover {
+  font-weight: 400;
+}
+
+.imp_dates .each_imp_dates p:first-child {
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.imp_dates .each_imp_dates p:last-child {
+  font-size: 1.4rem;
+  color: #555;
+  padding-bottom: 6px;
+}
+
 .important_infos {
   display: -webkit-box;
   display: -webkit-flex;

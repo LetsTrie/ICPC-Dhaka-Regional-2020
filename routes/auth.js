@@ -1,45 +1,28 @@
-const { Router } = require("express");
-const router = require('express').Router()
-const { auth } = require('../middlewares/auth.js')
+const multer = require('multer');
 
-const multer = require('multer')
+const C = require('../controller/auth.js');
+const router = require('express').Router();
+const { auth } = require('../middlewares/auth.js');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    console.log('[server]', req.files);
-    cb(null, 'public/');
+let storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+    cb(null, 'uploads');
   },
-  filename: (req, file, cb) => {
-    const filename = 'image.jpeg';
-    cb(null, filename);
-  },
-});
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === 'image/png' ||
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
+  filename: function(req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname)
   }
-};
-uploads = multer({
-  storage: storage,
-  fileFilter: fileFilter,
-}).fields([{name: 'image'}])
+})
 
-const {
-  postRegister,
-  postLogin,
-  createPost,
-  uploadImage
-} = require('../controller/auth.js')
+var registerUpload = multer({ storage }).fields([
+  { name: 'coachDp' },
+  { name: 'p1Dp' },
+]);
 
-router.post('/register', postRegister)
-router.post('/login', postLogin)
-router.post('/create', auth, createPost)
-router.post('/upload', uploads, uploadImage)
+router.post('/register/info', C.registerInfo);
+router.post('/register/upload', registerUpload, C.registerUpload);
 
-module.exports = router
+router.post('/login', C.postLogin);
+router.post('/create', auth, C.createPost);
+
+module.exports = router;

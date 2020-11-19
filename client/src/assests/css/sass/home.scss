@@ -232,6 +232,34 @@
   padding: 3rem 1rem;
 }
 
+.imp_dates {
+  .each_imp_dates {
+    border-bottom: 1px solid #999;
+    margin-bottom: 1rem;
+    p {
+      padding-bottom: 0.5rem;
+      font-weight: 300;
+      margin-bottom: 0;
+      padding-bottom: 2px;
+      &:hover {
+        font-weight: 400;
+      }
+
+      &:first-child {
+        font-weight: 400;
+        font-size: 1.6rem;
+        color: #333;
+      }
+      
+      &:last-child {
+        font-size: 1.4rem;
+        color: #555;
+        padding-bottom: 6px;
+      }
+    }
+  }
+}
+
 .important_infos {
   display: flex;
   justify-content: space-between;

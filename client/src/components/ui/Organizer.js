@@ -11,8 +11,8 @@ const Organizer = () => {
           <h2> Organizer </h2>
         </div>
         <div className='organizer_info'>
-          <div className='organizer_info_left'>
-            <div className='organizer_info_left_header'>
+          <div className='organizer_info_left' data-aos="zoom-in-down" data-aos-duration="600">
+            <div className='organizer_info_left_header' >
               <h3>University of Dhaka</h3>
             </div>
             <div className='organizer_info_left_info'>
@@ -25,7 +25,7 @@ const Organizer = () => {
                 In this year, Department of Computer Science and Engineering of University of Dhaka is going to organize the ICPC Dhaka Regional, 2020! A big thanks to them for taking the challenge in these uncertain times.
               </p>
             </div>
-            <div className='organizer_info_left_see_more'>
+            <div className='organizer_info_left_see_more' >
               <a href='https://www.du.ac.bd/' target='_blank'>
                 See more →
               </a>

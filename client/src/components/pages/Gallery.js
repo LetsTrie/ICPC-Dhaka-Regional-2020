@@ -23,7 +23,7 @@ function Gallery() {
         </div>
         <div className='each_gallery'>
           <div className='each_gallery__header'>
-            <h2>ICPC Preliminary Contest 2020</h2>
+            <h2>ICPC Preliminary Contest 2019</h2>
           </div>
           <div className='each_gallery__photos'>
             <_20Image />

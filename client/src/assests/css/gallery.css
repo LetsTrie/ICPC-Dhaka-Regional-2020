@@ -91,7 +91,7 @@ ul {
 }
 
 .each_gallery__photos {
-  max-width: 90%;
+  max-width: 88%;
   margin: auto;
   display: -webkit-box;
   display: -webkit-flex;
@@ -113,7 +113,7 @@ ul {
 }
 
 .each_gallery__photos .gallery_img_wrapper {
-  width: 32%;
+  width: 30%;
   margin: 1rem;
   -webkit-box-shadow: 4px 6px 8px #b6b6b6;
           box-shadow: 4px 6px 8px #b6b6b6;
