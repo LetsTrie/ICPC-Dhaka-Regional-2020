@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../assests/css/loader.css';
 
 export default function Loader() {
   return (

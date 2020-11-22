@@ -3,11 +3,13 @@ import {
   AUTH_ERROR_LOGIN,
   AUTH_SUCCESSFUL_LOGIN,
   STORE_TOKEN,
+  LOGOUT
 } from './types';
+
+const URL = 'http://localhost:5000/api/v1/auth';
 
 export const loginAction = (body, history) => async (dispatch) => {
   dispatch({ type: AUTH_LOADING_LOGIN });
-  const URL = 'http://localhost:5000/api/v1/auth';
   const jso = await fetch(`${URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -46,3 +48,7 @@ export const loginAction = (body, history) => async (dispatch) => {
     }
   }
 };
+
+export const logoutAction = () => async (dispatch) => {
+  dispatch({ type: LOGOUT });
+}

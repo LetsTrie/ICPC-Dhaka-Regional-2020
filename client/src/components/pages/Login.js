@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import logo from '../../assests/images/icpclogo_big.png';
 import { Link } from 'react-router-dom';
-import { login, adminLogin } from '../../action/index';
-import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import '../../assests/css/auth.css';
 import Header from '../ui/Header';
 import CustomTextField from '../ui/CustomTextField';
-import SSLCommerzPayment from 'sslcommerz';
-import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import { json } from 'body-parser';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -59,7 +53,13 @@ const Login = (props) => {
     await loginAction(formFields, props.history);
   };
 
-  useEffect(() => {}, [checkoutSuccess]);
+  useEffect(() => {
+    
+  }, [checkoutSuccess]);
+
+  if(isAuthenticated) {
+    return <Redirect to='/'/>
+  }
 
   const styles = {
     linkStyles: {
@@ -105,7 +105,7 @@ const Login = (props) => {
               label='Team name'
               onChange={createChangeHandler('team')}
               type='text'
-              required='true'
+              required={true}
             />
 
             <CustomTextField
@@ -114,7 +114,7 @@ const Login = (props) => {
               label='Password'
               onChange={createChangeHandler('password')}
               type='password'
-              required='true'
+              required={true}
             />
 
             <p className='login_forget_password'>

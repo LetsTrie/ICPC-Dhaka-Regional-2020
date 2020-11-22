@@ -1,6 +1,8 @@
 @import '_main';
+@import '_mixin';
 
 .gallery {
+  @include VectorArt;
   padding-bottom: 4rem;
   &__header {
   }
@@ -8,6 +10,7 @@
 
 .each_gallery {
   padding-top: 2rem;
+  padding-bottom: 3rem;
   @media (max-width: 750px) {
     padding-top: 1.7rem;
   }
@@ -15,7 +18,7 @@
     user-select: none;
     h2 {
       font-family: 'Libre Franklin', sans-serif;
-      padding: 1.5rem 0.5rem 2.5rem 0.5rem;
+      padding: 1.5rem 0.5rem 2rem 0.5rem;
       text-align: center;
       font-weight: 600;
       font-size: 6rem;

@@ -3,12 +3,10 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Alert from '@material-ui/lab/Alert';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../assests/css/auth.css';
 import logo from '../../assests/images/icpc_logo.png';
-import validate from '../../utils/RegValidation';
 import Header from '../ui/Header';
-import { useDispatch, useSelector } from 'react-redux';
 import CustomTextField from '../ui/CustomTextField';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -16,8 +14,9 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import registerInitialState from '../../data/registerInitialState';
 import axios from 'axios';
 import Loader from '../ui/Loader';
-import SSLCommerzPayment from 'sslcommerz';
 import useFormFields from '../HandleForms';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles({
   TextField: {
@@ -56,7 +55,9 @@ function validation(fld) {
   return null;
 }
 
-const Register = () => {
+const Register = (props) => {
+  const { isAuthenticated } = props.cred;
+
   // MUI Class
   const classes = useStyles();
 
@@ -162,6 +163,10 @@ const Register = () => {
   };
 
   useEffect(() => {}, [alert, loading]);
+  
+  if(isAuthenticated) {
+    return <Redirect to='/'/>
+  }
 
   return (
     <div className='register_wrapper'>
@@ -198,7 +203,7 @@ const Register = () => {
                     label='Team name'
                     onChange={createChangeHandler('team')}
                     type='text'
-                    required='true'
+                    required={true}
                   />
                   <CustomTextField
                     className={classes.TextField}
@@ -206,7 +211,7 @@ const Register = () => {
                     label='University'
                     onChange={createChangeHandler('university')}
                     type='text'
-                    required='true'
+                    required={true}
                   />
                 </div>
                 <div className='flex_row'>
@@ -216,7 +221,7 @@ const Register = () => {
                     label='Password'
                     onChange={createChangeHandler('password')}
                     type='password'
-                    required='true'
+                    required={true}
                   />
                   <CustomTextField
                     className={classes.TextField}
@@ -224,7 +229,7 @@ const Register = () => {
                     label='Confirm password'
                     onChange={createChangeHandler('confirmPassword')}
                     type='password'
-                    required='true'
+                    required={true}
                   />
                 </div>
 
@@ -241,7 +246,7 @@ const Register = () => {
                     label='First name'
                     onChange={createChangeHandler('coachFirstname')}
                     type='text'
-                    required='true'
+                    required={true}
                   />
                   <CustomTextField
                     className={classes.TextField}
@@ -249,7 +254,7 @@ const Register = () => {
                     label={'Last name'}
                     onChange={createChangeHandler('coachLastname')}
                     type='text'
-                    required='true'
+                    required={true}
                   />
                 </div>
                 <div className='flex_row'>
@@ -259,7 +264,7 @@ const Register = () => {
                     label='Email'
                     onChange={createChangeHandler('coachEmail')}
                     type='email'
-                    required='true'
+                    required={true}
                   />
                   <CustomTextField
                     className={classes.TextField}
@@ -267,7 +272,7 @@ const Register = () => {
                     label='Affiliation'
                     onChange={createChangeHandler('coachAffiliation')}
                     type='text'
-                    required='true'
+                    required={true}
                   />
                 </div>
                 <div className='flex_row'>
@@ -277,7 +282,7 @@ const Register = () => {
                     label='Designation'
                     onChange={createChangeHandler('coachDesignation')}
                     type='text'
-                    required='true'
+                    required={true}
                   />
                   <FormControl
                     variant='outlined'
@@ -306,12 +311,13 @@ const Register = () => {
                           paddingRight: '5px',
                         },
                       }}
-                      required='true'
+                      required={true}
                     >
                       <option aria-label='None' value='' />
                       <option value={'XS'}>XS</option>
                       <option value={'S'}>S</option>
                       <option value={'M'}>M</option>
+                      <option value={'L'}>L</option>
                       <option value={'XL'}>XL</option>
                       <option value={'XXL'}>XXL</option>
                       <option value={'XXXL'}>XXXL</option>
@@ -365,7 +371,7 @@ const Register = () => {
                             label='First name'
                             onChange={createChangeHandler(`p${i + 1}Firstname`)}
                             type='text'
-                            required='true'
+                            required={true}
                           />
                           <CustomTextField
                             className={classes.TextField}
@@ -373,7 +379,7 @@ const Register = () => {
                             label='Last name'
                             onChange={createChangeHandler(`p${i + 1}Lastname`)}
                             type='text'
-                            required='true'
+                            required={true}
                           />
                         </div>
                         <div className='flex_row'>
@@ -383,7 +389,7 @@ const Register = () => {
                             label='Email'
                             onChange={createChangeHandler(`p${i + 1}Email`)}
                             type='email'
-                            required='true'
+                            required={true}
                           />
                           <FormControl
                             variant='outlined'
@@ -412,7 +418,7 @@ const Register = () => {
                                   paddingRight: '5px',
                                 },
                               }}
-                              required='true'
+                              required={true}
                             >
                               <option aria-label='None' value='' />
                               <option value={'1st'}>1st</option>
@@ -454,7 +460,7 @@ const Register = () => {
                                   paddingRight: '5px',
                                 },
                               }}
-                              required='true'
+                              required={true}
                             >
                               <option aria-label='None' value='' />
                               <option value={'1st'}>1st</option>
@@ -493,12 +499,13 @@ const Register = () => {
                                   paddingRight: '5px',
                                 },
                               }}
-                              required='true'
+                              required={true}
                             >
                               <option aria-label='None' value='' />
                               <option value={'XS'}>XS</option>
                               <option value={'S'}>S</option>
                               <option value={'M'}>M</option>
+                              <option value={'L'}>L</option>
                               <option value={'XL'}>XL</option>
                               <option value={'XXL'}>XXL</option>
                               <option value={'XXXL'}>XXXL</option>
@@ -514,7 +521,7 @@ const Register = () => {
                               `p${i + 1}Affiliation`
                             )}
                             type='text'
-                            required='true'
+                            required={true}
                           />
                         </div>
                         <div>
@@ -591,4 +598,9 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => ({
+  cred: state.credentialReducer,
+});
+
+const mapDispatchToAction = {  };
+export default connect(mapStateToProps, mapDispatchToAction)(Register);

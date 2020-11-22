@@ -2,9 +2,8 @@ import { STORE_TOKEN, LOGOUT } from '../action/types';
 
 const initialState = {
   accessToken: null,
-  refreshToken: null,
-  isAuthenticated: false,
   teamInfo: {},
+  isAuthenticated: false,
 };
 
 export default function (state = initialState, action) {

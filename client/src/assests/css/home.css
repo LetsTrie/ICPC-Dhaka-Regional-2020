@@ -363,7 +363,7 @@ ul {
 
 .important_infos .flex_child_header p {
   font-size: 22px;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -384,7 +384,7 @@ ul {
   color: #333;
   font-weight: 300;
   border-bottom: 1px solid #999;
-  margin-bottom: .7rem;
+  margin-bottom: 0.7rem;
 }
 
 .important_infos .flex_child_list a:hover {
@@ -508,6 +508,7 @@ ul {
   -o-transition: all 0.2s;
   transition: all 0.2s;
   outline-offset: 2rem;
+  cursor: pointer;
 }
 
 .organizer_info_right img:hover {

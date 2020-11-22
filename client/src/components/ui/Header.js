@@ -22,11 +22,16 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import NavMenu from '../../data/navbar';
+
+import { connect } from 'react-redux';
+
 import {
   usePopupState,
   bindHover,
   bindMenu,
 } from 'material-ui-popup-state/hooks';
+
+import { logoutAction } from '../../action/authentication';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -171,7 +176,10 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 
-export default function BackToTop(props) {
+function BackToTop(props) {
+  const { isAuthenticated } = props.cred;
+  const { logoutAction } = props;
+
   window.dispatchEvent(new CustomEvent('resize'));
   const { children } = props;
   const classes = useStyles();
@@ -189,6 +197,10 @@ export default function BackToTop(props) {
   const handleMenuItemClick = (event, subMenuId, menuId) => {
     setSelectedIndex({ menuId, subMenuId });
     setValue(menuId);
+  };
+
+  const logoutHandler = async (e) => {
+    await logoutAction();
   };
 
   const mainMenu = NavMenu.map(({ link }, id) => ({ id, link }));
@@ -289,20 +301,43 @@ export default function BackToTop(props) {
         className={classes.tabContainer}
         onChange={handleChange}
       >
-        {NavMenu.map((menu, id) => (
-          <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
-        ))}
+        {NavMenu.map((menu, id) => {
+          let comp = '';
+          if(menu.authenticated) {
+            if(isAuthenticated) {
+              comp = <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
+            } 
+          } else if(menu.unAuthenticated) {
+            if(!isAuthenticated) {
+              comp = <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
+            }
+          } else {
+            comp = <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
+          }
+          return comp;
+        })}
       </Tabs>
-      <Button
-        variant='contained'
-        color='secondary'
-        className={classes.login}
-        component={Link}
-        to='/login'
-        onClick={() => setValue(2)}
-      >
-        Login
-      </Button>
+      {isAuthenticated ? (
+        <Button
+          variant='contained'
+          color='secondary'
+          className={classes.login}
+          onClick={logoutHandler}
+        >
+          Log Out
+        </Button>
+      ) : (
+        <Button
+          variant='contained'
+          color='secondary'
+          className={classes.login}
+          component={Link}
+          to='/login'
+          onClick={() => setValue(2)}
+        >
+          Login
+        </Button>
+      )}
     </React.Fragment>
   );
 
@@ -400,3 +435,10 @@ export default function BackToTop(props) {
 //     </IconButton>
 //   </React.Fragment>
 // );
+
+const mapStateToProps = (state) => ({
+  cred: state.credentialReducer,
+});
+
+const mapDispatchToAction = { logoutAction };
+export default connect(mapStateToProps, mapDispatchToAction)(BackToTop);

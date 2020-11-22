@@ -10,6 +10,7 @@ export default [
   {
     name: 'Registration',
     link: '/registration/online',
+    unAuthenticated: true
   },
   {
     name: 'Contest Info',
@@ -69,5 +70,10 @@ export default [
   {
     name: 'Contact Us',
     link: '/contact',
+  },
+  {
+    name: 'My Profile',
+    link: '/profile',
+    authenticated: true
   },
 ];

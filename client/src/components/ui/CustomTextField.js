@@ -33,7 +33,7 @@ CustomTextField.propTypes = {
   label: PropTypes.string,
   onChange: PropTypes.func,
   type: PropTypes.string,
-  required: PropTypes.string
+  required: PropTypes.bool
 };
 
 export default CustomTextField;
