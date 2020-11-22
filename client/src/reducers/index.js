@@ -5,16 +5,20 @@ import admin from './admin'
 import user from './user'
 import { connectRouter } from 'connected-react-router'
 import { adminReducer } from 'react-admin'
-import { createHashHistory } from 'history'
+import { createHashHistory } from 'history';
+
+import loginReducer from './loginReducer';
+import credentialReducer from './credentialReducer';
 
 const history = createHashHistory()
-const root = combineReducers({
+
+export default combineReducers({
   admin: adminReducer,
   router: connectRouter(history),
   auth,
   profile,
   user, 
-  admin
-})
-
-export default root
+  admin,
+  loginReducer,
+  credentialReducer
+});

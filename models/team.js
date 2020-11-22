@@ -14,6 +14,14 @@ const teamSchema = Schema({
     type: String,
     required: true
   },
+  transactionId: {
+    type: String,
+    required: true
+  },
+  transactionSuccess: {
+    type: Boolean,
+    required: false
+  },
   coach: {
     firstname: {
       type: String,

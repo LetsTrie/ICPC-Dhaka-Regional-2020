@@ -9,8 +9,16 @@ import Alert from '@material-ui/lab/Alert';
 import '../../assests/css/auth.css';
 import Header from '../ui/Header';
 import CustomTextField from '../ui/CustomTextField';
-
+import SSLCommerzPayment from 'sslcommerz';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+import { json } from 'body-parser';
+import { Redirect } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+
+import useFormFields from '../HandleForms';
+import { loginAction } from '../../action/authentication';
 
 const useStyles = makeStyles({
   TextField: {
@@ -26,43 +34,47 @@ const useStyles = makeStyles({
 });
 
 const Login = (props) => {
+  // Action 
+  const { loginAction } = props;
+  // Store
 
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
-  const [isError, setIsError] = useState(null);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const auth = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (auth.error) {
-      setIsError(auth);
-      console.log('[Login]', auth);
-    } else if (auth.user) {
-      console.log('home redirect');
-      history.push('/');
-    }
-  }, [auth]);
-
-  const valid = (data) => {
-    return data == null || data == '' || data == undefined;
-  };
-
-  const handleInput = (e) => {
-    const cred = credentials;
-    cred[e.target.name] = e.target.value;
-    setCredentials(cred);
-  };
-  const submit = (e) => {
-    const { email, password } = credentials;
-    if (!valid(email) && !valid(password)) {
-      dispatch(login(credentials));
-    }
-  };
-
+  // MUI Classes
   const classes = useStyles();
+
+  // Initial State
+  let initialState = { team: '', password: '' };
+  const { formFields, createChangeHandler } = useFormFields(initialState);
+
+  // const [isError, setIsError] = useState(null);
+  // const dispatch = useDispatch();
+  // const history = useHistory();
+  // const auth = useSelector((state) => state.auth);
+
+  // const search = props.location.search; // could be '?foo=bar'
+  // const params = new URLSearchParams(search);
+  // console.log(params.get('checkout'));
+
+  // useEffect(() => {
+  //   // if (auth.error) {
+  //   //   setIsError(auth);
+  //   //   console.log('[Login]', auth);
+  //   // } else if (auth.user) {
+  //   //   console.log('home redirect');
+  //   //   history.push('/');
+  //   // }
+  // }, [auth]);
+
+  const handleSubmit = async (e) => {
+    console.log(formFields);
+    e.preventDefault();
+
+    await loginAction(formFields, props.history);
+
+    // const { email, password } = credentials;
+    // if (!valid(email) && !valid(password)) {
+    //   dispatch(login(credentials));
+    // }
+  };
 
   const styles = {
     linkStyles: {
@@ -86,58 +98,66 @@ const Login = (props) => {
             <img src={logo} alt='icpc logo' />
           </div>
           <div className='login_header'>
-              <p>Team Account Login </p>
+            <p>Team Account Login </p>
           </div>
-          {isError && (
-            <div style={{padding: '15px 0'}}>
+          {/* {isError && (
+            <div style={{ padding: '15px 0' }}>
               <Alert variant='filled' severity='error'>
-                  {isError.msg}
+                {isError.msg}
               </Alert>
             </div>
-          )}
-          <CustomTextField
-            className={classes.TextField}
-            name='email'
-            label='Team name'
-            onChange={(e) => handleInput(e)}
-            type='text'
-          />
+          )} */}
+          <form onSubmit={handleSubmit}>
+            <CustomTextField
+              className={classes.TextField}
+              name='team'
+              label='Team name'
+              onChange={createChangeHandler('team')}
+              type='text'
+              required='true'
+            />
 
-          <br />
+            <CustomTextField
+              className={classes.TextField}
+              name='password'
+              label='Password'
+              onChange={createChangeHandler('password')}
+              type='password'
+              required='true'
+            />
 
-          <CustomTextField
-            className={classes.TextField}
-            type='password'
-            name='password'
-            label='Password'
-            onChange={(e) => handleInput(e)}
-          />
-
-          <p className='login_forget_password'>
-            <Link style={styles.linkStyles} to='#'>
-              Forgot password?
-            </Link>
-          </p>
-          <Button
-            variant='contained'
-            onClick={submit}
-            color='secondary'
-            size='large'
-            fullWidth={true}
-            className={classes.submitButton}
-          >
-            LOGIN
-          </Button>
-          <p style={styles.askForRegister}>
-            Not registered yet?{'  '}
-            <Link style={styles.linkStyles} to='/registration/online'>
-              Register your team now!
-            </Link>
-          </p>
+            <p className='login_forget_password'>
+              <Link style={styles.linkStyles} to='#'>
+                Forgot password?
+              </Link>
+            </p>
+            <Button
+              raised
+              type='submit'
+              variant='contained'
+              color='secondary'
+              size='large'
+              fullWidth={true}
+              className={classes.submitButton}
+            >
+              LOGIN
+            </Button>
+            <p style={styles.askForRegister}>
+              Not registered yet?{'  '}
+              <Link style={styles.linkStyles} to='/registration/online'>
+                Register your team now!
+              </Link>
+            </p>
+          </form>
         </div>
       </div>
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  auth: state.loginReducer,
+  cred: state.credentialReducer,
+});
 
-export default Login;
+const mapDispatchToAction = { loginAction };
+export default connect(mapStateToProps, mapDispatchToAction)(Login);

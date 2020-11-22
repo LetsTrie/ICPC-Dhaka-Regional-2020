@@ -15,7 +15,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import registerInitialState from '../../data/registerInitialState';
 import axios from 'axios';
-import validator from 'validator';
+import Loader from '../ui/Loader';
+import SSLCommerzPayment from 'sslcommerz';
+import useFormFields from '../HandleForms';
 
 const useStyles = makeStyles({
   TextField: {
@@ -38,18 +40,19 @@ const useStyles = makeStyles({
   },
 });
 
-function useFormFields(initialValues) {
-  const [formFields, setFormFields] = React.useState(initialValues);
-  const createChangeHandler = (key, isFile = false) => (e) => {
-    let value;
-    if (isFile) value = e.target.files[0];
-    else value = e.target.value;
-    setFormFields((prev) => ({ ...prev, [key]: value }));
-  };
-  return { formFields, createChangeHandler };
-}
+const numberOfParticipants = 3;
 
-function validation(formFields) {
+function validation(fld) {
+  if (fld.password !== fld.confirmPassword) {
+    return 'Password is not matching!';
+  }
+  if (!fld['coachDp']) {
+    return 'Please provide the Display Picture of Coach!';
+  }
+  for (let member = 1; member <= numberOfParticipants; member++) {
+    if (!fld[`p${member}Dp`])
+      return `Please provide the Display Picture of Participant ${member}`;
+  }
   return null;
 }
 
@@ -57,22 +60,20 @@ const Register = () => {
   // MUI Class
   const classes = useStyles();
 
-  let numberOfParticipants = 1;
-
   // Initial State
   let initialState = registerInitialState(numberOfParticipants);
   const { formFields, createChangeHandler } = useFormFields(initialState);
   const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
-    console.log('form submitted!');
+    setLoading(true);
     e.preventDefault();
-    const error = validation(formFields);
-    if (error) {
-      // Need Client Side Validation
-      // Password === confirm Password
+    const errorMessage = validation(formFields);
+    if (errorMessage) {
+      setLoading(false);
+      setAlert(errorMessage);
     } else {
-      console.log('no validation error!');
       const reqBody = {};
       const reqFiles = new FormData();
       for (let key in formFields) {
@@ -82,6 +83,7 @@ const Register = () => {
           reqBody[key] = formFields[key];
         }
       }
+
       let coachInfo = {};
       let participants = [{}, {}, {}];
       const formatKey = (s) => s.charAt(0).toLowerCase() + s.slice(1);
@@ -92,15 +94,13 @@ const Register = () => {
           coachInfo[newKey] = reqBody[key];
           delete reqBody[key];
         }
-        Array.from({ length: numberOfParticipants }, (_, i) => i + 1).map(
-          (el, i) => {
-            if (key.startsWith(`p${el}`)) {
-              let newKey = formatKey(key.split(`p${el}`)[1]);
-              participants[el - 1][newKey] = reqBody[key];
-              delete reqBody[key];
-            }
+        for (let el = 1; el <= numberOfParticipants; el++) {
+          if (key.startsWith(`p${el}`)) {
+            let newKey = formatKey(key.split(`p${el}`)[1]);
+            participants[el - 1][newKey] = reqBody[key];
+            delete reqBody[key];
           }
-        );
+        }
       }
       reqBody.coach = coachInfo;
       reqBody.participants = participants;
@@ -108,45 +108,64 @@ const Register = () => {
 
       const API = `http://localhost:5000/api/v1/auth/register`;
 
-      axios.post(`${API}/info`, reqBody).then((res) => {
-        console.log(res);
-        // axios.post(`${API}/upload`, reqFiles).then((uploaded) => {
-        //   console.log(uploaded);
-        // });
-      });
+      console.log(reqBody);
+      console.log('Starting...');
+      axios
+        .post(`${API}/info`, reqBody)
+        .then((res) => {
+          console.log(res.data);
+          reqFiles.append('SECRET_KEY', res.data.SECRET_KEY);
+          axios
+            .post(`${API}/upload`, reqFiles)
+            .then((done) => {
+              console.log(done.data);
+              axios
+                .get(`${API}/payment/init?key=${done.data.SECRET_KEY}`)
+                .then((trans) => {
+                  setAlert(null);
+                  setLoading(false);
+                  window.location.replace(trans.data.GatewayPageURL);
+                })
+                .catch((err) => {
+                  setLoading(false);
+                  console.log(err);
+                  setAlert({
+                    type: 'error',
+                    message: err.response.data.message,
+                  });
+                });
+            })
+            .catch((err) => {
+              setLoading(false);
+              console.log(err);
+
+              setAlert({
+                type: 'error',
+                message: err.response.data.message,
+              });
+            });
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+          setAlert({
+            type: 'error',
+            message: err.response.data.message,
+          });
+        });
     }
   };
 
-  // const auth = useSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     history.push('/');
-  //   }
-  //   if (auth.error == true) {
-  //     setAlert(auth);
-  //     setDisable(false);
-  //   } else if (auth.error == false) {
-  //     setAlert(auth);
-  //     setTimeout(() => {
-  //       history.push('/login');
-  //     }, 3000);
-  //   }
-  // });
-
-  // const [images, setImages] = useState([]);
-  // const [alert, setAlert] = useState(null);
-  const [btnDisable, setDisable] = useState(false);
-  // const history = useHistory();
-  // const dispatch = useDispatch();
-  const submit = (e) => {};
   const linkStyles = {
     textDecoration: 'none',
     color: '#5499C7',
   };
 
+  useEffect(() => {}, [alert, loading]);
+
   return (
     <div className='register_wrapper'>
+      {loading && <Loader />}
       <Header />
       <div className='register'>
         <div className='register_container'>
@@ -156,17 +175,19 @@ const Register = () => {
           <div className='register_your_team'>
             <p>Register Your Team</p>
           </div>
-          <div className='register_flex'>
-            <div className='register_flex_left'>
-              {/* {alert && (
-                <Alert
-                  variant='filled'
-                  severity={alert.error ? 'error' : 'success'}
-                >
-                  {alert.msg}
-                </Alert>
-              )} */}
-              <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <div className='register_flex'>
+              <div className='register_flex_left'>
+                {alert && (
+                  <Alert
+                    variant='filled'
+                    severity={alert.type}
+                    style={{ marginBottom: '2rem', fontSize: '1.5rem' }}
+                  >
+                    {alert.message}
+                  </Alert>
+                )}
+
                 <div className='secondary_heading'>
                   <p> Team Information </p>
                 </div>
@@ -217,7 +238,7 @@ const Register = () => {
                   <CustomTextField
                     className={classes.TextField}
                     name='coachFirstname'
-                    label={'First name'}
+                    label='First name'
                     onChange={createChangeHandler('coachFirstname')}
                     type='text'
                     required='true'
@@ -237,7 +258,7 @@ const Register = () => {
                     name='coachEmail'
                     label='Email'
                     onChange={createChangeHandler('coachEmail')}
-                    type='text'
+                    type='email'
                     required='true'
                   />
                   <CustomTextField
@@ -341,7 +362,7 @@ const Register = () => {
                           <CustomTextField
                             className={classes.TextField}
                             name={`p${i + 1}Firstname`}
-                            label={'First name'}
+                            label='First name'
                             onChange={createChangeHandler(`p${i + 1}Firstname`)}
                             type='text'
                             required='true'
@@ -349,7 +370,7 @@ const Register = () => {
                           <CustomTextField
                             className={classes.TextField}
                             name={`p${i + 1}Lastname`}
-                            label={'Last name'}
+                            label='Last name'
                             onChange={createChangeHandler(`p${i + 1}Lastname`)}
                             type='text'
                             required='true'
@@ -361,7 +382,7 @@ const Register = () => {
                             name={`p${i + 1}Email`}
                             label='Email'
                             onChange={createChangeHandler(`p${i + 1}Email`)}
-                            type='text'
+                            type='email'
                             required='true'
                           />
                           <FormControl
@@ -475,10 +496,12 @@ const Register = () => {
                               required='true'
                             >
                               <option aria-label='None' value='' />
+                              <option value={'XS'}>XS</option>
                               <option value={'S'}>S</option>
                               <option value={'M'}>M</option>
                               <option value={'XL'}>XL</option>
-                              <option value={'Others'}>Others</option>
+                              <option value={'XXL'}>XXL</option>
+                              <option value={'XXXL'}>XXXL</option>
                             </Select>
                           </FormControl>
                         </div>
@@ -500,8 +523,8 @@ const Register = () => {
                             className={classes.input}
                             id={`p${i + 1}DpId`}
                             type='file'
+                            name={`p${i + 1}Dp`}
                             onChange={createChangeHandler(`p${i + 1}Dp`, true)}
-                            required='true'
                           />
                           <label htmlFor={`p${i + 1}DpId`}>
                             <Button
@@ -518,41 +541,50 @@ const Register = () => {
                       </div>
                     ))}
                 </div>
-                <Button type='submit'> SUBMIT </Button>
-              </form>
-            </div>
-            <div className='register_flex_right'>
-              <div className='payment_methods'>
-                <p>Payment</p>
+              </div>
+              <div className='register_flex_right'>
+                <div className='registrationFee'>
+                  <div className='registrationFee__header'>
+                    <p>Registration Fee</p>
+                  </div>
+                  <div className='registrationFee__amount'>
+                    <p>6000 BDT per team</p>
+                  </div>
+                  <div className='registrationFee__des'>
+                    <small>
+                      ** You will be redirected to the payment method after
+                      giving all the informations of the team, coach and
+                      participants.
+                    </small>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className='submit_login' style={{ textAlign: 'center' }}>
-            <div className='submit_btn'>
-              <Button
-                variant='contained'
-                onClick={submit}
-                disabled={btnDisable}
-                color='secondary'
-                style={{
-                  padding: '1rem 4rem',
-                  fontSize: '1.85rem',
-                  marginBottom: '1.2rem',
-                }}
-              >
-                Submit
-              </Button>
+            <div className='submit_login' style={{ textAlign: 'center' }}>
+              <div className='submit_btn'>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='secondary'
+                  style={{
+                    padding: '1rem 4rem',
+                    fontSize: '1.85rem',
+                    marginBottom: '1.2rem',
+                  }}
+                >
+                  Submit
+                </Button>
+              </div>
+              <div className='login_option'>
+                <p>
+                  Already registered your team?
+                  <Link style={linkStyles} to='/login'>
+                    Click here!
+                  </Link>
+                </p>
+              </div>
             </div>
-            <div className='login_option'>
-              <p>
-                Already registered your team?
-                <Link style={linkStyles} to='/login'>
-                  Click here!
-                </Link>
-              </p>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

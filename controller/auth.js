@@ -1,104 +1,178 @@
 const User = require('../models/users.js');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { object } = require('@hapi/joi');
+
+const bcrypt = require('bcryptjs');
 const { registerValidation } = require('../validations/team.js');
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs').promises;
+const path = require('path');
+const Team = require('../models/team');
 
 exports.registerInfo = async (req, res) => {
-  const RB = req.body;
-  console.log(RB);
-  const { error } = registerValidation(RB);
-  if (error) {
-    console.log('Found Error!');
-    console.log(error.details[0].message);
-    return res.status(400).json({
-      message: error.details[0].message,
-    });
+  try {
+    const RB = req.body;
+
+    // Validate Request Body
+    const { error } = registerValidation(RB);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    // Checking the password
+    if (RB.password !== RB.confirmPassword) {
+      return res.status(400).json({
+        message: 'Password is not matching!',
+      });
+    }
+    delete RB.confirmPassword;
+
+    // Hashing the password
+    RB.password = await bcrypt.hash(RB.password, 10);
+
+    // Checking the Team name
+    const alreadyTaken = await Team.findOne({ team: RB.team });
+    if (alreadyTaken) {
+      return res.status(400).json({
+        message: 'Team name has already been taken !!',
+      });
+    }
+
+    // Saving locally.. Waiting for display pictures
+    const SECRET_KEY = uuidv4();
+    await fs.writeFile(
+      path.join(__dirname, `../uploads/${SECRET_KEY}.json`),
+      JSON.stringify(RB)
+    );
+    return res.status(201).json({ success: true, SECRET_KEY });
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
-  if (RB.password !== RB.confirmPassword) {
-    console.log('passowrd not matching');
-    return res.status(400).json({
-      message: 'Password is not matching!',
-    });
-  }
-  return res.json({
-    success: true
-  });
 };
 
 exports.registerUpload = async (req, res) => {
-  return res.json(req.files);
+  try {
+    // Getting the local data from SECRET_KEY
+    const { SECRET_KEY } = req.body;
+    let data = await fs.readFile(
+      path.join(__dirname, `../uploads/${SECRET_KEY}.json`),
+      'utf-8'
+    );
+    data = JSON.parse(data);
+
+    // Getting the images
+    data.coach.dp = req.files.coachDp[0].filename;
+    data.participants[0].dp = req.files.p1Dp[0].filename;
+    data.participants[1].dp = req.files.p2Dp[0].filename;
+    data.participants[2].dp = req.files.p3Dp[0].filename;
+
+    await fs.writeFile(
+      path.join(__dirname, `../uploads/${SECRET_KEY}.json`),
+      JSON.stringify(data)
+    );
+
+    return res.status(201).json({ success: true, SECRET_KEY });
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
-exports.postRegister = async (req, res) => {
-  console.log('[backend/register]: ', req.body);
-  const { password, conPassword, teamName } = req.body;
-  const {
-    validateRegCredentials,
-  } = require('../validations/validateRegCredentials.js');
-  const { error } = validateRegCredentials(req.body);
+const SSLCommerz = require('../services/sslcommerz');
+let settings = {
+  isSandboxMode: true, //false if live version
+  store_id: process.env.SSL_store_id,
+  store_passwd: process.env.SSL_store_password,
+};
 
-  const existingUser = await User.findOne({ teamName: teamName });
+let sslcommerz = new SSLCommerz(settings);
 
-  if (error) {
-    res.json({
-      status: false,
-      msg: error.details[0].message,
+exports.paymentInitiate = async (req, res) => {
+  try {
+    const SECRET_KEY = req.query.key;
+    const payload = require('../data/paymentInit');
+    const init = await sslcommerz.init_transaction(payload);
+
+    let data = await fs.readFile(
+      path.join(__dirname, `../uploads/${SECRET_KEY}.json`),
+      'utf-8'
+    );
+    data = JSON.parse(data);
+    data.transactionId = payload.tran_id;
+    data.transactionSuccess = false;
+    // Saving to Database
+    const team = new Team(data);
+    await team.save();
+
+    // Deleting the Local data
+    await fs.unlink(path.join(__dirname, `../uploads/${SECRET_KEY}.json`));
+
+    return res.status(200).json({
+      success: true,
+      GatewayPageURL: init.GatewayPageURL,
     });
-  } else if (password != conPassword) {
-    res.json({
-      status: false,
-      msg: 'Passwords do not match',
-    });
-  } else if (existingUser) {
-    res.json({
-      status: false,
-      msg: 'Team name already in use. Please try a different one',
-    });
-  } else {
-    delete req.body['conPassword'];
-    const hashed = await bcrypt.hash(password, 10);
-    req.body.password = hashed;
-    const user = new User(req.body);
-    await user.save();
-    console.log('User saved', user);
-    res.json({
-      status: true,
-      msg: 'Your team has successfully been registered!',
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
     });
   }
 };
 
-exports.postLogin = async (req, res) => {
-  console.log(req.body);
-  const { email, password } = req.body;
-  const user = await User.findOne({ teamName: email });
+exports.paymentIpnListener = async (req, res) => {
+  const { val_id } = req.body;
+  const info = await sslcommerz.validate_transaction_order(val_id);
+  const { status, tran_id, tran_date, amount, currency } = info;
+  if (status === 'INVALID_TRANSACTION ') {
+    return res.send('<h1>INVALID TRANSACTION</h1>');
+  }
+  console.log(amount, process.env.Fee);
+  if (parseInt(amount) !== parseInt(process.env.Fee)) {
+    return res.send('<h1>AMOUNT IS NOT VALID</h1>');
+  }
+  const team = await Team.findOne({ transactionId: tran_id });
+  if (team) {
+    team.transactionSuccess = true;
+    await team.save();
+    return res.send(
+      '<script>window.location="http://localhost:3000/login?checkout=success"</script>'
+    );
+  } else {
+    return res.send('TEAM IS NOT FOUND!!');
+  }
+};
 
-  if (user) {
-    console.log(user);
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (isMatch) {
-      const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '3h',
-      });
-      res.json({
-        status: true,
-        msg: 'User found',
-        data: {
-          token,
-          user,
-        },
+exports.teamLogin = async (req, res) => {
+  console.log(req.body);
+  const { team, password } = req.body;
+  const teamDetails = await Team.findOne({ team });
+
+  if (teamDetails) {
+    console.log(teamDetails);
+    const isMatched = await bcrypt.compare(password, teamDetails.password);
+    if (isMatched) {
+      const accessToken = await jwt.sign(
+        { id: teamDetails._id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '420h',
+        }
+      );
+
+      return res.status(200).json({
+        success: true,
+        accessToken,
       });
     } else {
-      res.json({
-        status: false,
-        msg: 'Password does not match',
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid Team name or Password !!',
       });
     }
   } else {
-    res.json({
-      status: false,
-      msg: 'Team name not found',
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid Team name or Password !!',
     });
   }
 };

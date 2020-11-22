@@ -17,12 +17,17 @@ let storage = multer.diskStorage({
 var registerUpload = multer({ storage }).fields([
   { name: 'coachDp' },
   { name: 'p1Dp' },
+  { name: 'p2Dp' },
+  { name: 'p3Dp' },
 ]);
 
 router.post('/register/info', C.registerInfo);
 router.post('/register/upload', registerUpload, C.registerUpload);
+router.get('/register/payment/init', C.paymentInitiate);
+router.post('/register/payment/IpnListener', C.paymentIpnListener);
 
-router.post('/login', C.postLogin);
+router.post('/login', C.teamLogin);
+
 router.post('/create', auth, C.createPost);
 
 module.exports = router;

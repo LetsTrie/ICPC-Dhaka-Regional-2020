@@ -2,10 +2,10 @@ const Joi = require('joi');
 
 exports.registerValidation = (data) => {
   const compareWith = Joi.object({
-    team: Joi.string().alphanum().min(6).max(30).required(),
+    team: Joi.string().min(6).max(30).required(),
     university: Joi.string().required(),
     password: Joi.string().min(6).required(),
-    confirmPassword: Joi.string().min(6).required(),
+    confirmPassword: Joi.string().required(),
     coach: Joi.object({
       firstname: Joi.string().required(),
       lastname: Joi.string().required(),
@@ -24,7 +24,7 @@ exports.registerValidation = (data) => {
         tshirtSize: Joi.string().required(),
         affiliation: Joi.string().required(),
       })
-    ),
+    ).length(3),
   });
 
   return compareWith.validate(data);

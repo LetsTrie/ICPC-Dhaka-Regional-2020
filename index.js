@@ -10,7 +10,7 @@ require('./config/databaseSetup.js')();
 // Express set up
 app.use(require('cors')());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', require('./index.route'));
 

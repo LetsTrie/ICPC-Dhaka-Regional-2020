@@ -1,11 +1,31 @@
-import { createStore, applyMiddleware } from 'redux'
-import root from './reducers'
-import thunk from 'redux-thunk'
-import { routerMiddleware, connectRouter } from 'connected-react-router'
-import { createHashHistory } from 'history'
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducers from './reducers';
+import thunk from 'redux-thunk';
 
-const history = createHashHistory()
-const store = createStore(root, applyMiddleware(thunk, routerMiddleware(history)))
+const middleware = [thunk];
 
-export default store
+const saveToLocalStorage = (state) => {
+  const serializedState = JSON.stringify(state);
+  localStorage.setItem('state', serializedState);
+};
 
+const loadFromLocalStorage = () => {
+  const serializedState = localStorage.getItem('state');
+  if (serializedState === null) return undefined;
+  return JSON.parse(serializedState);
+};
+
+const persistedState = loadFromLocalStorage();
+
+const store = createStore(
+  rootReducers,
+  persistedState,
+  compose(
+    applyMiddleware(...middleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
+
+store.subscribe(() => saveToLocalStorage(store.getState()));
+
+export default store;
