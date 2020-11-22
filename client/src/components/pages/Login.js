@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 
 import useFormFields from '../HandleForms';
 import { loginAction } from '../../action/authentication';
+import Loader from '../ui/Loader';
 
 const useStyles = makeStyles({
   TextField: {
@@ -34,9 +35,11 @@ const useStyles = makeStyles({
 });
 
 const Login = (props) => {
-  // Action 
+  // Action
   const { loginAction } = props;
   // Store
+  const { isLoading, error } = props.auth;
+  const { isAuthenticated } = props.cred;
 
   // MUI Classes
   const classes = useStyles();
@@ -45,36 +48,18 @@ const Login = (props) => {
   let initialState = { team: '', password: '' };
   const { formFields, createChangeHandler } = useFormFields(initialState);
 
-  // const [isError, setIsError] = useState(null);
-  // const dispatch = useDispatch();
-  // const history = useHistory();
-  // const auth = useSelector((state) => state.auth);
-
-  // const search = props.location.search; // could be '?foo=bar'
-  // const params = new URLSearchParams(search);
-  // console.log(params.get('checkout'));
-
-  // useEffect(() => {
-  //   // if (auth.error) {
-  //   //   setIsError(auth);
-  //   //   console.log('[Login]', auth);
-  //   // } else if (auth.user) {
-  //   //   console.log('home redirect');
-  //   //   history.push('/');
-  //   // }
-  // }, [auth]);
+  const params = new URLSearchParams(props.location.search);
+  const [checkoutSuccess, setCheckoutSuccess] = useState(
+    params.get('checkout') && !error ? true : false
+  );
 
   const handleSubmit = async (e) => {
-    console.log(formFields);
+    if(checkoutSuccess) setCheckoutSuccess(false);
     e.preventDefault();
-
     await loginAction(formFields, props.history);
-
-    // const { email, password } = credentials;
-    // if (!valid(email) && !valid(password)) {
-    //   dispatch(login(credentials));
-    // }
   };
+
+  useEffect(() => {}, [checkoutSuccess]);
 
   const styles = {
     linkStyles: {
@@ -91,6 +76,7 @@ const Login = (props) => {
 
   return (
     <div className='login_wrapper'>
+      {isLoading && <Loader />}
       <Header />
       <div className='login'>
         <div className='login_container'>
@@ -100,13 +86,18 @@ const Login = (props) => {
           <div className='login_header'>
             <p>Team Account Login </p>
           </div>
-          {/* {isError && (
+          {checkoutSuccess && (
+            <Alert severity='success' style={{marginBottom: '1.2rem'}}>
+              Your registration is successfully completed!
+            </Alert>
+          )}
+          {error && (
             <div style={{ padding: '15px 0' }}>
               <Alert variant='filled' severity='error'>
-                {isError.msg}
+                {error}
               </Alert>
             </div>
-          )} */}
+          )}
           <form onSubmit={handleSubmit}>
             <CustomTextField
               className={classes.TextField}

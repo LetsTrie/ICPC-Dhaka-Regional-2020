@@ -166,24 +166,17 @@ exports.teamLogin = async (req, res) => {
     } else {
       return res.status(401).json({
         success: false,
-        message: 'Invalid Team name or Password !!',
+        message: 'Incorrect password',
       });
     }
   } else {
     return res.status(401).json({
       success: false,
-      message: 'Invalid Team name or Password !!',
+      message: 'Team not found',
     });
   }
 };
 
-exports.createPost = async (req, res) => {
-  res.json({
-    id: req.user,
-  });
-};
-
-exports.uploadImage = async (req, res) => {
-  console.log('uploaded');
-  res.send('uploaded');
+exports.teamInformation = async (req, res) => {
+  return res.status(200).json({ success: true, team: req.team });
 };

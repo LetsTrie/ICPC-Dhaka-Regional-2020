@@ -2,37 +2,47 @@ import {
   AUTH_LOADING_LOGIN,
   AUTH_ERROR_LOGIN,
   AUTH_SUCCESSFUL_LOGIN,
+  STORE_TOKEN,
 } from './types';
 
 export const loginAction = (body, history) => async (dispatch) => {
-  console.log(body, history);
-  // dispatch({ type: AUTH_LOADING_LOGIN });
-  const URL = 'http://localhost:5000/api/v1/auth/login';
-  const jso = await fetch(URL, {
+  dispatch({ type: AUTH_LOADING_LOGIN });
+  const URL = 'http://localhost:5000/api/v1/auth';
+  const jso = await fetch(`${URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
   const response = await jso.json();
   console.log(response);
-  // if (!response.success) {
-  //   // show error message
-  // } else {
-  //   // save cred and go to my profile
-  //   // dispatch({ type: AUTH_SUCCESSFUL_LOGIN });
-  //   // const { accessToken, refreshToken } = data;
-  //   // const userInfo = await fetch(`/api/v1/auth/view-profile`, {
-  //   //   method: 'GET',
-  //   //   headers: {
-  //   //     Authorization: `Bearer ${accessToken}`,
-  //   //   },
-  //   // });
-  //   // const user = await userInfo.json();
-  //   // if (user.success) {}
-  //   // dispatch({
-  //   //   type: TOKENS,
-  //   //   payload: { accessToken, refreshToken, user: user.user },
-  //   // });
-  //   // history.push('/user/profile');
-  // }
+  if (!response.success) {
+    dispatch({
+      type: AUTH_ERROR_LOGIN,
+      message: response.message,
+    });
+  } else {
+    console.log('very good');
+    const { accessToken } = response;
+    const TeamJson = await fetch(`${URL}/teamInformation`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const teamInfo = await TeamJson.json();
+    console.log(teamInfo);
+    if (teamInfo.success) {
+      dispatch({ type: AUTH_SUCCESSFUL_LOGIN });
+      dispatch({
+        type: STORE_TOKEN,
+        payload: { accessToken, teamInfo: teamInfo.team },
+      });
+      history.push('/');
+    } else {
+      dispatch({
+        type: AUTH_ERROR_LOGIN,
+        message: teamInfo.message,
+      });
+    }
+  }
 };

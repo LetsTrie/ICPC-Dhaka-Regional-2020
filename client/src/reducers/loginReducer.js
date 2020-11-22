@@ -8,7 +8,6 @@ import {
 const initialState = {
   isLoading: false,
   error: undefined,
-  errorField: undefined,
   formSuccess: false,
 };
 
@@ -27,7 +26,6 @@ export default function (state = initialState, action) {
       return {
         ...initialState,
         error: action.message,
-        errorField: action.errorField,
       };
     case AUTH_SUCCESSFUL_LOGIN:
       return {

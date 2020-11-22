@@ -1,19 +1,18 @@
-import { TOKENS, LOGOUT } from '../action/types';
+import { STORE_TOKEN, LOGOUT } from '../action/types';
 
 const initialState = {
   accessToken: null,
   refreshToken: null,
   isAuthenticated: false,
-  userInfo: {},
+  teamInfo: {},
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case TOKENS:
+    case STORE_TOKEN:
       return {
         accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken,
-        userInfo: action.payload.user,
+        teamInfo: action.payload.teamInfo,
         isAuthenticated: true,
       };
     case LOGOUT:

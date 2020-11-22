@@ -3,7 +3,7 @@ const multer = require('multer');
 const C = require('../controller/auth.js');
 const router = require('express').Router();
 const { auth } = require('../middlewares/auth.js');
-
+const M = require('../middlewares/authorization');
 let storage = multer.diskStorage({
   destination: function (req, res, cb) {
     cb(null, 'uploads');
@@ -25,9 +25,10 @@ router.post('/register/info', C.registerInfo);
 router.post('/register/upload', registerUpload, C.registerUpload);
 router.get('/register/payment/init', C.paymentInitiate);
 router.post('/register/payment/IpnListener', C.paymentIpnListener);
-
 router.post('/login', C.teamLogin);
 
-router.post('/create', auth, C.createPost);
+router.get('/teamInformation', M.verifyToken, C.teamInformation);
+
+// router.post('/create', auth, C.createPost);
 
 module.exports = router;
