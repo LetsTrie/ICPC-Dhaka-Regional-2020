@@ -1,56 +1,68 @@
-html {
-  // font-size: 80%;
-}
-.Profile {
-  background-color: #eee;
-  .contentWrapper {
-    width: 60%;
+@import '_main';
+@import '_mixin';
+
+.profile {
+  @include VectorArt;
+
+  &__wrapper {
+    width: 75%;
     margin: auto;
-    padding: 50px 0;
+    padding: 5rem 0;
 
-    @media (max-width: 1200px) {
-      width: 75%;
-    }
-    @media (max-width: 900px) {
-      padding: 20px;
-      width: 85%;
-    }
-
-    .container {
+    .flex_parent {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      @media (max-width: 900px) {
-        flex-direction: column;
-      }
-      .left {
-        width: 28%;
+      box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+
+      .flex_child:first-child {
+        width: 30%;
         display: inline-block;
-        // height: 230px;
-        background-color: #fff;
-        @media (max-width: 900px) {
-          width: 90%;
-          margin: auto;
-        }
-        .team-name {
-          padding: 0 20px;
-          p {
-            color: gray;
+        background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+        padding: 3.3rem 0;
+        color: white;
+        margin: 10px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        font-weight: 300;
+
+        .teamImageNameUniv {
+          text-align: center;
+          &__img {
+            img {
+              height: 100px;
+              width: auto;
+              border-radius: 100%;
+            }
+          }
+
+          &__name_univ {
+            padding-bottom: 2rem;
+            p {
+              letter-spacing: .3px;
+              line-height: 160%;
+              &:first-child {
+                font-size: 3.3rem;
+              }
+
+              &:last-child {
+                font-size: 1.9rem;
+              letter-spacing: .5px;
+              }
+            }
           }
         }
       }
 
-      .right {
+      .flex_child:last-child {
         width: 70%;
         background-color: #fff;
-        border-top: 3px solid #ffba60;
-        @media (max-width: 900px) {
-          width: 90%;
-          margin: auto;
-          margin-top: 20px;
-        }
+
         .info-container {
-          padding: 25px 15px;
+          padding: 25px 5px;
 
           .section-header {
             display: flex;
@@ -61,7 +73,7 @@ html {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
             h4 {
-              padding: 0 10px;
+              padding: 0 9px;
             }
           }
           .section-body {
@@ -69,35 +81,20 @@ html {
             .row {
               display: flex;
               justify-content: space-between;
-              width: 90%;
-              margin: auto;
               padding: 10px 0;
-              @media (max-width: 900px) {
-                flex-direction: column;
-                padding: 0;
-              }
-
+              margin-left: 45px;
               .field {
                 width: 45%;
                 white-space: nowrap;
-                @media (max-width: 900px) {
-                  width: 100%;
-                  padding: 5px 0;
-                }
+
                 .field-name {
                   color: gray;
                   font-size: 13.5px;
-                  @media (max-width: 900px) {
-                    font-size: 12px;
-                  }
                 }
                 .field-value {
                   color: #333;
                   font-size: 16.5px;
                   padding: 5px 0;
-                  @media (max-width: 900px) {
-                    font-size: 15px;
-                  }
                 }
               }
             }
@@ -107,30 +104,21 @@ html {
               width: 90%;
               margin: auto;
               padding: 15px 0;
-              @media (max-width: 900px) {
-                justify-content: space-around;
-              }
               .image {
-                width: 17.5%;
+                margin: 0 2px;
+                margin-right: 2rem;
+
               }
               .texts {
                 padding: 13.5px 0;
                 white-space: nowrap;
-                @media (max-width: 900px) {
-                  padding: 0;
-                }
                 .name {
                   font-size: 16.5px;
-                  @media (max-width: 900px) {
-                    font-size: 13.5px;
-                  }
+                  padding-bottom: 6px;
                 }
                 .about {
                   color: gray;
                   font-size: 13.5px;
-                  @media (max-width: 900px) {
-                    font-size: 10px;
-                  }
                 }
               }
             }

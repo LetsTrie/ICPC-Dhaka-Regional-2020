@@ -211,6 +211,7 @@ ul {
 .login_wrapper {
   min-height: 90vh;
   padding-bottom: 8rem;
+  font-family: 'Roboto', sans-serif;
 }
 
 @media (min-width: 600px) {
@@ -347,4 +348,77 @@ ul {
   color: #4d4d4d;
   line-height: 160%;
   letter-spacing: .4px;
+}
+
+.admin_login_wrapper .login {
+  max-width: 55rem;
+  margin: auto;
+  padding-top: 1rem;
+  margin-top: 6.5rem;
+}
+
+@media (max-width: 600px) {
+  .admin_login_wrapper .login {
+    padding-top: 0.5rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.admin_login_wrapper .login .login_container {
+  padding: 1.5rem 5rem;
+  background-color: #fff;
+  border-radius: 10px;
+  padding-bottom: 3.4rem;
+  -webkit-box-shadow: 2px 5px 10px gray;
+          box-shadow: 2px 5px 10px gray;
+}
+
+@media (max-width: 600px) {
+  .admin_login_wrapper .login .login_container {
+    padding: 0.8rem 2rem;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+}
+
+.admin_login_wrapper .login .login_container .login_logo {
+  width: 50%;
+  margin: auto;
+  padding: 10px;
+  padding-top: 5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.admin_login_wrapper .login .login_container .login_logo img {
+  width: 100%;
+}
+
+.admin_login_wrapper .login .login_container .login_header {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.admin_login_wrapper .login .login_container .login_header p {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1.7rem;
+  font-size: 2.5rem;
+  color: #646464;
+}
+
+.admin_login_wrapper .login .login_container p {
+  color: #666;
+  padding: 10px 0;
+}
+
+.admin_login_wrapper .login .login_container .login_forget_password {
+  text-align: right;
+  font-size: 15px;
+  padding: 0;
 }

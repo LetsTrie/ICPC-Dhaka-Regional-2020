@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { admin } = require('../config/admin')
+const { admin } = require('../config/adminCredentials')
 
 exports.auth = async (req, res, next) => {
 try {

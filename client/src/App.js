@@ -17,25 +17,20 @@ import Profile from './components/pages/Profile';
 import EditProfile from './components/pages/EditProfile';
 import Temp from './components/pages/Temp';
 
-import Admin from './components/pages/Admin';
+import AdminPanel from './components/pages/AdminPanel';
 import AdminLogin from './components/pages/AdminLogin';
-
-import Upload from './components/pages/Upload';
-import { useSelector } from 'react-redux';
-
-import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
-import { adminLogin } from './action';
-
 import { connect } from 'react-redux';
 
 function App(props) {
-  const { isAuthenticated } = props.cred;
+  const { isAuthenticated, isAdmin } = props.cred;
 
-  const protectedRoutes = (component, role = 'team') => {
-    let loginPage = role === 'admin' ? Login : AdminLogin;
-    return isAuthenticated ? component : loginPage;
+  const teamRoutes = (component) => {
+    return isAuthenticated && !isAdmin ? component : Login;
   };
+
+  const adminRoutes = (component) => {
+    return isAuthenticated && isAdmin ? component: AdminLogin; 
+  }
 
   return (
     <div className='App'>
@@ -54,22 +49,10 @@ function App(props) {
               <Route exact path='/committee/:subMenu' component={Committee} />
               <Route exact path='/contact' component={ContactUs} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/upload' component={Upload} />
-              <Route exact path='/profile' component={protectedRoutes(Profile)} />
+              <Route exact path='/profile' component={teamRoutes(Profile)} />
               <Route exact path='/profile/edit' component={EditProfile} />
-              <Route exact path='/temp' component={Temp} />
               <Route exact path='/admin/login' component={AdminLogin} />
-              <Route exact path='/admin' component={Admin} />
-              <Route
-                exact
-                path='/admin/denied'
-                component={() => (
-                  <>
-                    <Header />
-                    <div style={{ fontSize: 25 }}>Admin access denied</div>
-                  </>
-                )}
-              />
+              <Route exact path='/admin' component={adminRoutes(AdminPanel)} />
             </Switch>
           </div>
         </BrowserRouter>

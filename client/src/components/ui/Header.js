@@ -219,6 +219,7 @@ function BackToTop(props) {
 
   useEffect(() => {
     const { pathname } = window.location;
+    
 
     mainMenu.forEach(({ link, id }) => {
       if (pathname === link && value !== id) {

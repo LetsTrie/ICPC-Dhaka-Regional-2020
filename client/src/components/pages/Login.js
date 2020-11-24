@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import logo from '../../assests/images/icpclogo_big.png';
 import { Link } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import '../../assests/css/auth.css';
 import Header from '../ui/Header';
 import CustomTextField from '../ui/CustomTextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +13,8 @@ import { connect } from 'react-redux';
 import useFormFields from '../HandleForms';
 import { loginAction } from '../../action/authentication';
 import Loader from '../ui/Loader';
+
+import '../../assests/css/auth.css';
 
 const useStyles = makeStyles({
   TextField: {
@@ -50,6 +51,7 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     if(checkoutSuccess) setCheckoutSuccess(false);
     e.preventDefault();
+    console.log(formFields);
     await loginAction(formFields, props.history);
   };
 
@@ -81,7 +83,7 @@ const Login = (props) => {
       <div className='login'>
         <div className='login_container'>
           <div className='login_logo'>
-            <img src={logo} alt='icpc logo' />
+            <img src={logo} alt='icpc' />
           </div>
           <div className='login_header'>
             <p>Team Account Login </p>

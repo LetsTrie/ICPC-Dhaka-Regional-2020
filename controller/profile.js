@@ -1,6 +1,6 @@
 const User = require('../models/users.js')
 const bcrypt = require('bcryptjs')
-const { admin } = require('../config/admin')
+const { admin } = require('../config/adminCredentials')
 
 const check = data => {
   return data == '' || data == undefined || data == null

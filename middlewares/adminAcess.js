@@ -1,4 +1,4 @@
-const { admin } = require('../config/admin')
+const { admin } = require('../config/adminCredentials')
 
 exports.adminAccess = async (req, res, next) => {
   if (req.user && req.user == admin.id) {
