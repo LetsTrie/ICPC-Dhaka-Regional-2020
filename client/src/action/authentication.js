@@ -40,7 +40,7 @@ export const loginAction = (body, history, isAdmin = false) => async (
         type: ADMIN_STORE_TOKEN,
         payload: { accessToken },
       });
-      // history.push('/admin');
+      history.push('/admin');
       return;
     }
 

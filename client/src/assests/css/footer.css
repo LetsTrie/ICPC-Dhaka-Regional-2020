@@ -165,17 +165,29 @@
   padding: 8px 10px;
 }
 
+.footerr_wrapper .inputBox {
+  height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .footerr_wrapper .inputBox input {
-  padding: 10px;
+  padding: 12px 10px;
   width: 50%;
   margin: 0;
   height: 100%;
 }
 
+.footerr_wrapper .inputBox input:focus, .footerr_wrapper .inputBox input:active {
+  outline: none;
+}
+
 .footerr_wrapper .inputBox button {
-  padding: 18px;
-  padding-top: 11px;
-  padding-bottom: 11.55px;
+  padding: 0px 16px;
+  letter-spacing: .5px;
   font-size: 14px;
   font-weight: 700;
   font-family: 'Roboto', sans-serif;

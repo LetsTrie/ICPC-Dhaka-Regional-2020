@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { validateContactUs } = require('../validations/contactUs')
+const { validateContactUs } = require('../validations/contact')
 const { sendClusterMail } = require('../config/sendMail')
 
 exports.getNavbar = async (req, res) => {
@@ -29,7 +29,7 @@ exports.contactUs = async (req, res) => {
     const receiver = 'safwan.du16@gmail.com'
     const subject = 'ICPC Dhaka Regionals 2021 - Contact Us'
     // sendClusterMail(receiver, subject, message)
-    res.json({
+    return res.status(200).json({
       status: true,
       msg: 'Your message has been received. Thanks for the concern!'
     })

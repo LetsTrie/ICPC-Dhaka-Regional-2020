@@ -9,6 +9,7 @@ import { createHashHistory } from 'history';
 
 import loginReducer from './loginReducer';
 import credentialReducer from './credentialReducer';
+import contactUsReducer from './contactUsReducer';
 
 const history = createHashHistory()
 
@@ -20,5 +21,6 @@ export default combineReducers({
   user, 
   admin,
   loginReducer,
-  credentialReducer
+  credentialReducer,
+  contactUsReducer
 });

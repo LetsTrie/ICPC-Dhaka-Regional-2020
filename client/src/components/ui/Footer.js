@@ -13,7 +13,7 @@ const Footer = () => {
             <div className='flex_child_info'>
               <div className='fourIcons'>
                 <a
-                  href='http://google.com/'
+                  href='https://www.facebook.com/icpcdhaka2020'
                   className='fa fa-facebook'
                   target='_blank'
                   rel='noopener noreferrer'

@@ -1,14 +1,14 @@
 const nodemailer = require('nodemailer');
 
 const Transport = nodemailer.createTransport({
-service: 'Gmail',
-auth: {
-  user: 'safwan.du16@gmail.com',
-  pass: process.env.Mail_Password
-}
-})
+  service: 'Gmail',
+  auth: {
+    user: 'safwan.du16@gmail.com',
+    pass: process.env.Mail_Password,
+  },
+});
 
-module.exports.passwordResetMail = async (email, type) => {
+exports.passwordResetMail = async (email, type) => {
   const mailBody = ` <strong>Dear User</strong>
   <br>
   Seems like you just forgot your password.
@@ -29,8 +29,7 @@ module.exports.passwordResetMail = async (email, type) => {
   return await Transport.sendMail(mailOptions);
 };
 
-module.exports.sendClusterMail = async (address, subject, body) => {
-  
+exports.sendClusterMail = async (address, subject, body) => {
   let mailOptions = {
     from: 'ICPC Dhaka Regionals 2021',
     to: address, //zaidfarzan@aol.com
@@ -40,4 +39,3 @@ module.exports.sendClusterMail = async (address, subject, body) => {
 
   return await Transport.sendMail(mailOptions);
 };
-

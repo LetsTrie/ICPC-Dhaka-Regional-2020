@@ -6,66 +6,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alert from '@material-ui/lab/Alert';
 import { contactUs } from '../../action/index';
 
-function ContactUs() {
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+import { Redirect } from 'react-router-dom';
 
-  const [states, setStates] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+import { connect } from 'react-redux';
 
-  const [alert, setAlert] = useState(null);
-  const [disable, setDisable] = useState(false);
+import useFormFields from '../HandleForms';
+import { loginAction } from '../../action/authentication';
+import Loader from '../ui/Loader';
 
-  useEffect(() => {
-    if (user.error != null) {
-      setAlert(user);
-    }
-    if (user.error == false) {
-      setTimeout(() => {
-        window.location.reload(false);
-      }, 3000);
-    }
-  }, [user]);
+import { contactUsAction } from '../../action/contactUs';
 
-  const check = (data) => {
-    return data == '' || data == null || data == undefined;
-  };
+function ContactUs(props) {
+  // Initial State
+  let initialState = { name: '', email: '', message: '' };
+  const { formFields, createChangeHandler } = useFormFields(initialState);
 
-  const handleChange = (e) => {
-    let temp = { ...states };
-    temp[e.target.name] = e.target.value;
-    setStates(temp);
-  };
+  const { contactUsAction } = props;
+  const { error, isLoading, formSuccess } = props.contact;
 
-  const handleSubmit = (e) => {
-    if (check(states.name)) {
-      setAlert({
-        error: true,
-        msg: 'Please enter your name',
-      });
-    } else if (check(states.email)) {
-      setAlert({
-        error: true,
-        msg: 'Please enter your email',
-      });
-    } else if (check(states.message)) {
-      setAlert({
-        error: true,
-        msg: 'Please enter the message',
-      });
-    } else {
-      setAlert(null);
-      setDisable(true);
-      dispatch(contactUs(states));
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await contactUsAction(formFields);
   };
 
   return (
     <div>
       <div className='contact'>
+        {isLoading && <Loader />}
         <div className='contact__nav'>
           <Header />
         </div>
@@ -76,27 +43,32 @@ function ContactUs() {
 
         <section>
           <div className='contactUsForm'>
-            {alert && (
-              <Alert
-                variant='filled'
-                severity={alert.error ? 'error' : 'success'}
-              >
-                {' '}
-                {alert.msg}{' '}
-              </Alert>
-            )}
             <div className='contactUsForm_flx'>
               <div className='contactUsForm_flx_form'>
-                <form action='#' onSubmit={(e) => e.preventDefault()}>
+                {formSuccess && (
+                  <Alert severity='success' style={{ marginBottom: '1.2rem' }}>
+                    We've received your message. We'll get back to you shortly.
+                  </Alert>
+                )}
+                {error && (
+                  <div style={{ padding: '15px 0' }}>
+                    <Alert variant='filled' severity='error'>
+                      {error}
+                    </Alert>
+                  </div>
+                )}
+                <form onSubmit={handleSubmit}>
                   <div className='textbox'>
                     <label htmlFor='nameID'>Full Name</label> <br />
                     <input
-                      type='text'
-                      placeholder='Your full name'
+                      placeholder='Full name'
                       autoComplete='off'
-                      id='nameID'
                       name='name'
-                      onChange={handleChange}
+                      type='text'
+                      id='nameID'
+                      onChange={createChangeHandler('name')}
+                      required={true}
+                      minlength='3'
                     />
                   </div>
 
@@ -104,11 +76,13 @@ function ContactUs() {
                     <label htmlFor='emailID'>Email</label> <br />
                     <input
                       type='text'
-                      placeholder='Your email address'
+                      placeholder='Email address'
                       autoComplete='off'
-                      id='emailID'
                       name='email'
-                      onChange={handleChange}
+                      type='email'
+                      id='emailID'
+                      onChange={createChangeHandler('email')}
+                      required={true}
                     />
                   </div>
 
@@ -119,14 +93,15 @@ function ContactUs() {
                       rows='4'
                       placeholder='Write down your message in details'
                       name='message'
-                      onChange={handleChange}
+                      type='text'
+                      onChange={createChangeHandler('message')}
+                      required={true}
+                      minlength='10'
                     ></textarea>
                   </div>
 
                   <div className='submitButton text-center'>
-                    <button onClick={handleSubmit} disabled={disable}>
-                      Submit
-                    </button>
+                    <button type='submit'>Submit</button>
                   </div>
                 </form>
               </div>
@@ -186,4 +161,9 @@ function ContactUs() {
   );
 }
 
-export default ContactUs;
+const mapStateToProps = (state) => ({
+  contact: state.contactUsReducer,
+});
+
+const mapDispatchToAction = { contactUsAction };
+export default connect(mapStateToProps, mapDispatchToAction)(ContactUs);
