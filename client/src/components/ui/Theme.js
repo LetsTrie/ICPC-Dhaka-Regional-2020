@@ -19,10 +19,11 @@ export default createMuiTheme({
   typography: {
     htmlFontSize: 10,
     tab: {
-      fontFamily: 'Raleway',
+      fontFamily: 'Lato',
       textTransform: 'none',
       fontWeight: 700,
       fontSize: '1rem',
+      letterSpacing: '1px'
     },
   },
 });

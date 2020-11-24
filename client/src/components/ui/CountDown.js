@@ -9,7 +9,8 @@ function CountDown() {
   let interval = useRef();
 
   const startTime = () => {
-    let eventTime = new Date(2021, 3, 1).getTime();
+    // 28 February 2021
+    let eventTime = new Date(2021, 1, 28).getTime();
 
     interval = setInterval(() => {
       let currentTime = new Date().getTime();

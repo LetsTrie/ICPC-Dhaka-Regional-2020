@@ -91,8 +91,8 @@ const Footer = () => {
                 <div className='flex_single_child_info'>
                   <p className='info_heading'>Address</p>
                   <p className='info_details'>
-                    Department of CSE, University of Dhaka (Mokarram Bhaban,
-                    Doyel Chattar, Shahbag, Dhaka)
+                    Department of CSE, 3rd Floor, Science Complex Building (Near
+                    Mukarram Bhaban, Doyel Chattar, Shahbag, Dhaka)
                   </p>
                 </div>
               </div>
@@ -103,7 +103,7 @@ const Footer = () => {
                 </div>
                 <div className='flex_single_child_info'>
                   <p className='info_heading'>Phone</p>
-                  <p className='info_details'>+8801938929740</p>
+                  <p className='info_details'>+88029670734</p>
                 </div>
               </div>
               <div className='flex_single_child'>
@@ -112,7 +112,7 @@ const Footer = () => {
                 </div>
                 <div className='flex_single_child_info'>
                   <p className='info_heading'>Email</p>
-                  <p className='info_details'>sakibkhan111296@gmail.com</p>
+                  <p className='info_details'>office@cse.du.ac.bd</p>
                 </div>
               </div>
             </div>

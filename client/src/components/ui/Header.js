@@ -16,11 +16,6 @@ import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from 'material-ui-popup-state/HoverMenu';
 import { useMediaQuery, IconButton } from '@material-ui/core';
-import { SwipeableDrawer } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import NavMenu from '../../data/navbar';
 
 import { connect } from 'react-redux';
@@ -70,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     ...theme.typography.tab,
     minWidth: 10,
-    marginLeft: '25px',
+    marginLeft: '15px',
     color: 'white',
     fontSize: '1.7rem',
     opacity: 0.8,
@@ -80,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     opacity: 1,
   },
   login: {
-    marginLeft: '40px',
+    marginLeft: '33px',
     marginRight: '25px',
     fontSize: '2rem',
     paddingLeft: '2.2rem',
@@ -353,7 +348,7 @@ function BackToTop(props) {
             to='/'
             className={classes.logoContainer}
           >
-            <img alt='ICPC Logo' src={logo} className={classes.logo} />
+            <img alt='ICPC' src={logo} className={classes.logo} />
           </Button>
           {matches ? null : tabs}
         </Toolbar>

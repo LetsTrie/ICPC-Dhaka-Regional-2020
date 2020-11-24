@@ -13,26 +13,15 @@ import Divider from '@material-ui/core/Divider';
 import Collapse from '@material-ui/core/Collapse';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import EditProfile from './EditProfile';
 
 import gravatar from '../../assests/images/gravatar.png';
-import userImg from '../../assests/images/gallery1.jpg';
 import MailOutline from '@material-ui/icons/MailOutline';
 import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 import Edit from '@material-ui/icons/Edit';
 import Info from '@material-ui/icons/Info';
 import People from '@material-ui/icons/People';
 import { useMediaQuery } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setProfileError,
-  setUser,
-  updatePassword,
-  updateEmail,
-} from '../../action/index';
+import { useSelector } from 'react-redux';
 
 import { connect } from 'react-redux';
 

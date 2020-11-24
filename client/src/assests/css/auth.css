@@ -72,16 +72,22 @@ ul {
 }
 
 .register_wrapper .register {
-  max-width: 150rem;
+  max-width: 90%;
   margin: auto;
   padding-top: 2rem;
   margin-top: 6.5rem;
 }
 
+@media (max-width: 1000px) {
+  .register_wrapper .register {
+    max-width: 98%;
+  }
+}
+
 @media (max-width: 600px) {
   .register_wrapper .register {
-    padding-top: 0.5rem;
-    margin-top: 2rem;
+    padding-top: 0rem;
+    margin-top: 1rem;
     padding-bottom: 1rem;
   }
 }
@@ -113,6 +119,12 @@ ul {
           user-select: none;
 }
 
+@media (max-width: 500px) {
+  .register_wrapper .register_logo img {
+    width: 100%;
+  }
+}
+
 .register_wrapper .register_your_team {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -126,6 +138,13 @@ ul {
   font-size: 2.9rem;
   color: #555555;
   padding-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .register_wrapper .register_your_team p {
+    font-size: 3.5rem;
+    margin-bottom: 2.6rem;
+  }
 }
 
 .register_flex {
@@ -147,6 +166,23 @@ ul {
   width: 28%;
 }
 
+@media (max-width: 800px) {
+  .register_flex {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .register_flex_left {
+    width: 98%;
+  }
+  .register_flex_right {
+    width: 98%;
+    padding-bottom: 2.5rem;
+  }
+}
+
 .register_flex .secondary_heading {
   padding-bottom: 2rem;
 }
@@ -165,30 +201,14 @@ ul {
   display: flex;
 }
 
-.payment_methods {
-  margin-top: 2rem;
-  height: 350px;
-  width: 100%;
-  background: gray;
-  font-size: 5rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: white;
+@media (max-width: 600px) {
+  .register_flex .flex_row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 
 .team_members .member_count {
@@ -315,20 +335,26 @@ ul {
 }
 
 .registrationFee__header {
-  margin-top: .7rem;
+  margin-top: 0.7rem;
   padding-bottom: 1.4rem;
 }
 
 .registrationFee__header p {
-  font-size: 3.5rem;
+  font-size: 3.3rem;
   font-weight: 300;
   line-height: 1.2;
   color: #333;
 }
 
 .registrationFee__amount {
-  margin-top: .7rem;
+  margin-top: 0.7rem;
   padding-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .registrationFee__amount {
+    padding-bottom: 1.3rem;
+  }
 }
 
 .registrationFee__amount p {
@@ -339,7 +365,7 @@ ul {
 }
 
 .registrationFee__des {
-  margin-top: .4rem;
+  margin-top: 0.4rem;
 }
 
 .registrationFee__des small {
@@ -347,7 +373,7 @@ ul {
   line-height: 1.2;
   color: #4d4d4d;
   line-height: 160%;
-  letter-spacing: .4px;
+  letter-spacing: 0.4px;
 }
 
 .admin_login_wrapper .login {

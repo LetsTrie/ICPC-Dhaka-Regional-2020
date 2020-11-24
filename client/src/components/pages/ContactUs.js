@@ -2,67 +2,66 @@ import React, { useState, useEffect } from 'react';
 import Header from '../ui/Header';
 import '../../assests/css/contact.css';
 
-import { useDispatch, useSelector } from 'react-redux'
-import Alert from '@material-ui/lab/Alert'
-import { contactUs } from '../../action/index'
+import { useDispatch, useSelector } from 'react-redux';
+import Alert from '@material-ui/lab/Alert';
+import { contactUs } from '../../action/index';
 
 function ContactUs() {
-
-  const user = useSelector(state => state.user)
-  const dispatch = useDispatch() 
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const [states, setStates] = useState({
     name: '',
     email: '',
-    message: ''
-  })
+    message: '',
+  });
 
-  const [alert, setAlert] = useState(null)
-  const [disable, setDisable] = useState(false)
+  const [alert, setAlert] = useState(null);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     if (user.error != null) {
-      setAlert(user)
+      setAlert(user);
     }
     if (user.error == false) {
       setTimeout(() => {
-        window.location.reload(false)
-      }, 3000)
+        window.location.reload(false);
+      }, 3000);
     }
-  }, [user])
-  
-  const check = data => {
-    return data == '' || data == null || data == undefined
-  } 
+  }, [user]);
 
-  const handleChange = e => {
-    let temp = {...states}
-    temp[e.target.name] = e.target.value
-    setStates(temp)
-  }
+  const check = (data) => {
+    return data == '' || data == null || data == undefined;
+  };
 
-  const handleSubmit = e => {
+  const handleChange = (e) => {
+    let temp = { ...states };
+    temp[e.target.name] = e.target.value;
+    setStates(temp);
+  };
+
+  const handleSubmit = (e) => {
     if (check(states.name)) {
       setAlert({
         error: true,
-        msg: 'Please enter your name'
-      })
+        msg: 'Please enter your name',
+      });
     } else if (check(states.email)) {
       setAlert({
         error: true,
-        msg: 'Please enter your email'
-      })
+        msg: 'Please enter your email',
+      });
     } else if (check(states.message)) {
       setAlert({
         error: true,
-        msg: 'Please enter the message'
-      })
+        msg: 'Please enter the message',
+      });
     } else {
-      setAlert(null)
-      setDisable(true)
-      dispatch(contactUs(states))
+      setAlert(null);
+      setDisable(true);
+      dispatch(contactUs(states));
     }
-  }
+  };
 
   return (
     <div>
@@ -77,9 +76,15 @@ function ContactUs() {
 
         <section>
           <div className='contactUsForm'>
-            {
-              alert && <Alert variant='filled' severity={ alert.error ? 'error' : 'success'}> { alert.msg } </Alert>
-            }
+            {alert && (
+              <Alert
+                variant='filled'
+                severity={alert.error ? 'error' : 'success'}
+              >
+                {' '}
+                {alert.msg}{' '}
+              </Alert>
+            )}
             <div className='contactUsForm_flx'>
               <div className='contactUsForm_flx_form'>
                 <form action='#' onSubmit={(e) => e.preventDefault()}>
@@ -119,7 +124,9 @@ function ContactUs() {
                   </div>
 
                   <div className='submitButton text-center'>
-                    <button onClick={handleSubmit} disabled={disable}>Submit</button>
+                    <button onClick={handleSubmit} disabled={disable}>
+                      Submit
+                    </button>
                   </div>
                 </form>
               </div>
@@ -132,7 +139,7 @@ function ContactUs() {
                     <span className='fa fa-envelope'></span>
                   </div>
                   <div className='contactUsForm_flx_contact_info_des'>
-                    <p>sakibkhan111296@gmail.com</p>
+                    <p>office@cse.du.ac.bd</p>
                   </div>
                 </div>
                 <div className='contactUsForm_flx_contact_info'>
@@ -141,7 +148,7 @@ function ContactUs() {
                   </div>
                   <div className='contactUsForm_flx_contact_info_des'>
                     <p className='contactUsForm_flx_contact_info_des_phone'>
-                    +8801938929740
+                      +88029670734
                     </p>
                   </div>
                 </div>
@@ -152,7 +159,8 @@ function ContactUs() {
                   </div>
                   <div className='contactUsForm_flx_contact_info_des'>
                     <p>
-                    Department of CSE, University of Dhaka (Mokarram Bhaban, Doyel Chattar, Shahbag, Dhaka)
+                      Department of CSE, 3rd Floor, Science Complex Building
+                      (Near Mukarram Bhaban, Doyel Chattar, Shahbag, Dhaka)
                     </p>
                   </div>
                 </div>

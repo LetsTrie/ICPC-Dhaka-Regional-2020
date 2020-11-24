@@ -18,11 +18,14 @@ import useFormFields from '../HandleForms';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   TextField: {
     width: '50%',
     marginRight: '1rem',
     marginBottom: '1.8rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   TextFieldFullWidth: {
     width: '100%',
@@ -33,11 +36,15 @@ const useStyles = makeStyles({
     width: '50%',
     marginRight: '1rem',
     marginBottom: '1.8rem',
+
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   input: {
     display: 'none',
   },
-});
+}));
 
 const numberOfParticipants = 3;
 

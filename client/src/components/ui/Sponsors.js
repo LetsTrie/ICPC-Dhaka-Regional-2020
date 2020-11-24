@@ -24,16 +24,6 @@ function Sponsors() {
           <div className='sponsor_img'>
             <img src={ICPC_Foundation} alt='sponsor' />
           </div>
-
-          <div className='sponsor_img'>
-            <img src={JetBrain} alt='sponsor' />
-          </div>
-          <div className='sponsor_img'>
-            <img src={ACM} alt='sponsor' />
-          </div>
-          <div className='sponsor_img'>
-            <img src={AcmICPC} alt='sponsor' />
-          </div>
         </div>
       </section>
     </div>
