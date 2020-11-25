@@ -22,5 +22,5 @@ export default combineReducers({
   admin,
   loginReducer,
   credentialReducer,
-  contactUsReducer
+  contactUsReducer,
 });

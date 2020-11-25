@@ -125,7 +125,6 @@ const Login = (props) => {
               </Link>
             </p>
             <Button
-              raised
               type='submit'
               variant='contained'
               color='secondary'

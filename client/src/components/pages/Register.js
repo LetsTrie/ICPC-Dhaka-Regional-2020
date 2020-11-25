@@ -343,7 +343,6 @@ const Register = (props) => {
                   />
                   <label htmlFor='coachDpId'>
                     <Button
-                      raised
                       variant='contained'
                       component='span'
                       className={classes.button}
@@ -542,7 +541,6 @@ const Register = (props) => {
                           />
                           <label htmlFor={`p${i + 1}DpId`}>
                             <Button
-                              raised
                               variant='contained'
                               component='span'
                               className={classes.button}

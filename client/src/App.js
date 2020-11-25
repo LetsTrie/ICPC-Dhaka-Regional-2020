@@ -15,7 +15,7 @@ import Register from './components/pages/Register';
 import ContactUs from './components/pages/ContactUs';
 import Profile from './components/pages/Profile';
 import EditProfile from './components/pages/EditProfile';
-import Temp from './components/pages/Temp';
+import NotFound from './components/pages/NotFound';
 
 import AdminPanel from './components/pages/AdminPanel';
 import AdminLogin from './components/pages/AdminLogin';
@@ -29,8 +29,8 @@ function App(props) {
   };
 
   const adminRoutes = (component) => {
-    return isAuthenticated && isAdmin ? component: AdminLogin; 
-  }
+    return isAuthenticated && isAdmin ? component : AdminLogin;
+  };
 
   return (
     <div className='App'>
@@ -41,18 +41,13 @@ function App(props) {
               <Route exact path='/' component={Home} />
               <Route exact path='/gallery' component={Gallery} />
               <Route exact path='/registration/online' component={Register} />
-              <Route
-                exact
-                path='/contest-info/:subMenu'
-                component={ContestInfo}
-              />
-              <Route exact path='/committee/:subMenu' component={Committee} />
               <Route exact path='/contact' component={ContactUs} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/profile' component={teamRoutes(Profile)} />
               <Route exact path='/profile/edit' component={EditProfile} />
               <Route exact path='/admin/login' component={AdminLogin} />
               <Route exact path='/admin' component={adminRoutes(AdminPanel)} />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </BrowserRouter>

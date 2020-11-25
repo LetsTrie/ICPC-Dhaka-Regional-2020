@@ -3,12 +3,14 @@ import {
   AUTH_LOADING_LOGIN,
   AUTH_ERROR_LOGIN,
   AUTH_SUCCESSFUL_LOGIN,
+  AUTH_ADMIN_LOGIN,
 } from '../action/types';
 
 const initialState = {
   isLoading: false,
   error: undefined,
   formSuccess: false,
+  teams: []
 };
 
 export default function (state = initialState, action) {
@@ -32,7 +34,6 @@ export default function (state = initialState, action) {
         ...initialState,
         formSuccess: true,
       };
-
     default:
       return state;
   }

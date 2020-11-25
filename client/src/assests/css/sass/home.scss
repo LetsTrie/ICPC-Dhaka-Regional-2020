@@ -287,9 +287,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 70%;
+  width: 75%;
   margin: auto;
   padding: 2.5rem 0.5rem 1rem 0.5rem;
+  @media(max-width: 1350px) {
+    width: 95%;
+  }
+  @media(max-width: 1000px) {
+    width: 99%;
+  }
 
   .flex_child {
     width: 290px;
@@ -434,6 +440,9 @@
         text-align: justify;
 
         @media (max-width: 1220px) {
+          width: 95%;
+        }
+        @media (max-width: 1100px) {
           width: 98%;
         }
         p {

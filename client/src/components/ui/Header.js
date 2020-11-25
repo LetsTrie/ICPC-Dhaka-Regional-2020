@@ -16,23 +16,38 @@ import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from 'material-ui-popup-state/HoverMenu';
 import { useMediaQuery, IconButton } from '@material-ui/core';
-import NavMenu from '../../data/navbar';
-
-import { connect } from 'react-redux';
-
+import { SwipeableDrawer } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import navMenu from '../../data/navbar';
 import {
   usePopupState,
   bindHover,
   bindMenu,
 } from 'material-ui-popup-state/hooks';
 
+import { connect } from 'react-redux';
 import { logoutAction } from '../../action/authentication';
+
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
+  },
+  drawerMargin: {
+    [theme.breakpoints.down('md')]: {
+      marginTop: '90px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '75px',
+    },
   },
   toolbarMargin: {
     [theme.breakpoints.down('xl')]: {
@@ -100,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.tab,
     fontSize: '1.4rem',
     padding: '1rem 1.6rem',
-
     opacity: 0.7,
     '&:hover': {
       opacity: 1,
@@ -108,15 +122,14 @@ const useStyles = makeStyles((theme) => ({
   },
   selectedMenuItem: {
     ...theme.typography.tab,
-    fontSize: '1.2rem',
-    padding: '1rem',
-    paddingRight: '1.3rem',
+    fontSize: '1.6rem',
+    padding: '1rem 1.6rem',
     opacity: 1,
     color: 'white',
   },
   drawerIcon: {
-    height: '50px',
-    width: '50px',
+    height: '45px',
+    width: '45px',
   },
   drawerIconContainer: {
     marginLeft: 'auto',
@@ -125,16 +138,63 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawer: {
-    backgroundColor: theme.palette.common.arcBlue,
+    backgroundColor: 'white',
+    width: '270px',
   },
   drawerItem: {
     ...theme.typography.tab,
-    color: 'white',
-    opacity: 0.7,
+    color: 'black',
+    fontSize: '1.8rem',
+    opacity: 1,
+    paddingTop: '1px',
+    paddingBottom: '1px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.3rem',
+      letterSpacing: '.4px',
+      fontFamily: 'Lato',
+    },
   },
 
   drawerItemSelected: {
+    ...theme.typography.tab,
+    color: 'black',
+    fontSize: '1.8rem',
     opacity: 1,
+    paddingTop: '1px',
+    paddingBottom: '1px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.3rem',
+      fontFamily: 'Lato',
+      letterSpacing: '.4px',
+    },
+  },
+  CollapseDrawerItem: {
+    ...theme.typography.tab,
+    color: 'black',
+    fontSize: '1.75rem',
+    opacity: 1,
+    fontFamily: 'Lato',
+    letterSpacing: '.4px',
+    paddingTop: '1px',
+    paddingBottom: '1px',
+  },
+  CollapseDrawerItemSelected: {
+    ...theme.typography.tab,
+    color: 'black',
+    fontSize: '1.75rem',
+    opacity: 1,
+    letterSpacing: '.4px',
+    fontFamily: 'Lato',
+    paddingTop: '1px',
+    paddingBottom: '1px',
+  },
+  appbar: {
+    [theme.breakpoints.down('md')]: {
+      zIndex: theme.zIndex.modal + 1,
+    },
+  },
+  nested: {
+    paddingLeft: theme.spacing(3.5),
   },
 }));
 
@@ -171,9 +231,31 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 
+function redirectTo(url) {
+  window.open(url);
+}
+
 function BackToTop(props) {
-  const { isAuthenticated } = props.cred;
+  const { isAuthenticated, isAdmin } = props.cred;
   const { logoutAction } = props;
+
+  const [openCollapse, setOpen] = React.useState(false);
+
+  const handleCollapseClick = () => {
+    setOpen(!openCollapse);
+  };
+
+  const modifiedNavMenu = navMenu.filter((n) => {
+    if (isAuthenticated) {
+      if (n.name === 'Registration') return false;
+      if (isAdmin) {
+        if (n.name === 'Contact Us' || n.name === 'My Profile') return false;
+      }
+    } else {
+      if (n.name === 'My Profile') return false;
+    }
+    return true;
+  });
 
   window.dispatchEvent(new CustomEvent('resize'));
   const { children } = props;
@@ -182,58 +264,70 @@ function BackToTop(props) {
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down('md'));
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [value, setValue] = useState(0); // selected main menu
-  const [selectedIndex, setSelectedIndex] = useState({}); // menuId, subMenuId
 
-  const handleChange = (e, newValue) => {
-    setValue(newValue);
+  // Selected Menu and SubMenu Index
+  const [menuIndex, setMenuIndex] = useState(0); // selected main menu
+  const [subMenuIndex, setSubMenuIndex] = useState(null); // menuId, subMenuId
+
+  const handleMenuClick = (e, menuId) => {
+    setMenuIndex(menuId);
   };
 
-  const handleMenuItemClick = (event, subMenuId, menuId) => {
-    setSelectedIndex({ menuId, subMenuId });
-    setValue(menuId);
+  const handleSubMenuClick = (e, menuId, subMenuId) => {
+    setMenuIndex(menuId);
+    setSubMenuIndex(subMenuId);
   };
 
   const logoutHandler = async (e) => {
     await logoutAction();
   };
 
-  const mainMenu = NavMenu.map(({ link }, id) => ({ id, link }));
-  const subMenu = NavMenu.map((menu, id) => {
-    if (menu.submenu) {
-      return menu.submenu.map((subM, jd) => ({
-        menuId: id,
-        subMenuId: jd,
-        subMenuName: subM.name,
-        subMenuLink: subM.link,
-      }));
-    }
-  })
+  const mainMenu = modifiedNavMenu.map(({ link }, id) => ({ id, link }));
+
+  const subMenu = modifiedNavMenu
+    .map((menu, id) => {
+      if (menu.submenu) {
+        return menu.submenu.map((subM, jd) => ({
+          menuId: id,
+          subMenuId: jd,
+          subMenuName: subM.name,
+          subMenuLink: subM.link,
+        }));
+      }
+    })
     .filter(Boolean)
     .flat();
 
   useEffect(() => {
-    const { pathname } = window.location;
-    
+    const { pathname } = window.location; // /, /gallery
 
-    mainMenu.forEach(({ link, id }) => {
-      if (pathname === link && value !== id) {
-        setValue(id);
+    // Page refresh dile hook er value initial hoye jabe...
+    // tai notun kore set korar jonno
+    if (!openDrawer) {
+      mainMenu.forEach(({ link, id }) => {
+        if (pathname === link && menuIndex !== id) {
+          setMenuIndex(id);
+        }
+      });
+
+      subMenu.forEach((sm) => {
+        const { menuId, subMenuId, subMenuLink } = sm;
+        if (pathname === subMenuLink && menuIndex !== menuId) {
+          setMenuIndex(menuId);
+          setSubMenuIndex(subMenuId);
+        }
+      });
+
+      if (pathname === '/login') {
+        setMenuIndex(2);
       }
-    });
-
-    subMenu.forEach((sm) => {
-      const { menuId, subMenuId, subMenuLink } = sm;
-      if (pathname === subMenuLink && value !== menuId) {
-        setValue(menuId);
-        setSelectedIndex({ menuId, subMenuId });
-      }
-    });
-
-    if (pathname === '/login') {
-      setValue(2);
     }
-  }, [value]);
+  }, [menuIndex, subMenuIndex]);
+
+  const selected = (id, jd) => {
+    return id === menuIndex && jd === subMenuIndex;
+  };
+
   const MenuPopupState = ({ menu, id }) => {
     const popupState = usePopupState({
       variant: 'popover',
@@ -242,13 +336,15 @@ function BackToTop(props) {
     return (
       <React.Fragment>
         <Tab
-          key={id}
+          key={`${menu.name}-${id}`}
           label={menu.name}
           component={menu.submenu ? undefined : Link}
           to={menu.submenu ? undefined : menu.link}
-          onClick={menu.submenu ? undefined : () => setValue(id)}
+          onClick={menu.submenu ? undefined : () => setMenuIndex(id)}
           className={
-            value === id ? `${classes.tab} ${classes.selectedTab}` : classes.tab
+            menuIndex === id
+              ? `${classes.tab} ${classes.selectedTab}`
+              : classes.tab
           }
           {...bindHover(popupState)}
         />
@@ -264,23 +360,20 @@ function BackToTop(props) {
           >
             {menu.submenu.map((sm, jd) => (
               <MenuItem
-                key={`${sm.name}-${jd}`}
+                key={`${menu.name}-${sm.name}-${jd}`}
                 onClick={(e) => {
                   popupState.close();
-                  handleMenuItemClick(e, jd, id);
+                  if (sm.notPage) redirectTo(sm.external);
+                  else handleSubMenuClick(e, id, jd);
                 }}
-                component={Link}
-                to={sm.link}
+                component={sm.notPage ? undefined : Link}
+                to={sm.notPage ? undefined : sm.link}
                 classes={{
-                  root:
-                    id === selectedIndex.menuId &&
-                    jd === selectedIndex.subMenuId
-                      ? classes.selectedMenuItem
-                      : classes.menuItem,
+                  root: selected(id, jd)
+                    ? classes.selectedMenuItem
+                    : classes.menuItem,
                 }}
-                selected={
-                  id === selectedIndex.menuId && jd === selectedIndex.subMenuId
-                }
+                selected={selected(id, jd)}
               >
                 {sm.name}
               </MenuItem>
@@ -290,29 +383,35 @@ function BackToTop(props) {
       </React.Fragment>
     );
   };
+  // For Desktop
   const tabs = (
     <React.Fragment>
       <Tabs
-        value={value}
+        value={menuIndex}
         className={classes.tabContainer}
-        onChange={handleChange}
+        onChange={handleMenuClick}
       >
-        {NavMenu.map((menu, id) => {
-          let comp = '';
-          if(menu.authenticated) {
-            if(isAuthenticated) {
-              comp = <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
-            } 
-          } else if(menu.unAuthenticated) {
-            if(!isAuthenticated) {
-              comp = <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
-            }
-          } else {
-            comp = <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
+        {/* Authorization */
+        /* ============= */
+        /* 1. unAuthenticated user der jonno... Authenticated hole badh */
+        /* 2. only for team members... UnAuthenticated && admin hole badh */}
+        {modifiedNavMenu.map((menu, id) => {
+          let comp = (
+            <MenuPopupState menu={menu} id={id} key={`${menu.name}-${id}`} />
+          );
+          let show = true;
+          if (menu.unAuthenticated && isAuthenticated) {
+            show = false;
+          } else if (menu.teamAllowed && (!isAuthenticated || isAdmin)) {
+            show = false;
           }
-          return comp;
+          return show ? comp : '';
         })}
       </Tabs>
+
+      {/* Logout handlers */
+      /* Authenticated holei hobe.. */}
+
       {isAuthenticated ? (
         <Button
           variant='contained'
@@ -329,7 +428,7 @@ function BackToTop(props) {
           className={classes.login}
           component={Link}
           to='/login'
-          onClick={() => setValue(2)}
+          onClick={() => setMenuIndex(2)}
         >
           Login
         </Button>
@@ -337,20 +436,142 @@ function BackToTop(props) {
     </React.Fragment>
   );
 
+  const ListInDrawer = ({ menu, id }) => {
+    return (
+      <React.Fragment>
+        <ListItem
+          className={classes.mainDrawerMenu}
+          key={`${menu.name}-${id}`}
+          divider
+          button
+          component={menu.submenu ? undefined : Link}
+          to={menu.submenu ? undefined : menu.link}
+          onClick={() => {
+            if (!menu.submenu) setOpenDrawer(false);
+            setMenuIndex(id);
+            handleCollapseClick();
+          }}
+          selected={menu.submenu ? false : menuIndex === id}
+        >
+          <ListItemText
+            className={
+              menuIndex === id ? classes.drawerItemSelected : classes.drawerItem
+            }
+            disableTypography
+          >
+            {menu.name}
+          </ListItemText>
+          {menu.submenu ? (
+            menuIndex !== id ? (
+              <ExpandLess />
+            ) : (
+              <ExpandMore />
+            )
+          ) : (
+            ''
+          )}
+        </ListItem>
+        {menu.submenu ? (
+          <Collapse
+            in={menu.submenu && menuIndex === id}
+            timeout='auto'
+            unmountOnExit
+          >
+            <List component='div' disablePadding>
+              {menu.submenu.map((sm, jd) => (
+                <ListItem
+                  className={classes.nested}
+                  divider
+                  button
+                  key={`${menu.name}-${sm.name}-${jd}`}
+                  component={sm.notPage ? undefined : Link}
+                  to={sm.notPage ? undefined : sm.link}
+                  onClick={(e) => {
+                    handleCollapseClick();
+                    setOpenDrawer(false);
+                    if (sm.notPage) redirectTo(sm.external);
+                    else handleSubMenuClick(e, id, jd);
+                  }}
+                  classes={{
+                    root: selected(id, jd)
+                      ? classes.selectedMenuItem
+                      : classes.menuItem,
+                  }}
+                  selected={selected(id, jd)}
+                >
+                  <ListItemText
+                    className={
+                      menuIndex === id && subMenuIndex === jd
+                        ? classes.CollapseDrawerItemSelected
+                        : classes.CollapseDrawerItem
+                    }
+                    disableTypography
+                  >
+                    {sm.name}
+                  </ListItemText>
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+        ) : (
+          ''
+        )}
+      </React.Fragment>
+    );
+  };
+
+  // For Mobile
+  const drawer = (
+    <React.Fragment>
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        onOpen={() => setOpenDrawer(true)}
+        classes={{ paper: classes.drawer }}
+      >
+        <div className={classes.drawerMargin}></div>
+        <List disablePadding>
+          {modifiedNavMenu.map((menu, id) => {
+            let comp = (
+              <ListInDrawer menu={menu} id={id} key={`${menu.name}-${id}`} />
+            );
+            let show = true;
+            if (menu.unAuthenticated && isAuthenticated) {
+              show = false;
+            } else if (menu.teamAllowed && (!isAuthenticated || isAdmin)) {
+              show = false;
+            }
+            return show ? comp : '';
+          })}
+        </List>
+      </SwipeableDrawer>
+      <IconButton
+        className={classes.drawerIconContainer}
+        onClick={() => setOpenDrawer(!openDrawer)}
+        disableRipple
+      >
+        <MenuIcon className={classes.drawerIcon} style={{ color: 'white' }} />
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar>
+      <AppBar className={classes.appbar}>
         <Toolbar>
+          {/* After clicking Top-left icon, It'll redirect to home.  */}
           <Button
-            onClick={() => setValue(0)}
+            onClick={() => setMenuIndex(0)}
             component={Link}
             to='/'
             className={classes.logoContainer}
           >
             <img alt='ICPC' src={logo} className={classes.logo} />
           </Button>
-          {matches ? null : tabs}
+          {matches ? drawer : tabs}
         </Toolbar>
       </AppBar>
       <Toolbar id='back-to-top-anchor' />
@@ -364,73 +585,6 @@ function BackToTop(props) {
     </React.Fragment>
   );
 }
-
-// const drawer = (
-//   <React.Fragment>
-//     <SwipeableDrawer
-//       disableBackdropTransition={!iOS}
-//       disableDiscovery={iOS}
-//       open={openDrawer}
-//       onClose={() => setOpenDrawer(false)}
-//       onOpen={() => setOpenDrawer(true)}
-//       classes={{ paper: classes.drawer }}
-//     >
-//       <List disablePadding>
-//         <ListItem
-//           divider
-//           button
-//           component={Link}
-//           to='/'
-//           onClick={() => {
-//             setOpenDrawer(false);
-//             setValue(0);
-//           }}
-//           selected={value === 0}
-//         >
-//           <ListItemText
-//             className={
-//               value === 0
-//                 ? [classes.drawerItem, classes.drawerItemSelected]
-//                 : classes.drawerItem
-//             }
-//             disableTypography
-//           >
-//             Home
-//           </ListItemText>
-//         </ListItem>
-//         <ListItem
-//           divider
-//           button
-//           component={Link}
-//           to='/gallery'
-//           onClick={() => {
-//             setOpenDrawer(false);
-//             setValue(1);
-//           }}
-//           selected={value === 1}
-//         >
-//           <ListItemText
-//             className={
-//               value === 1
-//                 ? [classes.drawerItem, classes.drawerItemSelected]
-//                 : classes.drawerItem
-//             }
-//             disableTypography
-//           >
-//             Gallery
-//           </ListItemText>
-//         </ListItem>
-//       </List>
-//     </SwipeableDrawer>
-//     <IconButton
-//       className={classes.drawerIconContainer}
-//       onClick={() => setOpenDrawer(!openDrawer)}
-//       disableRipple
-//     >
-//       <MenuIcon className={classes.drawerIcon} />
-//     </IconButton>
-//   </React.Fragment>
-// );
 
 const mapStateToProps = (state) => ({
   cred: state.credentialReducer,

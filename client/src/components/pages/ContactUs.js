@@ -79,7 +79,7 @@ function ContactUs(props) {
                       onChange={createChangeHandler('name')}
                       value={formFields.name}
                       required={true}
-                      minlength='3'
+                      minLength='3'
                     />
                   </div>
 
@@ -108,7 +108,7 @@ function ContactUs(props) {
                       type='text'
                       onChange={createChangeHandler('message')}
                       required={true}
-                      minlength='10'
+                      minLength='10'
                       value={formFields.message}
                     ></textarea>
                   </div>

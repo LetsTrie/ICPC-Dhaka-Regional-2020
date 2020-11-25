@@ -10,7 +10,7 @@ export default [
   {
     name: 'Registration',
     link: '/registration/online',
-    unAuthenticated: true
+    unAuthenticated: true,
   },
   {
     name: 'Contest Info',
@@ -23,22 +23,18 @@ export default [
       {
         name: 'Rules of ICPC Dhaka Regional',
         link: '/contest-info/rules-of-icpc-dhaka-regional',
-        pdfRedirect: true
       },
       {
         name: 'Accomodation',
         link: '/contest-info/accomodation',
-        pdfRedirect: true
       },
       {
         name: 'Payment',
         link: '/contest-info/program-schedule',
-        pdfRedirect: true
       },
       {
         name: 'Program Schedule',
         link: '/contest-info/program-schedule',
-        pdfRedirect: true
       },
     ],
   },
@@ -49,17 +45,14 @@ export default [
       {
         name: 'Steering Committee',
         link: '/committee/steering-committee',
-        pdfRedirect: true,
       },
       {
         name: 'Executive Committee',
         link: '/committee/executive-committee',
-        pdfRedirect: true,
       },
       {
         name: 'Judging Panel',
         link: '/committee/judging-panel',
-        pdfRedirect: true,
       },
       {
         name: 'Sub-Committee',
@@ -74,6 +67,18 @@ export default [
   {
     name: 'My Profile',
     link: '/profile',
-    authenticated: true
+    teamAllowed: true,
   },
 ];
+
+/*
+link ba image thakle evabe notPage true kore dile ebong, external server pdf link othoba
+bairer kono link diye dilei hobe.. 
+
+{
+    name: 'Sub-Committee',
+    link: '/committee/sub-committees',
+    notPage: true,
+    external: 'http://localhost:5000/1.jpg',
+  },
+*/
