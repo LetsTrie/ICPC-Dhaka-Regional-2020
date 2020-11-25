@@ -17,14 +17,11 @@ export const contactUsAction = (body) => async (dispatch) => {
 
   const response = await resJson.json();
   if (!response.success) {
-    console.log('Error Occurred!');
-    console.log(response);
     dispatch({
       type: CONTACT_ERROR,
       message: response.message,
     });
   } else {
-    console.log('Yo')
     dispatch({ type: CONTACT_SUCCESSFUL });
   }
 };

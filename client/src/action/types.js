@@ -6,6 +6,7 @@ export const STORE_TOKEN = 'STORE_TOKEN';
 export const ADMIN_STORE_TOKEN = 'ADMIN_STORE_TOKEN';
 export const LOGOUT = 'LOGOUT';
 
+export const CONTACT_INIT = 'CONTACT_INIT';
 export const CONTACT_LOADING = 'CONTACT_LOADING';
 export const CONTACT_ERROR = 'CONTACT_ERROR';
 export const CONTACT_SUCCESSFUL = 'CONTACT_SUCCESSFUL';

@@ -1,33 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Header from '../ui/Header';
 import '../../assests/css/contact.css';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Alert from '@material-ui/lab/Alert';
-import { contactUs } from '../../action/index';
-
-import { Redirect } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 
 import useFormFields from '../HandleForms';
-import { loginAction } from '../../action/authentication';
 import Loader from '../ui/Loader';
 
 import { contactUsAction } from '../../action/contactUs';
+import { CONTACT_INIT } from '../../action/types';
 
 function ContactUs(props) {
   // Initial State
   let initialState = { name: '', email: '', message: '' };
-  const { formFields, createChangeHandler } = useFormFields(initialState);
+  const { formFields, createChangeHandler, resetForm } = useFormFields(
+    initialState
+  );
+  // Dispatch
+  const dispatch = useDispatch();
 
+  // Action & Store
   const { contactUsAction } = props;
   const { error, isLoading, formSuccess } = props.contact;
 
+  // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     await contactUsAction(formFields);
   };
+
+  // Reset Form
+  useEffect(() => {
+    if (formSuccess) {
+      resetForm();
+      setTimeout(() => dispatch({ type: CONTACT_INIT }), 5000);
+    }
+  }, [formSuccess]);
 
   return (
     <div>
@@ -67,6 +77,7 @@ function ContactUs(props) {
                       type='text'
                       id='nameID'
                       onChange={createChangeHandler('name')}
+                      value={formFields.name}
                       required={true}
                       minlength='3'
                     />
@@ -83,6 +94,7 @@ function ContactUs(props) {
                       id='emailID'
                       onChange={createChangeHandler('email')}
                       required={true}
+                      value={formFields.email}
                     />
                   </div>
 
@@ -97,6 +109,7 @@ function ContactUs(props) {
                       onChange={createChangeHandler('message')}
                       required={true}
                       minlength='10'
+                      value={formFields.message}
                     ></textarea>
                   </div>
 
