@@ -30,7 +30,7 @@ export default [
       },
       {
         name: 'Payment',
-        link: '/contest-info/program-schedule',
+        link: '/contest-info/payment',
       },
       {
         name: 'Program Schedule',

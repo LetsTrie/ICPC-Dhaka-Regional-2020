@@ -28,6 +28,7 @@ router.post('/register/payment/IpnListener', C.paymentIpnListener);
 router.post('/login', C.teamLogin);
 
 router.get('/teamInformation', M.verifyToken, C.teamInformation);
+router.post('/update-password', M.verifyToken, C.updatePassword);
 
 // router.post('/create', auth, C.createPost);
 

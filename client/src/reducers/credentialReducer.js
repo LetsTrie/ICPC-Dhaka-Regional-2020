@@ -1,6 +1,7 @@
 import {
   STORE_TOKEN,
   ADMIN_STORE_TOKEN,
+  UPDATE_TEAM_PROFILE,
   LOGOUT
 } from '../action/types';
 
@@ -31,6 +32,11 @@ export default function (state = initialState, action) {
       return {
         ...initialState,
       };
+    case UPDATE_TEAM_PROFILE: 
+      return {
+        ...state,
+        teamInfo: action.team
+      }
     default:
       return state;
   }

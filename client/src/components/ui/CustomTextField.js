@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 
-function CustomTextField({ className, name, label, onChange, type, required}) {
+function CustomTextField({ className, name, label, onChange, type, required, ...props}) {
   return (
     <Fragment>
       <TextField
@@ -22,6 +22,7 @@ function CustomTextField({ className, name, label, onChange, type, required}) {
         autoComplete='off'
         onChange={onChange}
         required={required}
+        {...props}
       />
     </Fragment>
   );

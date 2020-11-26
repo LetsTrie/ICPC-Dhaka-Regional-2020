@@ -1,10 +1,52 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { registerValidation } = require('../validations/team.js');
+const { updatePasswordValidation } = require('../validations/profile.js');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs').promises;
 const path = require('path');
 const Team = require('../models/team');
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const RB = req.body;
+    console.log(RB);
+
+    // Validate Request Body
+    const { error } = updatePasswordValidation(RB);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    // Checking the password
+    if (RB.newPassword !== RB.confirmPassword) {
+      return res.status(400).json({
+        message: 'Password is not matching!',
+      });
+    }
+
+    const team = await Team.findById(req.team._id);
+    const isMatched = await bcrypt.compare(RB.previousPassword, team.password);
+    if (isMatched) {
+      // Hashing the password
+      team.password = await bcrypt.hash(RB.newPassword, 10);
+      await team.save();
+      return res.status(200).json({
+        success: true,
+        team,
+      });
+    }
+    return res.status(401).json({
+      success: false,
+      message: 'Incorrect previous password',
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
 exports.registerInfo = async (req, res) => {
   try {

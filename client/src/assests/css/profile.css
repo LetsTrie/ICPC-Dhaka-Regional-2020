@@ -93,6 +93,7 @@ ul {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   font-weight: 300;
+  min-height: 700px;
 }
 
 .profile__wrapper .flex_parent .flex_child:first-child .teamImageNameUniv {
@@ -110,7 +111,7 @@ ul {
 }
 
 .profile__wrapper .flex_parent .flex_child:first-child .teamImageNameUniv__name_univ p {
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   line-height: 160%;
 }
 
@@ -120,7 +121,7 @@ ul {
 
 .profile__wrapper .flex_parent .flex_child:first-child .teamImageNameUniv__name_univ p:last-child {
   font-size: 1.9rem;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child {
@@ -137,6 +138,10 @@ ul {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 95%;
   margin: auto;
   font-size: 16.5px;
@@ -146,11 +151,24 @@ ul {
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-header h4 {
-  padding: 0 9px;
+  font-weight: 500;
+  font-size: 2rem;
+  padding-left: 1.3rem;
+  padding-top: 2px;
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body {
   padding: 15px 0;
+}
+
+.profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body-fields {
+  padding-top: 1.3rem;
+  width: 90%;
+  margin: auto;
+}
+
+.profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body-fields-submit {
+  text-align: center;
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row {
@@ -210,4 +228,40 @@ ul {
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user .texts .about {
   color: gray;
   font-size: 13.5px;
+}
+
+.tabs {
+  color: #424242;
+  padding-top: 15px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
+}
+
+.tabs .tab {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 12.5px 10px 12.5px 2.5rem;
+  margin-bottom: 5px;
+}
+
+.tabs .tab:hover {
+  background: #4242424d;
+}
+
+.tabs .tab.selected {
+  background: #4747474d;
+}
+
+.tabs .tab p {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  padding-left: 1.8rem;
+  color: white;
 }

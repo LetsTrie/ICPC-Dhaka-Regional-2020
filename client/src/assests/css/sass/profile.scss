@@ -28,6 +28,7 @@
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         font-weight: 300;
+        min-height: 700px;
 
         .teamImageNameUniv {
           text-align: center;
@@ -42,7 +43,7 @@
           &__name_univ {
             padding-bottom: 2rem;
             p {
-              letter-spacing: .3px;
+              letter-spacing: 0.3px;
               line-height: 160%;
               &:first-child {
                 font-size: 3.3rem;
@@ -50,7 +51,7 @@
 
               &:last-child {
                 font-size: 1.9rem;
-              letter-spacing: .5px;
+                letter-spacing: 0.5px;
               }
             }
           }
@@ -66,6 +67,7 @@
 
           .section-header {
             display: flex;
+            align-items: center;
             width: 95%;
             margin: auto;
             font-size: 16.5px;
@@ -73,11 +75,25 @@
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
             h4 {
-              padding: 0 9px;
+              font-weight: 500;
+              font-size: 2rem;
+              padding-left: 1.3rem;
+              padding-top: 2px;
             }
           }
           .section-body {
             padding: 15px 0;
+
+            &-fields {
+              padding-top: 1.3rem;
+              width: 90%;
+              margin: auto;
+
+              &-submit {
+                text-align: center;
+              }
+            }
+
             .row {
               display: flex;
               justify-content: space-between;
@@ -107,7 +123,6 @@
               .image {
                 margin: 0 2px;
                 margin-right: 2rem;
-
               }
               .texts {
                 padding: 13.5px 0;
@@ -125,6 +140,33 @@
           }
         }
       }
+    }
+  }
+}
+
+.tabs {
+  color: #424242;
+  padding-top: 15px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
+  .tab {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 12.5px 10px 12.5px 2.5rem;
+    margin-bottom: 5px;
+    &:hover {
+      background: #4242424d;
+    }
+
+    &.selected {
+      background: #4747474d;
+    }
+    p {
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+      padding-left: 1.8rem;
+      color: white;
     }
   }
 }
