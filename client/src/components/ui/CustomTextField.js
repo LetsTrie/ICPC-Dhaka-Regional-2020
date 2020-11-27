@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 
 function CustomTextField({ className, name, label, onChange, type, required, ...props}) {
   return (
-    <Fragment>
+    <>
       <TextField
         className={className}
         inputProps={{ style: { fontSize: '1.6rem' } }}
@@ -24,7 +24,7 @@ function CustomTextField({ className, name, label, onChange, type, required, ...
         required={required}
         {...props}
       />
-    </Fragment>
+    </>
   );
 }
 

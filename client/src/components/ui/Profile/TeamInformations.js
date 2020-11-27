@@ -38,7 +38,9 @@ export const Profile = (props) => {
           <div className='row'>
             <div className='field'>
               <div className='field-name'>Team Name</div>
-              <div className='field-value'>{teamInfo.team}</div>
+              <div className='field-value'>
+                {teamInfo.team.charAt(0).toUpperCase() + teamInfo.team.slice(1)}
+              </div>
             </div>
 
             <div className='field'>
@@ -71,7 +73,7 @@ export const Profile = (props) => {
             <div className='each-user' key={uuid()}>
               <div className={`image ${member.dp}`}>
                 <Avatar
-                  src={`http://localhost:5000/${member.dp}`}
+                  src={`/${member.dp}`}
                   className={
                     mobileDevice ? avatarClasses.large : avatarClasses.small
                   }

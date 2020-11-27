@@ -9,7 +9,6 @@ import Edit from '@material-ui/icons/Edit';
 import People from '@material-ui/icons/People';
 
 import { connect } from 'react-redux';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 import TeamInformations from '../ui/Profile/TeamInformations';
 import UpdateInformations from '../ui/Profile/UpdateInformations';
@@ -28,12 +27,11 @@ export const Profile = (props) => {
     ) : params === 'update-password' ? (
       <UpdatePassword isLoading={isLoading} setIsLoading={setIsLoading} />
     ) : (
-      <TeamInformations isLoading={isLoading} setIsLoading={setIsLoading}  />
+      <TeamInformations isLoading={isLoading} setIsLoading={setIsLoading} />
     );
   };
 
   useEffect(() => {}, [params]);
-  const { pathname } = window.location;
 
   return (
     <div className='profile'>
@@ -47,7 +45,10 @@ export const Profile = (props) => {
                 <img src={gravatar} alt='Simple Coding Photo' />
               </div>
               <div className='teamImageNameUniv__name_univ'>
-                <p> {teamInfo.team} </p>
+                <p>
+                  {teamInfo.team.charAt(0).toUpperCase() +
+                    teamInfo.team.slice(1)}
+                </p>
                 <p> {teamInfo.university} </p>
               </div>
             </div>

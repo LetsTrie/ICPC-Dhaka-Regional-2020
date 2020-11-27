@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './components/ui/Theme';
 
-import Header from './components/ui/Header';
 import Home from './components/pages/Home';
 import Gallery from './components/pages/Gallery';
-import ContestInfo from './components/pages/ContestInfo';
-import Committee from './components/pages/Committee';
 import Footer from './components/ui/Footer';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';

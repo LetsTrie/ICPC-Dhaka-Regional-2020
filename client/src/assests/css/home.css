@@ -67,7 +67,6 @@ ul {
           background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-  background-attachment: fixed;
 }
 
 .Home__navbar .Home__banner_text {
@@ -322,8 +321,13 @@ ul {
   background-repeat: no-repeat;
   -webkit-background-size: cover;
           background-size: cover;
-  background-attachment: fixed;
   padding: 3rem 1rem;
+}
+
+@media (min-width: 772px) {
+  .importantInfosWrappers {
+    background-attachment: fixed;
+  }
 }
 
 .imp_dates .each_imp_dates {

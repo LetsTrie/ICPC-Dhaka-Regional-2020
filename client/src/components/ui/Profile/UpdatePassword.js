@@ -54,7 +54,7 @@ export const Profile = (props) => {
       return;
     }
     setIsLoading(true);
-    let originalUrl = 'http://localhost:5000/api/v1/auth/update-password';
+    let originalUrl = '/api/v1/auth/update-password';
     const resJson = await fetch(originalUrl, {
       method: 'POST',
       headers: {

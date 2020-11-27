@@ -7,49 +7,12 @@ const fs = require('fs').promises;
 const path = require('path');
 const Team = require('../models/team');
 
-exports.updatePassword = async (req, res) => {
-  try {
-    const RB = req.body;
-    console.log(RB);
-
-    // Validate Request Body
-    const { error } = updatePasswordValidation(RB);
-    if (error) {
-      return res.status(400).json({
-        message: error.details[0].message,
-      });
-    }
-
-    // Checking the password
-    if (RB.newPassword !== RB.confirmPassword) {
-      return res.status(400).json({
-        message: 'Password is not matching!',
-      });
-    }
-
-    const team = await Team.findById(req.team._id);
-    const isMatched = await bcrypt.compare(RB.previousPassword, team.password);
-    if (isMatched) {
-      // Hashing the password
-      team.password = await bcrypt.hash(RB.newPassword, 10);
-      await team.save();
-      return res.status(200).json({
-        success: true,
-        team,
-      });
-    }
-    return res.status(401).json({
-      success: false,
-      message: 'Incorrect previous password',
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
 exports.registerInfo = async (req, res) => {
   try {
+    req.body.team = req.body.team.toLowerCase().trim();
+    req.body.password = req.body.password.toLowerCase().trim();
+    req.body.confirmPassword = req.body.confirmPassword.toLowerCase().trim();
+    
     const RB = req.body;
 
     // Validate Request Body
@@ -166,7 +129,6 @@ exports.paymentIpnListener = async (req, res) => {
   if (status === 'INVALID_TRANSACTION ') {
     return res.send('<h1>INVALID TRANSACTION</h1>');
   }
-  console.log(amount, process.env.Fee);
   if (parseInt(amount) !== parseInt(process.env.Fee)) {
     return res.send('<h1>AMOUNT IS NOT VALID</h1>');
   }
@@ -183,12 +145,14 @@ exports.paymentIpnListener = async (req, res) => {
 };
 
 exports.teamLogin = async (req, res) => {
-  console.log(req.body);
-  const { team, password } = req.body;
+  let { team, password } = req.body;
+
+  team = team.toLowerCase().trim();
+  password = password.toLowerCase().trim();
+
   const teamDetails = await Team.findOne({ team });
 
   if (teamDetails) {
-    console.log(teamDetails);
     const isMatched = await bcrypt.compare(password, teamDetails.password);
     if (isMatched) {
       const accessToken = await jwt.sign(
@@ -219,4 +183,44 @@ exports.teamLogin = async (req, res) => {
 
 exports.teamInformation = async (req, res) => {
   return res.status(200).json({ success: true, team: req.team });
+};
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const RB = req.body;
+
+    // Validate Request Body
+    const { error } = updatePasswordValidation(RB);
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
+    // Checking the password
+    if (RB.newPassword !== RB.confirmPassword) {
+      return res.status(400).json({
+        message: 'Password is not matching!',
+      });
+    }
+
+    const team = await Team.findById(req.team._id);
+    const isMatched = await bcrypt.compare(RB.previousPassword, team.password);
+    if (isMatched) {
+      // Hashing the password
+      team.password = await bcrypt.hash(RB.newPassword, 10);
+      await team.save();
+      return res.status(200).json({
+        success: true,
+        team,
+      });
+    }
+    return res.status(401).json({
+      success: false,
+      message: 'Incorrect previous password',
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 };

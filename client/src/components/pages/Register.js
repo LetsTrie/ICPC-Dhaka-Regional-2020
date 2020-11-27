@@ -55,9 +55,15 @@ function validation(fld) {
   if (!fld['coachDp']) {
     return 'Please provide the Display Picture of Coach!';
   }
+  if (fld['coachDp'].size > 300 * 1000) {
+    return 'Picture size of Coach must be less than 300 KB';
+  }
   for (let member = 1; member <= numberOfParticipants; member++) {
     if (!fld[`p${member}Dp`])
       return `Please provide the Display Picture of Participant ${member}`;
+
+    if (fld[`p${member}Dp`].size > 300 * 1000)
+      return `Picture size of Participant ${member} must be less than 300 KB`;
   }
   return null;
 }
@@ -74,8 +80,9 @@ const Register = (props) => {
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setLoading(true);
+    setAlert(null);
     e.preventDefault();
     const errorMessage = validation(formFields);
     if (errorMessage) {
@@ -114,53 +121,27 @@ const Register = (props) => {
       reqBody.participants = participants;
       reqBody.participants.length = numberOfParticipants;
 
-      const API = `http://localhost:5000/api/v1/auth/register`;
+      const API = `/api/v1/auth/register`;
 
-      console.log(reqBody);
-      console.log('Starting...');
-      axios
-        .post(`${API}/info`, reqBody)
-        .then((res) => {
-          console.log(res.data);
-          reqFiles.append('SECRET_KEY', res.data.SECRET_KEY);
-          axios
-            .post(`${API}/upload`, reqFiles)
-            .then((done) => {
-              console.log(done.data);
-              axios
-                .get(`${API}/payment/init?key=${done.data.SECRET_KEY}`)
-                .then((trans) => {
-                  setAlert(null);
-                  setLoading(false);
-                  window.location.replace(trans.data.GatewayPageURL);
-                })
-                .catch((err) => {
-                  setLoading(false);
-                  console.log(err);
-                  setAlert({
-                    type: 'error',
-                    message: err.response.data.message,
-                  });
-                });
-            })
-            .catch((err) => {
-              setLoading(false);
-              console.log(err);
+      try {
+        const { data: res } = await axios.post(`${API}/info`, reqBody);
+        console.log('Informations uploaded to server...')
+        reqFiles.append('SECRET_KEY', res.SECRET_KEY);
+        const { data: done } = await axios.post(`${API}/upload`, reqFiles);
+        console.log('Files uploaded to server...')
+        const trans = await axios.get(
+          `${API}/payment/init?key=${done.SECRET_KEY}`
+        );
+        console.log('Transaction initiated with server...');
 
-              setAlert({
-                type: 'error',
-                message: err.response.data.message,
-              });
-            });
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-          setAlert({
-            type: 'error',
-            message: err.response.data.message,
-          });
-        });
+        setAlert(null);
+        window.location.replace(trans.data.GatewayPageURL);
+        setLoading(false);
+      } catch (err) {
+        console.log(err.response);
+        setLoading(false);
+        setAlert(err.response.data.message);
+      }
     }
   };
 
@@ -169,10 +150,14 @@ const Register = (props) => {
     color: '#5499C7',
   };
 
-  useEffect(() => {}, [alert, loading]);
-  
-  if(isAuthenticated) {
-    return <Redirect to='/'/>
+  useEffect(() => {
+    if (alert) {
+      window.scrollTo(0, 0);
+    }
+  }, [alert, loading]);
+
+  if (isAuthenticated) {
+    return <Redirect to='/' />;
   }
 
   return (
@@ -193,10 +178,10 @@ const Register = (props) => {
                 {alert && (
                   <Alert
                     variant='filled'
-                    severity={alert.type}
+                    severity='error'
                     style={{ marginBottom: '2rem', fontSize: '1.5rem' }}
                   >
-                    {alert.message}
+                    {alert}
                   </Alert>
                 )}
 
@@ -229,6 +214,7 @@ const Register = (props) => {
                     onChange={createChangeHandler('password')}
                     type='password'
                     required={true}
+                    minLength='6'
                   />
                   <CustomTextField
                     className={classes.TextField}
@@ -237,6 +223,7 @@ const Register = (props) => {
                     onChange={createChangeHandler('confirmPassword')}
                     type='password'
                     required={true}
+                    minLength='6'
                   />
                 </div>
 
@@ -607,5 +594,5 @@ const mapStateToProps = (state) => ({
   cred: state.credentialReducer,
 });
 
-const mapDispatchToAction = {  };
+const mapDispatchToAction = {};
 export default connect(mapStateToProps, mapDispatchToAction)(Register);

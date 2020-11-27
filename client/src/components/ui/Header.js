@@ -97,6 +97,14 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '2.2rem',
     textTransform: 'none',
   },
+  DrawerAuthBtn: {
+    borderRadius: '0',
+    fontSize: '2.2rem',
+    textTransform: 'none',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    marginTop: '1rem',
+  },
   logoContainer: {
     padding: 0,
     '&:hover': {
@@ -334,7 +342,7 @@ function BackToTop(props) {
       popupId: id,
     });
     return (
-      <React.Fragment>
+      <>
         <Tab
           key={`${menu.name}-${id}`}
           label={menu.name}
@@ -380,12 +388,12 @@ function BackToTop(props) {
             ))}
           </Menu>
         )}
-      </React.Fragment>
+      </>
     );
   };
   // For Desktop
   const tabs = (
-    <React.Fragment>
+    <>
       <Tabs
         value={menuIndex}
         className={classes.tabContainer}
@@ -433,12 +441,12 @@ function BackToTop(props) {
           Login
         </Button>
       )}
-    </React.Fragment>
+    </>
   );
 
   const ListInDrawer = ({ menu, id }) => {
     return (
-      <React.Fragment>
+      <>
         <ListItem
           className={classes.mainDrawerMenu}
           key={`${menu.name}-${id}`}
@@ -516,13 +524,13 @@ function BackToTop(props) {
         ) : (
           ''
         )}
-      </React.Fragment>
+      </>
     );
   };
 
   // For Mobile
   const drawer = (
-    <React.Fragment>
+    <>
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
@@ -546,6 +554,27 @@ function BackToTop(props) {
             return show ? comp : '';
           })}
         </List>
+        {isAuthenticated ? (
+          <Button
+            variant='contained'
+            color='secondary'
+            className={classes.DrawerAuthBtn}
+            onClick={logoutHandler}
+          >
+            Log Out
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='secondary'
+            className={classes.DrawerAuthBtn}
+            component={Link}
+            to='/login'
+            onClick={() => setMenuIndex(2)}
+          >
+            Login
+          </Button>
+        )}
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
@@ -554,11 +583,11 @@ function BackToTop(props) {
       >
         <MenuIcon className={classes.drawerIcon} style={{ color: 'white' }} />
       </IconButton>
-    </React.Fragment>
+    </>
   );
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <AppBar className={classes.appbar}>
         <Toolbar>
@@ -582,7 +611,7 @@ function BackToTop(props) {
         </Fab>
       </ScrollTop>
       <div className={classes.toolbarMargin}></div>
-    </React.Fragment>
+    </>
   );
 }
 

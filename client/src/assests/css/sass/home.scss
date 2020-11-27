@@ -9,7 +9,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
-    background-attachment: fixed;
+    // background-attachment: fixed;
 
     .Home__banner_text {
       padding: 10rem;
@@ -251,7 +251,9 @@
     url(../images/importantLinks.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
+  @media(min-width: 772px) {
+    background-attachment: fixed;
+  }
   padding: 3rem 1rem;
 }
 

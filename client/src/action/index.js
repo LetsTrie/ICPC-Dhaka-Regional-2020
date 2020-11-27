@@ -3,7 +3,7 @@ import axios from 'axios'
 /*  -- User Level APIs, Controller: user.js --   */
 
 export const getNavbar = () => (dispatch, getState) => {
-  axios.get('http://localhost:5000/api/v1/user/getNavbar').then(res => {
+  axios.get('/api/v1/user/getNavbar').then(res => {
     dispatch({
       type: 'SET_NAVBAR',
       payload: res.data
@@ -17,7 +17,7 @@ export const contactUs = data => (dispatch, getState) => {
       "Content-Type": "application/json"
     }
   }
-  axios.post('http://localhost:5000/api/v1/user/contactUs', data, config).then(res => {
+  axios.post('/api/v1/user/contactUs', data, config).then(res => {
       dispatch({
         type: 'CONTACT_US'  ,
         payload: res.data
@@ -33,7 +33,7 @@ export const register = data => (dispatch, getState) => {
       "Content-Type": "application/json"
     }
   }
-  axios.post('http://localhost:5000/api/v1/auth/register', data, config).then(res => {
+  axios.post('/api/v1/auth/register', data, config).then(res => {
       dispatch({
         type: 'REGISTER_ERROR'  ,
         payload: res.data
@@ -47,7 +47,7 @@ export const login = data => async (dispatch, getState) => {
       "Content-Type": "application/json"
     }
   }
-  axios.post('http://localhost:5000/api/v1/auth/login', data, config).then(res => {
+  axios.post('/api/v1/auth/login', data, config).then(res => {
     const { status, msg } = res.data
     console.log(res.data)
     if (!status) {
@@ -77,7 +77,7 @@ export const upload = (data) => (dispatch, getState) => {
     }
   }
   console.log('action: ', data)
-  axios.post('http://localhost:5000/api/v1/auth/upload', data, config).then(res => {
+  axios.post('/api/v1/auth/upload', data, config).then(res => {
     console.log(res.data)
   })
 }
@@ -97,7 +97,7 @@ export const setUser = () => (dispatch, getState) => {
       "x-auth-token": localStorage.getItem('token')
     }
   }
-  axios.get('http://localhost:5000/api/v1/profile/getUser', config).then(res => {
+  axios.get('/api/v1/profile/getUser', config).then(res => {
     if (res.data.status) {
       dispatch({
         type: 'SET_USER',
@@ -120,7 +120,7 @@ export const updatePassword = data => (dispatch, getState) => {
     }
   }
 
-  axios.post('http://localhost:5000/api/v1/profile/update/password', data, config).then(res => {
+  axios.post('/api/v1/profile/update/password', data, config).then(res => {
     dispatch({
       type: 'UPDATE_PROFILE',
       payload: res.data
@@ -136,7 +136,7 @@ export const updateEmail = data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/profile/update/email', data, config).then(res => {
+  axios.post('/api/v1/profile/update/email', data, config).then(res => {
     dispatch({
       type: 'UPDATE_PROFILE',
       payload: res.data
@@ -152,7 +152,7 @@ export const updateProfile = data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/profile/update/profile', data, config).then(res => {
+  axios.post('/api/v1/profile/update/profile', data, config).then(res => {
     dispatch({
       type: 'UPDATE_PROFILE',
       payload: res.data
@@ -172,7 +172,7 @@ export const adminLogin= data => (dispatch, getState) => {
     type: 'GET_STATE',
     payload: ''
   })
-  axios.post('http://localhost:5000/api/v1/admin/login', data, config).then(res => {
+  axios.post('/api/v1/admin/login', data, config).then(res => {
     console.log(res.data)
     if (res.data.status) {
       dispatch({
@@ -194,7 +194,7 @@ export const getAllUsers = () => (dispatch, getState) => {
       "x-auth-token": localStorage.getItem('token')
     }
   }
-  axios.get('http://localhost:5000/api/v1/admin/getAllUsers', config).then(res => {
+  axios.get('/api/v1/admin/getAllUsers', config).then(res => {
     if (!res.data.status) {
       dispatch({
         type: 'ADMIN_ERROR',
@@ -216,7 +216,7 @@ export const loadAdminGallery = () => (dispatch, getState) => {
       "x-auth-token": localStorage.getItem('token')
     }
   }
-  axios.get('http://localhost:5000/api/v1/admin/load-gallery', config).then(res => {
+  axios.get('/api/v1/admin/load-gallery', config).then(res => {
     if (!res.data.status) {
       dispatch({
         type: 'ADMIN_ERROR',
@@ -239,7 +239,7 @@ export const adminUploadImage = data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/admin/upload-image', data, config).then(res => {
+  axios.post('/api/v1/admin/upload-image', data, config).then(res => {
     dispatch({
       type: 'UPDATE_GALLERY',
       payload: res.data
@@ -255,7 +255,7 @@ export const adminUploadPDF = data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/admin/upload-pdf', data, config).then(res => {
+  axios.post('/api/v1/admin/upload-pdf', data, config).then(res => {
     console.log(res.data)
   })
 }
@@ -268,7 +268,7 @@ export const adminUpdateImageVisibility= data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/admin/update-image-visibility', data, config).then(res => {
+  axios.post('/api/v1/admin/update-image-visibility', data, config).then(res => {
     console.log(res.data)
   })
 }
@@ -281,7 +281,7 @@ export const adminUpdateSubmenu= data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/admin/update-submenu', data, config).then(res => {
+  axios.post('/api/v1/admin/update-submenu', data, config).then(res => {
 
 })
 }
@@ -294,7 +294,7 @@ export const clusterEmail= data => (dispatch, getState) => {
     }
   }
   console.log(data)
-  axios.post('http://localhost:5000/api/v1/admin/email', data, config).then(res => {
+  axios.post('/api/v1/admin/email', data, config).then(res => {
     dispatch({
       type: 'EMAIL_RESPONSE',
       payload: res.data

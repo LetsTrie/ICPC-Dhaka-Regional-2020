@@ -12,7 +12,7 @@
 //   }
 // });
 
-// const host = `http://localhost:5000/api/v1`;
+// const host = `/api/v1`;
 
 // exports.sendMailToAdmin = () => {
 //   const mailOptions = {

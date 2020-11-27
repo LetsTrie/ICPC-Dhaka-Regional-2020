@@ -252,14 +252,15 @@ ul {
   background-color: inherit;
   margin-top: 0.7rem;
   width: 95%;
-  font-size: 2rem;
+  font-size: 1.8rem;
   padding: 5px 10px 5px 3px;
   border: none;
   border-bottom: 2px solid #ccc;
   -webkit-transition: border-bottom 0.25s ease;
   -o-transition: border-bottom 0.25s ease;
   transition: border-bottom 0.25s ease;
-  color: #333;
+  color: #444444;
+  font-family: 'Roboto', sans-serif;
 }
 
 .contactUsForm_flx_form form .textbox input:focus, .contactUsForm_flx_form form .textbox input:active,

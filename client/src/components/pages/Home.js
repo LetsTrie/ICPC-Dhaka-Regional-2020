@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import Sponsors from '../ui/Sponsors';
 import ImportantInfos from '../ui/ImportantInfos';
 import Organizer from '../ui/Organizer';
-
+import {connect} from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -23,40 +23,17 @@ const useStyles = makeStyles({
   },
 });
 
-function Home() {
+function Home(props) {
+  const { isAuthenticated } = props.cred;
   const classes = useStyles();
-
-    /* -- Authentication manager -- */
-  const history = useHistory()
-  const logout = e => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
-    console.log('logged out')
-    window.location.reload(false)
-  }
-  const [isLoggedIn, setLoggedIn] = useState(false)
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'))
-    if (user) {
-      setLoggedIn(true)
-    }
-  }, [ ])
-  /* -- Ends --*/
-
-const handleRegister = e => {
-  history.push('/registration/online')
-}
+  const handleRegister = (e) => {
+    props.history.push('/registration/online');
+  };
 
   return (
     <div className='Home'>
       <div className='Home__navbar'>
         <Header />
-        { 
-          // Dummy logout button 
-          isLoggedIn ? <p style={{fontSize: '25px', cursor: 'pointer', textAlign: 'right'}} onClick={logout}>
-          Logout
-          </p> : <div> </div>
-        }
         <div className='Home__banner_text'>
           <div className='Home__banner_text-primary'>
             <h1>ICPC Dhaka Regional 2020</h1>
@@ -67,12 +44,17 @@ const handleRegister = e => {
             </h3>
           </div>
           <Countdown />
-
-          <div className='Home_banner_button'>
-            <Button variant='contained' className={classes.root} onClick={handleRegister}>
-              Register your team
-            </Button>
-          </div>
+          {!isAuthenticated && (
+            <div className='Home_banner_button'>
+              <Button
+                variant='contained'
+                className={classes.root}
+                onClick={handleRegister}
+              >
+                Register your team
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <Organizer />
@@ -82,4 +64,9 @@ const handleRegister = e => {
   );
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+  cred: state.credentialReducer,
+});
+
+const mapDispatchToAction = {};
+export default connect(mapStateToProps, mapDispatchToAction)(Home);

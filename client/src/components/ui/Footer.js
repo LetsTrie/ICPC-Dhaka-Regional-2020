@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import '../../assests/css/footer.css';
 
 const Footer = () => {
   return (
-    <Fragment>
+    <>
       <div className='footerr_wrapper'>
         <div className='footerr'>
           <div className='footer_flex_child'>
@@ -21,7 +21,7 @@ const Footer = () => {
                   {null}
                 </a>
                 <a
-                  href='http://google.com/'
+                  href='https://google.com/'
                   className='fa fa-youtube'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -29,7 +29,7 @@ const Footer = () => {
                   {null}
                 </a>
                 <a
-                  href='http://google.com/'
+                  href='https://google.com/'
                   className='fa fa-instagram'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -37,7 +37,7 @@ const Footer = () => {
                   {null}
                 </a>
                 <a
-                  href='http://google.com/'
+                  href='https://google.com/'
                   className='fa fa-twitter'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -140,7 +140,7 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

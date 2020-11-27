@@ -12,7 +12,6 @@ import { logoutAction } from '../../action/authentication';
 import { Link } from 'react-router-dom';
 import logo from '../../assests/images/logo.png';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -23,7 +22,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: 'auto',
     fontSize: '3rem',
-    letterSpacing: '.2px'
+    letterSpacing: '.2px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '2.5rem',
+      letterSpacing: '0',
+      margin: '0',
+    },
   },
   toolbarMargin: {
     [theme.breakpoints.down('xl')]: {
@@ -68,11 +72,20 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '2.2rem',
     paddingRight: '2.2rem',
     textTransform: 'none',
+
+    [theme.breakpoints.down('md')]: {
+      marginLeft: 'auto',
+      marginRight: '1.5rem',
+    },
   },
   logoContainer: {
     padding: 0,
     '&:hover': {
       backgroundColor: 'transparent',
+    },
+
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
 }));
@@ -89,11 +102,7 @@ function AdminHeader(props) {
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
-          <Button
-            component={Link}
-            to='/'
-            className={classes.logoContainer}
-          >
+          <Button component={Link} to='/' className={classes.logoContainer}>
             <img alt='ICPC Logo' src={logo} className={classes.logo} />
           </Button>
           <Typography variant='h6' className={classes.title}>

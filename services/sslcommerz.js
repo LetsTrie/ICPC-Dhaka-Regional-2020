@@ -32,7 +32,6 @@ class SSLCommerz {
   async init_transaction(post_body) {
     post_body['store_id'] = this.store_id;
     post_body['store_passwd'] = this.store_passwd;
-    console.log(this.submit_url, post_body);
     return this.post(this.submit_url, post_body);
   }
   /**

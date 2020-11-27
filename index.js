@@ -7,6 +7,8 @@ require('dotenv').config();
 // Data setup
 require('./config/databaseSetup.js')();
 
+app.use(require('cors')());
+
 // Express set up
 app.use(require('cors')());
 app.use(express.json());

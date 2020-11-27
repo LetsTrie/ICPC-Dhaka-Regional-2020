@@ -114,12 +114,13 @@
             background-color: inherit;
             margin-top: 0.7rem;
             width: 95%;
-            font-size: 2rem;
+            font-size: 1.8rem;
             padding: 5px 10px 5px 3px;
             border: none;
             border-bottom: 2px solid #ccc;
             transition: border-bottom 0.25s ease;
-            color: #333;
+            color: rgb(68, 68, 68);
+            font-family: 'Roboto', sans-serif;
 
             &:focus,
             &:active {
