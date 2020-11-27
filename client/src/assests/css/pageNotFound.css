@@ -89,6 +89,10 @@ ul {
 }
 
 .pageNotFound__header h1 {
-  font-weight: 400;
-  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }

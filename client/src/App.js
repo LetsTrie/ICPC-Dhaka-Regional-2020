@@ -18,6 +18,9 @@ import AdminPanel from './components/pages/AdminPanel';
 import AdminLogin from './components/pages/AdminLogin';
 import { connect } from 'react-redux';
 
+import FailedPayment from './components/pages/FailedPayment';
+import CancelPayment from './components/pages/CancelPayment';
+
 function App(props) {
   const { isAuthenticated, isAdmin } = props.cred;
 
@@ -38,6 +41,8 @@ function App(props) {
               <Route exact path='/' component={Home} />
               <Route exact path='/gallery' component={Gallery} />
               <Route exact path='/registration/online' component={Register} />
+              <Route exact path='/payment/failed' component={FailedPayment} />
+              <Route exact path='/payment/cancel' component={CancelPayment} />
               <Route exact path='/contact' component={ContactUs} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/profile' component={teamRoutes(Profile)} />

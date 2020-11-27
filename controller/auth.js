@@ -12,7 +12,7 @@ exports.registerInfo = async (req, res) => {
     req.body.team = req.body.team.toLowerCase().trim();
     req.body.password = req.body.password.toLowerCase().trim();
     req.body.confirmPassword = req.body.confirmPassword.toLowerCase().trim();
-    
+
     const RB = req.body;
 
     // Validate Request Body
@@ -223,4 +223,16 @@ exports.updatePassword = async (req, res) => {
     console.log(err);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
+};
+
+exports.paymentUnseccessful = async (req, res) => {
+  return res.send(
+    '<script>window.location="http://localhost:3000/payment/failed"</script>'
+  );
+};
+
+exports.paymentFailed = async (req, res) => {
+  return res.send(
+    '<script>window.location="http://localhost:3000/payment/cancel"</script>'
+  );
 };

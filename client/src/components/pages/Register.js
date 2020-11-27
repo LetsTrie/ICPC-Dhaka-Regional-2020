@@ -128,7 +128,7 @@ const Register = (props) => {
         console.log('Informations uploaded to server...')
         reqFiles.append('SECRET_KEY', res.SECRET_KEY);
         const { data: done } = await axios.post(`${API}/upload`, reqFiles);
-        console.log('Files uploaded to server...')
+        console.log('Files uploaded to server...');
         const trans = await axios.get(
           `${API}/payment/init?key=${done.SECRET_KEY}`
         );
@@ -139,6 +139,7 @@ const Register = (props) => {
         setLoading(false);
       } catch (err) {
         console.log(err.response);
+        console.log(err.response.data.message);
         setLoading(false);
         setAlert(err.response.data.message);
       }
@@ -179,7 +180,7 @@ const Register = (props) => {
                   <Alert
                     variant='filled'
                     severity='error'
-                    style={{ marginBottom: '2rem', fontSize: '1.5rem' }}
+                    style={{ marginBottom: '2rem', fontSize: '15px' }}
                   >
                     {alert}
                   </Alert>
