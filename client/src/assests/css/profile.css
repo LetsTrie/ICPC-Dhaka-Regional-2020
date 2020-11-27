@@ -63,12 +63,29 @@ ul {
   padding: 5rem 0;
 }
 
+@media (max-width: 1500px) {
+  .profile__wrapper {
+    width: 85%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .profile__wrapper {
+    width: 98%;
+  }
+}
+
 .profile__wrapper .flex_parent {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
@@ -80,6 +97,16 @@ ul {
   background: white;
 }
 
+@media (max-width: 1000px) {
+  .profile__wrapper .flex_parent {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
 .profile__wrapper .flex_parent .flex_child:first-child {
   width: 30%;
   display: inline-block;
@@ -89,11 +116,19 @@ ul {
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 3.3rem 0;
   color: white;
-  margin: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   font-weight: 300;
   min-height: 700px;
+}
+
+@media (max-width: 1000px) {
+  .profile__wrapper .flex_parent .flex_child:first-child {
+    width: 100%;
+    min-height: 100px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
 }
 
 .profile__wrapper .flex_parent .flex_child:first-child .teamImageNameUniv {
@@ -129,6 +164,20 @@ ul {
   background-color: #fff;
 }
 
+@media (max-width: 1000px) {
+  .profile__wrapper .flex_parent .flex_child:last-child {
+    width: 95%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .profile__wrapper .flex_parent .flex_child:last-child {
+    width: 100%;
+    margin: auto;
+  }
+}
+
 .profile__wrapper .flex_parent .flex_child:last-child .info-container {
   padding: 25px 5px;
 }
@@ -152,9 +201,8 @@ ul {
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-header h4 {
   font-weight: 500;
-  font-size: 2rem;
+  font-size: 20px;
   padding-left: 1.3rem;
-  padding-top: 2px;
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body {
@@ -184,9 +232,31 @@ ul {
   margin-left: 45px;
 }
 
+@media (max-width: 1000px) {
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row {
+    margin-left: 12px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 0;
+    padding-top: 10px;
+    padding-left: 7px;
+  }
+}
+
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row .field {
   width: 45%;
-  white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row .field {
+    width: 100%;
+  }
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row .field:first-child {
+    padding-bottom: 10px;
+  }
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row .field .field-name {
@@ -198,6 +268,8 @@ ul {
   color: #333;
   font-size: 16.5px;
   padding: 5px 0;
+  white-space: break-word;
+  letter-spacing: .4px;
 }
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user {
@@ -228,6 +300,27 @@ ul {
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user .texts .about {
   color: gray;
   font-size: 13.5px;
+}
+
+@media (max-width: 1000px) {
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user {
+    width: 95%;
+    padding: 5px 0;
+  }
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user .texts {
+    padding: 0px 0;
+    white-space: nowrap;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+  }
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user .texts .name {
+    font-size: 16.5px;
+    padding-bottom: 2px;
+  }
+  .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user .texts .about {
+    color: gray;
+    font-size: 13.5px;
+  }
 }
 
 .tabs {

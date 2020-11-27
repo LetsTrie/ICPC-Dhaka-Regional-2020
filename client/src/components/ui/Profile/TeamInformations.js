@@ -7,15 +7,10 @@ import Avatar from '@material-ui/core/Avatar';
 
 import Info from '@material-ui/icons/Info';
 import People from '@material-ui/icons/People';
-import { useMediaQuery } from '@material-ui/core';
 
 import { connect } from 'react-redux';
 
 const avatarStyles = makeStyles((theme) => ({
-  small: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
-  },
   large: {
     width: theme.spacing(10),
     height: theme.spacing(10),
@@ -25,7 +20,6 @@ const avatarStyles = makeStyles((theme) => ({
 export const Profile = (props) => {
   const { isAuthenticated, teamInfo } = props.cred;
   const avatarClasses = avatarStyles();
-  const mobileDevice = useMediaQuery('(min-width: 900px)');
 
   return (
     <>
@@ -75,7 +69,7 @@ export const Profile = (props) => {
                 <Avatar
                   src={`/${member.dp}`}
                   className={
-                    mobileDevice ? avatarClasses.large : avatarClasses.small
+                    avatarClasses.large
                   }
                 />
               </div>

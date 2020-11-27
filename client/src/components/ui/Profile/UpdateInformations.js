@@ -14,7 +14,7 @@ export const Profile = (props) => {
           <h4>Update Information</h4>
         </div>
         <div className='section-body'>
-          Hello world
+          <h1 style={{textAlign: 'center', paddingTop: '15px'}} >Coming soon....</h1>
         </div>
       </div>
     </>
