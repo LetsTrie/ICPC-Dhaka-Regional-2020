@@ -18,6 +18,10 @@ import AdminPanel from './components/pages/AdminPanel';
 import AdminLogin from './components/pages/AdminLogin';
 import { connect } from 'react-redux';
 
+import RegisteredTeams from './components/pages/Admin/Teams';
+import AdminContact from './components/pages/Admin/Contact';
+import AdminForum from './components/pages/Admin/Forum';
+
 import FailedPayment from './components/pages/FailedPayment';
 import CancelPayment from './components/pages/CancelPayment';
 
@@ -48,7 +52,21 @@ function App(props) {
               <Route exact path='/profile' component={teamRoutes(Profile)} />
               <Route exact path='/profile/edit' component={EditProfile} />
               <Route exact path='/admin/login' component={AdminLogin} />
-              <Route exact path='/admin' component={adminRoutes(AdminPanel)} />
+              <Route
+                exact
+                path={['/admin/teams', '/admin']}
+                component={adminRoutes(RegisteredTeams)}
+              />
+              <Route
+                exact
+                path='/admin/contact'
+                component={adminRoutes(AdminContact)}
+              />
+              <Route
+                exact
+                path='/admin/forum'
+                component={adminRoutes(AdminForum)}
+              />
               <Route component={NotFound} />
             </Switch>
           </div>
