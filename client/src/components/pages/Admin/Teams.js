@@ -20,6 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Avatar from '@material-ui/core/Avatar'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TableFooter from '@material-ui/core/TableFooter';
@@ -121,18 +122,24 @@ const useStyles2 = makeStyles({
   },
 });
 
-const Rows = (props) => {
-  const { rows, page, rowsPerPage, emptyRows } = props;
-  const [open, setOpen] = React.useState(false);
+const SingleRow = ({ T }) => {
+  const [open, setOpen] = React.useState(false)
   const classes = useRowStyles();
-  console.log(rows);
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }));
+
+  const avatarClass = useStyles()
+
   return (
     <>
-      {(rowsPerPage > 0
-        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        : rows
-      ).map((T) => (
-        <TableRow key={T.name} className={classes.root}>
+      <TableRow key={T.name} className={classes.root}>
           <TableCell>
             <IconButton
               aria-label='expand row'
@@ -152,38 +159,71 @@ const Rows = (props) => {
           <TableCell align='right'>{T.coach.email}</TableCell>
           <TableCell align='right'>{T.createdAt}</TableCell>
         </TableRow>
-      ))}
-      {emptyRows > 0 && (
-        <TableRow style={{ height: 53 * emptyRows }}>
-          <TableCell colSpan={6} />
-        </TableRow>
-      )}
-      {/* <TableRow>
+        <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box margin={1}>
+          <Box margin={1}>
               <Typography variant='h6' gutterBottom component='div'>
-                History
+                Coach
               </Typography>
               <Table size='small' aria-label='purchases'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align='right'>Amount</TableCell>
-                    <TableCell align='right'>Total price ($)</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Affiliation</TableCell>
+                    <TableCell align='right'>Designation</TableCell>
+                    <TableCell align='right'>Email</TableCell>
+                    <TableCell align='right'>Tshirt Size</TableCell>
+                    <TableCell align='right'>Picture</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                <TableCell>
+                    {T.coach.firstname + ' ' + T.coach.lastname}
+                  </TableCell>
+                  <TableCell align='right'>{T.coach.affiliation}</TableCell>
+                  <TableCell align='right'>{T.coach.designation}</TableCell>
+                  <TableCell align='right'>{T.coach.email}</TableCell>
+                  <TableCell align='right'>{T.coach.tshirtSize}</TableCell>
+                  <TableCell align='right'>
+                                <div className={avatarClass.root}>
+                                    <Avatar alt='Participant image' src={T.coach.dp} />
+                                </div>
+                  </TableCell>
+                </TableBody>
+              </Table>
+            </Box>
+            <Box margin={1}>
+              <Typography variant='h6' gutterBottom component='div'>
+                Participants
+              </Typography>
+              <Table size='small' aria-label='purchases'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Affiliation</TableCell>
+                    <TableCell align='right'>Semester/Year</TableCell>
+                    <TableCell align='right'>Tshirt Size</TableCell>
+                    <TableCell align='right'>Picture</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {T.participants.map(member => (
+                    <TableRow key={member._id}>
                       <TableCell component='th' scope='row'>
-                        {historyRow.date}
+                        {member.firstname + member.lastname}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align='right'>{historyRow.amount}</TableCell>
+                      <TableCell>{member.affiliation}</TableCell>
+                      <TableCell align='right'>{member.semester + ', ' + member.year}</TableCell>
                       <TableCell align='right'>
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                        {member.tshirtSize}
+                      </TableCell>
+                      <TableCell align='right'>
+                        <div className={avatarClass.root}>
+                          <p style={{textAlign: 'right'}}>
+                            <Avatar alt='Participant image' src={member.dp} />
+                          </p>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -193,7 +233,24 @@ const Rows = (props) => {
           </Collapse>
         </TableCell>
       </TableRow>
-     */}
+    </>
+  )
+}
+
+const Rows = (props) => {
+  const { rows, page, rowsPerPage, emptyRows } = props;
+  const [open, setOpen] = React.useState(false);
+  const classes = useRowStyles();
+  console.log(rows);
+  return (
+    <>
+      {(rowsPerPage > 0
+        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        : rows
+      ).map((T) => (
+        <SingleRow T={T} />
+      ))}
+    
     </>
   );
 };
