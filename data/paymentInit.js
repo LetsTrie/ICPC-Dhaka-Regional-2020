@@ -1,16 +1,17 @@
 const { v4: uuidv4 } = require('uuid');
+const getHostname = require('../utils/getHostname');
 // Need to change
 
-module.exports = {
-  total_amount: process.env.Fee,
+module.exports = (get) => ({
+  total_amount: parseInt(process.env.Fee),
   currency: 'BDT',
   tran_id: uuidv4(),
-  success_url: 'http://localhost:5000/api/v1/auth/register/payment/IpnListener',
-  fail_url: 'http://localhost:5000/api/v1/auth/register/payment/unsuccessful',
-  cancel_url: 'http://localhost:5000/api/v1/auth/register/payment/failed',
+  success_url: `${getHostname(get, 5000)}/api/v1/auth/register/payment/IpnListener`,
+  fail_url: `${getHostname(get, 5000)}/api/v1/auth/register/payment/unsuccessful`,
+  cancel_url: `${getHostname(get, 5000)}/api/v1/auth/register/payment/failed`,
   shipping_method: 'Courier',
-  product_name: 'Computer.',
-  product_category: 'Electronic',
+  product_name: 'contest',
+  product_category: 'contestFee',
   product_profile: 'general',
   cus_name: 'Customer Name',
   cus_email: 'cust@yahoo.com',
@@ -34,4 +35,4 @@ module.exports = {
   value_b: 'ref002_B',
   value_c: 'ref003_C',
   value_d: 'ref004_D',
-};
+});

@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
+import '../../../assests/css/pageNotFound.css'
 import Header from '../../ui/AdminHeader';
 
-const Contact = () => {
+export default () => {
   return (
-    <div>
+    <div className='pageNotFound'>
       <Header />
-      HELLO THERE... Contact
+      <div className='pageNotFound__header'> 
+        <h1> Coming soon... </h1>
+      </div>
     </div>
-  )
-}
-
-export default Contact
+  );
+};

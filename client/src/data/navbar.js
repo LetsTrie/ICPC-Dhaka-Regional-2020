@@ -23,6 +23,8 @@ export default [
       {
         name: 'Rules of ICPC Dhaka Regional',
         link: '/contest-info/rules-of-icpc-dhaka-regional',
+        notPage: true,
+        external: '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
       },
       {
         name: 'Accomodation',
@@ -76,9 +78,9 @@ link ba image thakle evabe notPage true kore dile ebong, external server pdf lin
 bairer kono link diye dilei hobe.. 
 
 {
-    name: 'Sub-Committee',
-    link: '/committee/sub-committees',
-    notPage: true,
-    external: 'http://localhost:5000/1.jpg',
-  },
+  name: 'Sub-Committee',
+  link: '/committee/sub-committees',
+  notPage: true,
+  external: 'http://localhost:5000/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
+},
 */

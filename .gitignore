@@ -105,4 +105,6 @@ dist
 
 package-lock.json
 todo.txt
-.vscode
+.vscode/settings.json
+
+/client/build

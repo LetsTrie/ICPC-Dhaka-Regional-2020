@@ -240,7 +240,11 @@ ScrollTop.propTypes = {
 };
 
 function redirectTo(url) {
-  window.open(url);
+  if(process.env.NODE_ENV) {
+    window.open('http://localhost:5000' + url);
+  } else {
+    window.open(window.location.protocol + '//' + window.location.host + url);
+  }
 }
 
 function BackToTop(props) {

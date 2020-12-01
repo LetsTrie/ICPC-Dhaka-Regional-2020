@@ -69,6 +69,7 @@ function validation(fld) {
 }
 
 const Register = (props) => {
+  const isPending = true;
   const { isAuthenticated } = props.cred;
 
   // MUI Class
@@ -125,7 +126,7 @@ const Register = (props) => {
 
       try {
         const { data: res } = await axios.post(`${API}/info`, reqBody);
-        console.log('Informations uploaded to server...')
+        console.log('Informations uploaded to server...');
         reqFiles.append('SECRET_KEY', res.SECRET_KEY);
         const { data: done } = await axios.post(`${API}/upload`, reqFiles);
         console.log('Files uploaded to server...');
@@ -162,10 +163,15 @@ const Register = (props) => {
   }
 
   return (
-    <div className='register_wrapper'>
+    <div className={isPending ? 'auth-pending-wrapper' : 'register_wrapper'}>
       {loading && <Loader />}
       <Header />
-      <div className='register'>
+      {isPending ? (
+        <div className='auth-pending'>
+          <h1> Registration will be available after Team Selection </h1>
+        </div>
+      ) : (
+        <div className='register'>
         <div className='register_container'>
           <div className='register_logo'>
             <img src={logo} alt='icpc logo' />
@@ -587,7 +593,9 @@ const Register = (props) => {
           </form>
         </div>
       </div>
-    </div>
+    
+      )}
+      </div>
   );
 };
 

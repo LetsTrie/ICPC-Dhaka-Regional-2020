@@ -25,13 +25,17 @@ const getCountdown = (eventTime) => {
 
 function CountDown() {
   const remainingTimes = getCountdown(eventTime);
-  const [day, setDay] = useState(remainingTimes.valid ? remainingTimes.d : 0);
-  const [hour, setHour] = useState(remainingTimes.valid ? remainingTimes.h : 0);
+  const [day, setDay] = useState(
+    remainingTimes.valid ? remainingTimes.d.toString().padStart(2, '0') : '00'
+  );
+  const [hour, setHour] = useState(
+    remainingTimes.valid ? remainingTimes.h.toString().padStart(2, '0') : '00'
+  );
   const [minute, setMinute] = useState(
-    remainingTimes.valid ? remainingTimes.m : 0
+    remainingTimes.valid ? remainingTimes.m.toString().padStart(2, '0') : '00'
   );
   const [second, setSecond] = useState(
-    remainingTimes.valid ? remainingTimes.s : 0
+    remainingTimes.valid ? remainingTimes.s.toString().padStart(2, '0') : '00'
   );
 
   let interval = useRef();
@@ -40,7 +44,7 @@ function CountDown() {
     interval = setInterval(() => {
       const times = getCountdown(eventTime);
       if (times.valid) {
-        const {d, h, m, s} = times;
+        const { d, h, m, s } = times;
         setDay(d.toString().padStart(2, '0'));
         setHour(h.toString().padStart(2, '0'));
         setMinute(m.toString().padStart(2, '0'));

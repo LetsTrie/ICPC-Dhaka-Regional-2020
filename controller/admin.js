@@ -9,7 +9,7 @@ const adminCred = require('../config/adminCredentials');
 
 exports.fetchRegisteredTeams = async (req, res) => {
   try {
-    const teams = await Team.find();
+    const teams = await Team.find().sort({ _id: -1});
     return res.status(200).json({
       success: true,
       teams,

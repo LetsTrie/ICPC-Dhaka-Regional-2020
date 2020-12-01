@@ -20,7 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@material-ui/core/Avatar';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TableFooter from '@material-ui/core/TableFooter';
@@ -123,7 +123,7 @@ const useStyles2 = makeStyles({
 });
 
 const SingleRow = ({ T }) => {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
 
   const useStyles = makeStyles((theme) => ({
@@ -135,92 +135,117 @@ const SingleRow = ({ T }) => {
     },
   }));
 
-  const avatarClass = useStyles()
+  const avatarClass = useStyles();
 
   return (
     <>
       <TableRow key={T.name} className={classes.root}>
-          <TableCell>
-            <IconButton
-              aria-label='expand row'
-              size='small'
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component='th' scope='row'>
-            {T.team}
-          </TableCell>
-          <TableCell align='right'>{T.university}</TableCell>
-          <TableCell align='right'>
-            {T.coach.firstname + ' ' + T.coach.lastname}
-          </TableCell>
-          <TableCell align='right'>{T.coach.email}</TableCell>
-          <TableCell align='right'>{T.createdAt}</TableCell>
-        </TableRow>
-        <TableRow>
+        <TableCell>
+          <IconButton
+            aria-label='expand row'
+            size='small'
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component='th' scope='row'>
+          {T.team}
+        </TableCell>
+        <TableCell align='right'>{T.university}</TableCell>
+        <TableCell align='right'>
+          {T.coach.firstname + ' ' + T.coach.lastname}
+        </TableCell>
+        <TableCell align='right'>{T.coach.email}</TableCell>
+        <TableCell align='right'>
+          {T.createdAt
+            ? new Date(T.createdAt).toLocaleString(undefined, {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+            : ''}
+        </TableCell>
+      </TableRow>
+      <TableRow style={{ background: '#f6f6f6' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout='auto' unmountOnExit>
-          <Box margin={1}>
+            <Box margin={1}>
               <Typography variant='h6' gutterBottom component='div'>
-                Coach
+                Coach Information
               </Typography>
               <Table size='small' aria-label='purchases'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
-                    <TableCell>Affiliation</TableCell>
-                    <TableCell align='right'>Designation</TableCell>
                     <TableCell align='right'>Email</TableCell>
                     <TableCell align='right'>Tshirt Size</TableCell>
-                    <TableCell align='right'>Picture</TableCell>
+
+                    <TableCell align='right'>Affiliation</TableCell>
+                    <TableCell align='right'>Designation</TableCell>
+                    <TableCell align='right'>Display Picture</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                <TableCell>
+                  <TableCell>
                     {T.coach.firstname + ' ' + T.coach.lastname}
                   </TableCell>
-                  <TableCell align='right'>{T.coach.affiliation}</TableCell>
-                  <TableCell align='right'>{T.coach.designation}</TableCell>
                   <TableCell align='right'>{T.coach.email}</TableCell>
                   <TableCell align='right'>{T.coach.tshirtSize}</TableCell>
+                  <TableCell align='right'>{T.coach.affiliation}</TableCell>
+                  <TableCell align='right'>{T.coach.designation}</TableCell>
                   <TableCell align='right'>
-                                <div className={avatarClass.root}>
-                                    <Avatar alt='Participant image' src={T.coach.dp} />
-                                </div>
+                    <div
+                      className={avatarClass.root}
+                      style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                      <Avatar alt='Participant image' src={T.coach.dp} />
+                    </div>
                   </TableCell>
                 </TableBody>
               </Table>
             </Box>
             <Box margin={1}>
               <Typography variant='h6' gutterBottom component='div'>
-                Participants
+                Participant's Inforamtion
               </Typography>
               <Table size='small' aria-label='purchases'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
-                    <TableCell>Affiliation</TableCell>
-                    <TableCell align='right'>Semester/Year</TableCell>
+                    <TableCell align='right'>Email</TableCell>
                     <TableCell align='right'>Tshirt Size</TableCell>
-                    <TableCell align='right'>Picture</TableCell>
+                    <TableCell align='right'>Affiliation</TableCell>
+                    <TableCell align='right'>Semester/Year</TableCell>
+                    <TableCell align='right'>Display Picture</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {T.participants.map(member => (
+                  {T.participants.map((member) => (
                     <TableRow key={member._id}>
                       <TableCell component='th' scope='row'>
-                        {member.firstname + member.lastname}
+                        {member.firstname + ' ' + member.lastname}
                       </TableCell>
-                      <TableCell>{member.affiliation}</TableCell>
-                      <TableCell align='right'>{member.semester + ', ' + member.year}</TableCell>
+                      <TableCell align='right'>{member.email}</TableCell>
+                      <TableCell align='right'>{member.tshirtSize}</TableCell>
+                      <TableCell align='right'>{member.affiliation}</TableCell>
                       <TableCell align='right'>
-                        {member.tshirtSize}
+                        {member.year +
+                          ' year, ' +
+                          member.semester +
+                          ' semester'}
                       </TableCell>
                       <TableCell align='right'>
-                        <div className={avatarClass.root}>
-                          <p style={{textAlign: 'right'}}>
+                        <div
+                          className={avatarClass.root}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                          }}
+                        >
+                          <p style={{ textAlign: 'right' }}>
                             <Avatar alt='Participant image' src={member.dp} />
                           </p>
                         </div>
@@ -234,8 +259,8 @@ const SingleRow = ({ T }) => {
         </TableCell>
       </TableRow>
     </>
-  )
-}
+  );
+};
 
 const Rows = (props) => {
   const { rows, page, rowsPerPage, emptyRows } = props;
@@ -250,7 +275,6 @@ const Rows = (props) => {
       ).map((T) => (
         <SingleRow T={T} />
       ))}
-    
     </>
   );
 };

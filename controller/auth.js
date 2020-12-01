@@ -7,6 +7,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const Team = require('../models/team');
 
+const getHostname = require('../utils/getHostname');
+
 exports.registerInfo = async (req, res) => {
   try {
     req.body.team = req.body.team.toLowerCase().trim();
@@ -82,8 +84,9 @@ exports.registerUpload = async (req, res) => {
 };
 
 const SSLCommerz = require('../services/sslcommerz');
+
 let settings = {
-  isSandboxMode: true, //false if live version
+  isSandboxMode: process.env.isSandboxMode === 'false' ? false : true,
   store_id: process.env.SSL_store_id,
   store_passwd: process.env.SSL_store_password,
 };
@@ -136,8 +139,9 @@ exports.paymentIpnListener = async (req, res) => {
   if (team) {
     team.transactionSuccess = true;
     await team.save();
+    let hostname = getHostname(req, 3000);
     return res.send(
-      '<script>window.location="http://localhost:3000/login?checkout=success"</script>'
+      `<script>window.location="${hostname}/login?checkout=success"</script>`
     );
   } else {
     return res.send('TEAM IS NOT FOUND!!');
@@ -226,13 +230,15 @@ exports.updatePassword = async (req, res) => {
 };
 
 exports.paymentUnseccessful = async (req, res) => {
+  let hostname = getHostname(req, 3000);
   return res.send(
-    '<script>window.location="http://localhost:3000/payment/failed"</script>'
+    `<script>window.location="${hostname}/payment/failed"</script>`
   );
 };
 
 exports.paymentFailed = async (req, res) => {
+  let hostname = getHostname(req, 3000);
   return res.send(
-    '<script>window.location="http://localhost:3000/payment/cancel"</script>'
+    `<script>window.location="${hostname}/payment/cancel"</script>`
   );
 };

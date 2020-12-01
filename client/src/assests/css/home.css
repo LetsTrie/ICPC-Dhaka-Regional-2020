@@ -387,15 +387,31 @@ ul {
   }
 }
 
+@media (max-width: 700px) {
+  .important_infos {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
 .important_infos .flex_child {
   width: 290px;
   margin-bottom: 2rem;
+  margin: 5px;
   background: white;
   -webkit-box-shadow: rgba(19, 15, 235, 0.164) 3px 6px 15px 0px;
           box-shadow: rgba(19, 15, 235, 0.164) 3px 6px 15px 0px;
   position: relative;
   border-radius: 7px;
   cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .important_infos .flex_child {
+    margin: 1rem;
+  }
 }
 
 .important_infos .flex_child_header {
