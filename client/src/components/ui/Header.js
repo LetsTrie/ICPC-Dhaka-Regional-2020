@@ -240,7 +240,7 @@ ScrollTop.propTypes = {
 };
 
 function redirectTo(url) {
-  if(process.env.NODE_ENV) {
+  if(process.env.NODE_ENV === 'development') {
     window.open('http://localhost:5000' + url);
   } else {
     window.open(window.location.protocol + '//' + window.location.host + url);

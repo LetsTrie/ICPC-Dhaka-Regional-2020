@@ -56,18 +56,18 @@ const AdminLogin = (props) => {
     await loginAction(formFields, props.history, true);
   };
 
-  const styles = {
-    linkStyles: {
-      textDecoration: 'none',
-      color: '#3576a2',
-    },
-    askForRegister: {
-      marginTop: '1rem',
-      textAlign: 'center',
-      fontSize: '1.4rem',
-      color: '#555',
-    },
-  };
+  // const styles = {
+  //   linkStyles: {
+  //     textDecoration: 'none',
+  //     color: '#3576a2',
+  //   },
+  //   askForRegister: {
+  //     marginTop: '1rem',
+  //     textAlign: 'center',
+  //     fontSize: '1.4rem',
+  //     color: '#555',
+  //   },
+  // };
 
   return (
     <div className='login_wrapper admin_login_wrapper'>

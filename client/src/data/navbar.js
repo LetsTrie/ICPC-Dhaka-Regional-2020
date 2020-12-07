@@ -81,6 +81,6 @@ bairer kono link diye dilei hobe..
   name: 'Sub-Committee',
   link: '/committee/sub-committees',
   notPage: true,
-  external: 'http://localhost:5000/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
+  external: '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
 },
 */

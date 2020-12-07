@@ -4,7 +4,7 @@ const validate = data => {
   const { teamInfo, membersInfo } = data 
 
   const check = str => {
-    return str == '' || str == null || str == undefined
+    return str === '' || str === null || str === undefined
   }
 
   if (check(teamInfo.teamName)) {

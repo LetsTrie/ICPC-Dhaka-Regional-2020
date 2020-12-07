@@ -263,9 +263,7 @@ const SingleRow = ({ T }) => {
 };
 
 const Rows = (props) => {
-  const { rows, page, rowsPerPage, emptyRows } = props;
-  const [open, setOpen] = React.useState(false);
-  const classes = useRowStyles();
+  const { rows, page, rowsPerPage} = props;
   console.log(rows);
   return (
     <>
