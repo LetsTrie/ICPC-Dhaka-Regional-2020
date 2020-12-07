@@ -3,7 +3,6 @@ import {
   AUTH_LOADING_LOGIN,
   AUTH_ERROR_LOGIN,
   AUTH_SUCCESSFUL_LOGIN,
-  AUTH_ADMIN_LOGIN,
 } from '../action/types';
 
 const initialState = {

@@ -4,8 +4,6 @@ import Info from '@material-ui/icons/Info';
 import { connect } from 'react-redux';
 
 export const Profile = (props) => {
-  const { isAuthenticated, teamInfo } = props.cred;
-
   return (
     <>
       <div className='info-container'>

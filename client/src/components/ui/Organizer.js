@@ -36,7 +36,7 @@ const Organizer = () => {
               </p>
             </div>
             <div className='organizer_info_left_see_more'>
-              <a href='https://www.du.ac.bd/' target='_blank'>
+              <a href='https://www.du.ac.bd/' target='_blank' rel="noopener noreferrer">
                 See more →
               </a>
             </div>

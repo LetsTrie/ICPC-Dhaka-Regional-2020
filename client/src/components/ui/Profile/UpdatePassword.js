@@ -6,7 +6,6 @@ import CustomTextField from '../CustomTextField';
 import { makeStyles } from '@material-ui/core/styles';
 import useFormFields from '../../HandleForms';
 import Button from '@material-ui/core/Button';
-import Loader from '../Loader';
 import Alert from '@material-ui/lab/Alert';
 import { useDispatch } from 'react-redux';
 import { UPDATE_TEAM_PROFILE } from '../../../action/types';
@@ -27,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 export const Profile = (props) => {
-  const { isAuthenticated, teamInfo, accessToken } = props.cred;
+  const { accessToken } = props.cred;
   const { isLoading, setIsLoading } = props;
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
