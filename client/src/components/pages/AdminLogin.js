@@ -74,7 +74,7 @@ const AdminLogin = (props) => {
       {isLoading && <Loader />}
       <AdminHeader />
       <div className='login'>
-        <div className='login_container'>
+        <div className='login_container admin_login_container'>
           <div className='login_logo'>
             <img src={logo} alt='icpc' />
           </div>

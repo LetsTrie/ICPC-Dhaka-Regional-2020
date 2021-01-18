@@ -1,15 +1,76 @@
 const Team = require('../models/team');
 const jwt = require('jsonwebtoken');
 const adminCred = require('../config/adminCredentials');
+const path = require('path');
+const Payment = require('../models/payment');
 
 // const User = require('../models/users.js');
 // const fs = require('fs');
 // const path = require('path');
 // const { sendClusterMail } = require('../config/sendMail.js');
+const excelToJson = require('convert-excel-to-json');
+
+function urlSlug(d) {
+  return d.split(' ').join('.').split('_').join('-');
+}
+
+async function parseFile() {
+  let result = excelToJson({
+    sourceFile: path.join(__dirname, '..', 'uploads', 'teams.xls'),
+  }).allTeamsTable;
+  let teams = [];
+  const allTeamsFromDb = await Payment.find({});
+  let mapping = {};
+  for (let t of allTeamsFromDb) mapping[t.team] = 1;
+
+  for (let i = 1; i < result.length; i++) {
+    teams.push({
+      teamId: urlSlug(result[i]['C']),
+      [result[0]['C']]: result[i]['C'],
+      [result[0]['D']]: result[i]['D'],
+      [result[0]['E']]: result[i]['E'],
+      [result[0]['F']]: result[i]['F'],
+      'Payment Status': mapping[result[i]['C']] ? 'Paid' : 'Not Paid Yet',
+    });
+  }
+  console.log(teams);
+  teams.sort((a, b) => a.Team > b.Team);
+  return teams;
+}
+
+exports.getTeamInfo = async (req, res) => {
+  try {
+    const teams = await parseFile();
+    return res.status(200).json({
+      success: true,
+      teams,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err,
+    });
+  }
+};
+
+exports.storeTeamInfo = async (req, res) => {
+  try {
+    const teams = await parseFile();
+    return res.status(200).json({
+      success: true,
+      teams,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
 
 exports.fetchRegisteredTeams = async (req, res) => {
   try {
-    const teams = await Team.find().sort({ _id: -1});
+    const teams = await Team.find().sort({ _id: -1 });
     return res.status(200).json({
       success: true,
       teams,

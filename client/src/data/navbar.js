@@ -8,8 +8,8 @@ export default [
     link: '/gallery',
   },
   {
-    name: 'Registration',
-    link: '/registration/online',
+    name: 'Teams',
+    link: '/teams',
     unAuthenticated: true,
   },
   {

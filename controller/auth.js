@@ -6,8 +6,67 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs').promises;
 const path = require('path');
 const Team = require('../models/team');
+const Payment = require('../models/payment');
 
 const getHostname = require('../utils/getHostname');
+const SSLCommerz = require('../services/sslcommerz');
+
+let settings = {
+  isSandboxMode: process.env.isSandboxMode === 'false' ? false : true,
+  store_id: process.env.SSL_store_id,
+  store_passwd: process.env.SSL_store_password,
+};
+
+let sslcommerz = new SSLCommerz(settings);
+
+exports.teamPaymentInitiate = async (req, res) => {
+  try {
+    const payload = require('../data/paymentInit')(req);
+    const init = await sslcommerz.init_transaction(payload);
+    return res.status(200).json({
+      success: true,
+      GatewayPageURL: init.GatewayPageURL,
+      transactionId: payload.tran_id,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+exports.paymentIpnListener = async (req, res) => {
+  let hostname = getHostname(req, 3000);
+  const { teamId, teamName, country, institution, coach } = req.query;
+  const { val_id } = req.body;
+  const info = await sslcommerz.validate_transaction_order(val_id);
+  const { status, tran_id, tran_date, amount, currency } = info;
+  if (status === 'INVALID_TRANSACTION ') {
+    return res.send('<h1>INVALID TRANSACTION</h1>');
+  }
+  const payment = new Payment({
+    team: teamName
+  });
+  await payment.save();
+  return res.send(
+    `<script>window.location="${hostname}/payment/${teamId}?Team=${teamName}&Country=${country}&Institution=${institution}&Coach=${coach}&Success=true"</script>`
+  );
+};
+
+exports.paymentUnseccessful = async (req, res) => {
+  let hostname = getHostname(req, 3000);
+  return res.send(
+    `<script>window.location="${hostname}/payment/failed"</script>`
+  );
+};
+
+exports.paymentFailed = async (req, res) => {
+  let hostname = getHostname(req, 3000);
+  return res.send(
+    `<script>window.location="${hostname}/payment/cancel"</script>`
+  );
+};
 
 exports.registerInfo = async (req, res) => {
   try {
@@ -83,16 +142,6 @@ exports.registerUpload = async (req, res) => {
   }
 };
 
-const SSLCommerz = require('../services/sslcommerz');
-
-let settings = {
-  isSandboxMode: process.env.isSandboxMode === 'false' ? false : true,
-  store_id: process.env.SSL_store_id,
-  store_passwd: process.env.SSL_store_password,
-};
-
-let sslcommerz = new SSLCommerz(settings);
-
 exports.paymentInitiate = async (req, res) => {
   try {
     const SECRET_KEY = req.query.key;
@@ -122,29 +171,6 @@ exports.paymentInitiate = async (req, res) => {
       success: false,
       message: err.message,
     });
-  }
-};
-
-exports.paymentIpnListener = async (req, res) => {
-  const { val_id } = req.body;
-  const info = await sslcommerz.validate_transaction_order(val_id);
-  const { status, tran_id, tran_date, amount, currency } = info;
-  if (status === 'INVALID_TRANSACTION ') {
-    return res.send('<h1>INVALID TRANSACTION</h1>');
-  }
-  if (parseInt(amount) !== parseInt(process.env.Fee)) {
-    return res.send('<h1>AMOUNT IS NOT VALID</h1>');
-  }
-  const team = await Team.findOne({ transactionId: tran_id });
-  if (team) {
-    team.transactionSuccess = true;
-    await team.save();
-    let hostname = getHostname(req, 3000);
-    return res.send(
-      `<script>window.location="${hostname}/login?checkout=success"</script>`
-    );
-  } else {
-    return res.send('TEAM IS NOT FOUND!!');
   }
 };
 
@@ -227,18 +253,4 @@ exports.updatePassword = async (req, res) => {
     console.log(err);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
-};
-
-exports.paymentUnseccessful = async (req, res) => {
-  let hostname = getHostname(req, 3000);
-  return res.send(
-    `<script>window.location="${hostname}/payment/failed"</script>`
-  );
-};
-
-exports.paymentFailed = async (req, res) => {
-  let hostname = getHostname(req, 3000);
-  return res.send(
-    `<script>window.location="${hostname}/payment/cancel"</script>`
-  );
 };

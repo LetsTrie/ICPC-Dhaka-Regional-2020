@@ -62,9 +62,31 @@ ul {
 .registeredTeamsWrapper .registeredTeams__header h1 {
   text-align: center;
   font-weight: 300;
-  font-size: 5rem;
+  font-size: 6rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+@media (max-width: 500px) {
+  .registeredTeamsWrapper .registeredTeams__header h1 {
+    font-size: 5rem;
+  }
+}
+
+.registeredTeamsWrapper .registeredTeams__subheader h3 {
+  text-align: center;
+  font-weight: 300;
+  font-size: 4rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border: 2px dashed gray;
+}
+
+@media (max-width: 500px) {
+  .registeredTeamsWrapper .registeredTeams__subheader h3 {
+    font-size: 3.5rem;
+  }
 }
 
 .registeredTeamsWrapper .registeredTeams__table {

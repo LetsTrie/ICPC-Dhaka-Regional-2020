@@ -330,9 +330,9 @@ function BackToTop(props) {
         }
       });
 
-      if (pathname === '/login') {
-        setMenuIndex(2);
-      }
+      // if (pathname === '/login') {
+      //   setMenuIndex(2);
+      // }
     }
   }, [menuIndex, subMenuIndex]);
 
@@ -424,7 +424,7 @@ function BackToTop(props) {
       {/* Logout handlers */
       /* Authenticated holei hobe.. */}
 
-      {isAuthenticated ? (
+      {/* {isAuthenticated ? (
         <Button
           variant='contained'
           color='secondary'
@@ -444,7 +444,7 @@ function BackToTop(props) {
         >
           Login
         </Button>
-      )}
+      )} */}
     </>
   );
 
@@ -558,7 +558,7 @@ function BackToTop(props) {
             return show ? comp : '';
           })}
         </List>
-        {isAuthenticated ? (
+        {/* {isAuthenticated ? (
           <Button
             variant='contained'
             color='secondary'
@@ -578,7 +578,7 @@ function BackToTop(props) {
           >
             Login
           </Button>
-        )}
+        )} */}
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}

@@ -11,9 +11,28 @@
       h1 {
         text-align: center;
         font-weight: 300;
-        font-size: 5rem;
+        font-size: 6rem;
         padding-top: 2rem;
         padding-bottom: 2rem;
+
+        @media (max-width: 500px) {
+          font-size: 5rem;
+        }
+      }
+    }
+    &__subheader {
+      h3 {
+        text-align: center;
+        font-weight: 300;
+        font-size: 4rem;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        border: 2px dashed gray;
+        
+        @media (max-width: 500px) {
+          font-size: 3.5rem;
+        }
       }
     }
 
