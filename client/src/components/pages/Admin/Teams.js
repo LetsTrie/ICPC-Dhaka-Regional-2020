@@ -1,384 +1,265 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../ui/AdminHeader';
-
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import axios from 'axios';
 
-import Loader from '../../ui/Loader';
-
-import '../../../assests/css/adminTeams.css';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import SaveIcon from '@material-ui/icons/Save';
+import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Avatar from '@material-ui/core/Avatar';
-
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import axios from 'axios';
+import TableRow from '@material-ui/core/TableRow';
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
+import '../../../assests/css/adminTeams.css';
+import Header from '../../ui/AdminHeader';
+import useFormFields from '../../HandleForms';
+
+const columns = [
+  { id: 'Team', label: 'Team', minWidth: 170 },
+  {
+    id: 'Country',
+    label: 'Country',
+    minWidth: 170,
+    align: 'right',
   },
-});
-
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
+  {
+    id: 'Institution',
+    label: 'Institution',
+    minWidth: 170,
+    align: 'right',
   },
-}));
-
-function TablePaginationActions(props) {
-  const classes = useStyles1();
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onChangePage } = props;
-
-  const handleFirstPageButtonClick = (event) => {
-    onChangePage(event, 0);
-  };
-
-  const handleBackButtonClick = (event) => {
-    onChangePage(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event) => {
-    onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event) => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <div className={classes.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label='first page'
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label='previous page'
-      >
-        {theme.direction === 'rtl' ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='next page'
-      >
-        {theme.direction === 'rtl' ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label='last page'
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </div>
-  );
-}
-
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
+  {
+    id: 'Coach',
+    label: 'Coach',
+    minWidth: 170,
+  },
+  {
+    id: 'Payment Status',
+    label: 'Payment Status',
+    minWidth: 170,
+    align: 'right',
+  },
+];
 
 const useStyles2 = makeStyles({
   table: {
     minWidth: 500,
   },
+  root: {
+    width: '100%',
+    marginTop: 25,
+    borderRadius: 5,
+  },
+  container: {
+    maxHeight: 1000,
+  },
 });
 
-const SingleRow = ({ T }) => {
-  const [open, setOpen] = React.useState(false);
-  const classes = useRowStyles();
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-  }));
-
-  const avatarClass = useStyles();
-
+const SubHeading = () => {
   return (
-    <>
-      <TableRow key={T.name} className={classes.root}>
-        <TableCell>
-          <IconButton
-            aria-label='expand row'
-            size='small'
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component='th' scope='row'>
-          {T.team}
-        </TableCell>
-        <TableCell align='right'>{T.university}</TableCell>
-        <TableCell align='right'>
-          {T.coach.firstname + ' ' + T.coach.lastname}
-        </TableCell>
-        <TableCell align='right'>{T.coach.email}</TableCell>
-        <TableCell align='right'>
-          {T.createdAt
-            ? new Date(T.createdAt).toLocaleString(undefined, {
-                day: 'numeric',
-                month: 'numeric',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-              })
-            : ''}
-        </TableCell>
-      </TableRow>
-      <TableRow style={{ background: '#f6f6f6' }}>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box margin={1}>
-              <Typography variant='h6' gutterBottom component='div'>
-                Coach Information
-              </Typography>
-              <Table size='small' aria-label='purchases'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align='right'>Email</TableCell>
-                    <TableCell align='right'>Tshirt Size</TableCell>
-
-                    <TableCell align='right'>Affiliation</TableCell>
-                    <TableCell align='right'>Designation</TableCell>
-                    <TableCell align='right'>Display Picture</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableCell>
-                    {T.coach.firstname + ' ' + T.coach.lastname}
-                  </TableCell>
-                  <TableCell align='right'>{T.coach.email}</TableCell>
-                  <TableCell align='right'>{T.coach.tshirtSize}</TableCell>
-                  <TableCell align='right'>{T.coach.affiliation}</TableCell>
-                  <TableCell align='right'>{T.coach.designation}</TableCell>
-                  <TableCell align='right'>
-                    <div
-                      className={avatarClass.root}
-                      style={{ display: 'flex', justifyContent: 'flex-end' }}
-                    >
-                      <Avatar alt='Participant image' src={T.coach.dp} />
-                    </div>
-                  </TableCell>
-                </TableBody>
-              </Table>
-            </Box>
-            <Box margin={1}>
-              <Typography variant='h6' gutterBottom component='div'>
-                Participant's Inforamtion
-              </Typography>
-              <Table size='small' aria-label='purchases'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align='right'>Email</TableCell>
-                    <TableCell align='right'>Tshirt Size</TableCell>
-                    <TableCell align='right'>Affiliation</TableCell>
-                    <TableCell align='right'>Semester/Year</TableCell>
-                    <TableCell align='right'>Display Picture</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {T.participants.map((member) => (
-                    <TableRow key={member._id}>
-                      <TableCell component='th' scope='row'>
-                        {member.firstname + ' ' + member.lastname}
-                      </TableCell>
-                      <TableCell align='right'>{member.email}</TableCell>
-                      <TableCell align='right'>{member.tshirtSize}</TableCell>
-                      <TableCell align='right'>{member.affiliation}</TableCell>
-                      <TableCell align='right'>
-                        {member.year +
-                          ' year, ' +
-                          member.semester +
-                          ' semester'}
-                      </TableCell>
-                      <TableCell align='right'>
-                        <div
-                          className={avatarClass.root}
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                          }}
-                        >
-                          <p style={{ textAlign: 'right' }}>
-                            <Avatar alt='Participant image' src={member.dp} />
-                          </p>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
-  );
-};
-
-const Rows = (props) => {
-  const { rows, page, rowsPerPage} = props;
-  console.log(rows);
-  return (
-    <>
-      {(rowsPerPage > 0
-        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        : rows
-      ).map((T) => (
-        <SingleRow T={T} />
-      ))}
-    </>
+    <div className='registeredTeams__subheader'>
+      <h3> No teams have registered yet</h3>
+    </div>
   );
 };
 
 const Teams = (props) => {
   const { accessToken } = props.cred;
   const [teams, setTeams] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const classes = useStyles2();
+  const [showSubmitButton, setShowSubmitButton] = useState(false);
+  const [fileError, setFileError] = useState(null);
+  const { formFields, createChangeHandler } = useFormFields({ file: null });
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, teams.length - page * rowsPerPage);
+  const classes = useStyles2();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formFields.file.name !== 'teams.xls') {
+      setFileError('Spreadsheet name should be "teams.xls"');
+    } else if (formFields.file.size / 1000 / 1000 > 5) {
+      setFileError('Spreadsheet size should be less than 5MB');
+    } else {
+      setFileError(null);
+      setIsLoading(true);
+      const reqFiles = new FormData();
+      reqFiles.append('file', formFields.file);
+      const headers = { Authorization: `Bearer ${accessToken}` };
+      const { data: response } = await axios.post(
+        '/api/v1/admin/team-file-xls-upload',
+        reqFiles,
+        {
+          headers,
+        }
+      );
+      console.log(response.teams);
+      setTeams(response.teams);
+      setShowSubmitButton(false);
+      setIsLoading(false);
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    setShowSubmitButton(true);
+    createChangeHandler('file', true)(e);
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get('/api/v1/admin/team-file-xls').then((res) => {
+      const { teams } = res.data;
+      setTeams(teams);
+      setIsLoading(false);
+    });
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  useEffect(() => {
-    const getTeamInfo = async () => {
-      const headers = { Authorization: `Bearer ${accessToken}` };
-      const { data: res } = await axios.get('/api/v1/admin/teams', {
-        headers,
-      });
-      setTeams(res.teams);
-      setIsLoading(false);
-    };
-    try {
-      getTeamInfo();
-    } catch (err) {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log('team is loading');
-    console.log(isLoading);
-  }, [isLoading]);
 
   return (
     <div className='registeredTeamsWrapper'>
       <Header />
+      <>
+        <div className='registeredTeams__header'>
+          <h1> Registered Teams </h1>
+        </div>
+        <div className='registeredTeams__table'>
+          <form onSubmit={handleSubmit} style={{ textAlign: 'right' }}>
+            <div>
+              <input
+                id='fileId'
+                type='file'
+                name='file'
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+                onClick={(e) => (e.target.value = null)}
+              />
+              <label htmlFor='fileId'>
+                <Button
+                  variant='contained'
+                  component='span'
+                  className={classes.button}
+                  startIcon={<CloudUploadIcon />}
+                  style={{ fontSize: 17 }}
+                >
+                  Upload your
+                  <span
+                    style={{
+                      paddingLeft: 7,
+                      paddingRight: 7,
+                      fontWeight: '700',
+                      textTransform: 'lowercase',
+                    }}
+                  >{`"teams.xls"`}</span>
+                  File
+                </Button>
+              </label>
 
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className='registeredTeams__header'>
-            <h1> Registered Teams </h1>
-          </div>
-          <div className='registeredTeams__table'>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label='collapsible table'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>Team name</TableCell>
-                    <TableCell align='right'>University</TableCell>
-                    <TableCell align='right'>Coach</TableCell>
-                    <TableCell align='right'>Email (Coach)</TableCell>
-                    <TableCell align='right'>Registration Date</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <Rows
-                    rows={teams}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    emptyRows={emptyRows}
-                  />
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      rowsPerPageOptions={[
-                        5,
-                        10,
-                        25,
-                        { label: 'All', value: -1 },
-                      ]}
-                      colSpan={4}
-                      count={teams.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      SelectProps={{
-                        inputProps: { 'aria-label': 'rows per page' },
-                        native: true,
-                      }}
-                      onChangePage={handleChangePage}
-                      onChangeRowsPerPage={handleChangeRowsPerPage}
-                      ActionsComponent={TablePaginationActions}
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </TableContainer>
-          </div>
-        </>
-      )}
+              {showSubmitButton && (
+                <Button
+                  variant='contained'
+                  color='primary'
+                  className={classes.button}
+                  startIcon={<SaveIcon />}
+                  style={{ fontSize: 17, marginLeft: 10 }}
+                  type='Submit'
+                >
+                  Submit File
+                </Button>
+              )}
+            </div>
+          </form>
+          {fileError && (
+            <Alert
+              severity='error'
+              style={{ fontSize: 18, marginTop: 15, fontWeight: '700' }}
+            >
+              {fileError}
+            </Alert>
+          )}
+          {teams.length === 0 ? (
+            <SubHeading />
+          ) : (
+            <Paper className={classes.root}>
+              <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label='sticky table'>
+                  <TableHead>
+                    <TableRow>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={'center'}
+                          style={{ minWidth: column.minWidth, fontSize: 18 }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {teams
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row) => {
+                        return (
+                          <TableRow
+                            hover
+                            role='checkbox'
+                            tabIndex={-1}
+                            key={row.team}
+                          >
+                            {columns.map((column) => {
+                              const value = row[column.id];
+                              return (
+                                <TableCell
+                                  key={column.id}
+                                  align={'center'}
+                                  style={{ fontSize: 16 }}
+                                >
+                                  {column.format && typeof value === 'number'
+                                    ? column.format(value)
+                                    : value}
+                                </TableCell>
+                              );
+                            })}
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[100, 200, 300]}
+                colSpan={4}
+                component='div'
+                count={teams.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </Paper>
+          )}
+        </div>
+      </>
     </div>
   );
 };

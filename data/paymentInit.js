@@ -1,38 +1,38 @@
 const { v4: uuidv4 } = require('uuid');
 const getHostname = require('../utils/getHostname');
-// Need to change
 
-module.exports = (get) => ({
-  total_amount: parseInt(process.env.Fee),
-  currency: 'BDT',
-  tran_id: uuidv4(),
-  success_url: `${getHostname(get, 5000)}/api/v1/auth/register/payment/IpnListener`,
-  fail_url: `${getHostname(get, 5000)}/api/v1/auth/register/payment/unsuccessful`,
-  cancel_url: `${getHostname(get, 5000)}/api/v1/auth/register/payment/failed`,
-  shipping_method: 'Courier',
-  product_name: 'contest',
-  product_category: 'contestFee',
-  product_profile: 'general',
-  cus_name: 'Customer Name',
-  cus_email: 'cust@yahoo.com',
-  cus_add1: 'Dhaka',
-  cus_add2: 'Dhaka',
-  cus_city: 'Dhaka',
-  cus_state: 'Dhaka',
-  cus_postcode: '1000',
-  cus_country: 'Bangladesh',
-  cus_phone: '01711111111',
-  cus_fax: '01711111111',
-  ship_name: 'Customer Name',
-  ship_add1: 'Dhaka',
-  ship_add2: 'Dhaka',
-  ship_city: 'Dhaka',
-  ship_state: 'Dhaka',
-  ship_postcode: 1000,
-  ship_country: 'Bangladesh',
-  multi_card_name: 'mastercard',
-  value_a: 'ref001_A',
-  value_b: 'ref002_B',
-  value_c: 'ref003_C',
-  value_d: 'ref004_D',
-});
+module.exports = (req) => {
+  const { teamId, teamName, country, institution, coach } = req.query;
+  return {
+    total_amount: parseInt(process.env.Fee),
+    currency: 'BDT',
+    tran_id: uuidv4(),
+    success_url: `${getHostname(
+      req,
+      5000
+    )}/api/v1/auth/register/payment/IpnListener?teamId=${teamId}&teamName=${teamName}&country=${country}&institution=${institution}&coach=${coach}`,
+    fail_url: `${getHostname(
+      req,
+      5000
+    )}/api/v1/auth/register/payment/unsuccessful`,
+    cancel_url: `${getHostname(req, 5000)}/api/v1/auth/register/payment/failed`,
+    shipping_method: 'Courier',
+    product_name: 'contest',
+    product_category: 'contestFee',
+    product_profile: 'general',
+    cus_name: teamName,
+    cus_email: 'cust@yahoo.com',
+    cus_add1: institution,
+    cus_city: 'Dhaka',
+    cus_postcode: '1000',
+    cus_country: country,
+    cus_phone: '01711111111',
+    ship_name: coach,
+    ship_add1: 'Dhaka',
+    ship_city: 'Dhaka',
+    ship_state: 'Dhaka',
+    ship_postcode: 1000,
+    ship_country: 'Bangladesh',
+    multi_card_name: 'mastercard',
+  };
+};

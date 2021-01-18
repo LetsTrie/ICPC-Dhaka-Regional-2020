@@ -47,10 +47,6 @@ const navMenu = [
     name: 'Contact',
     link: '/admin/contact',
   },
-  {
-    name: 'Forum',
-    link: '/admin/forum'
-  }
 ];
 
 const useStyles = makeStyles((theme) => ({

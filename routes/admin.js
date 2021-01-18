@@ -1,19 +1,33 @@
-const router = require('express').Router()
+const router = require('express').Router();
+const multer = require('multer');
 
 const C = require('../controller/admin');
 const M = require('../middlewares/authorization');
 
+let storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+let teamInfoFile = multer({ storage }).single('file');
+
 router.post('/login', C.login);
 router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
+router.get('/team-file-xls', C.getTeamInfo);
+router.post('/team-file-xls-upload', [M.AdminAccess, teamInfoFile], C.storeTeamInfo);
 
 // const { auth } = require('../middlewares/auth.js')
 // const { adminAccess } = require('../middlewares/adminAcess')
-// const { 
+// const {
 //   login,
-//   getAllUsers, 
+//   getAllUsers,
 //   uploadImage,
-//    loadGallery, 
-//    uploadPDF, 
+//    loadGallery,
+//    uploadPDF,
 //    updateImageVisibility,
 //    updateSubmenus,
 //    clusterMail
@@ -69,4 +83,4 @@ router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
 // router.post('/update-submenu', [auth, adminAccess], updateSubmenus)
 // router.post('/email', [auth, adminAccess], clusterMail)
 
-module.exports = router
+module.exports = router;

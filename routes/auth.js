@@ -33,6 +33,8 @@ router.post('/login', C.teamLogin);
 router.get('/teamInformation', M.verifyToken, C.teamInformation);
 router.post('/update-password', M.verifyToken, C.updatePassword);
 
+router.get('/teamPaymentInitiate', C.teamPaymentInitiate);
+
 // router.post('/create', auth, C.createPost);
 
 module.exports = router;

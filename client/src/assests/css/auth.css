@@ -490,3 +490,7 @@ ul {
   font-size: 15px;
   padding: 0;
 }
+
+.admin_login_container {
+  margin-top: 10px;
+}

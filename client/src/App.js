@@ -13,6 +13,8 @@ import ContactUs from './components/pages/ContactUs';
 import Profile from './components/pages/Profile';
 import EditProfile from './components/pages/EditProfile';
 import NotFound from './components/pages/NotFound';
+import Teams from './components/pages/Teams';
+import Payment from './components/pages/Payment';
 
 import AdminPanel from './components/pages/AdminPanel';
 import AdminLogin from './components/pages/AdminLogin';
@@ -44,9 +46,11 @@ function App(props) {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/gallery' component={Gallery} />
-              <Route exact path='/registration/online' component={Register} />
               <Route exact path='/payment/failed' component={FailedPayment} />
               <Route exact path='/payment/cancel' component={CancelPayment} />
+              <Route exact path='/payment/:teamId' component={Payment} />
+              <Route exact path='/teams' component={Teams} />
+              <Route exact path='/registration/online' component={Register} />
               <Route exact path='/contact' component={ContactUs} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/profile' component={teamRoutes(Profile)} />

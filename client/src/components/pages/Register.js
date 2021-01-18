@@ -172,430 +172,436 @@ const Register = (props) => {
         </div>
       ) : (
         <div className='register'>
-        <div className='register_container'>
-          <div className='register_logo'>
-            <img src={logo} alt='icpc logo' />
-          </div>
-          <div className='register_your_team'>
-            <p>Register Your Team</p>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className='register_flex'>
-              <div className='register_flex_left'>
-                {alert && (
-                  <Alert
-                    variant='filled'
-                    severity='error'
-                    style={{ marginBottom: '2rem', fontSize: '15px' }}
-                  >
-                    {alert}
-                  </Alert>
-                )}
-
-                <div className='secondary_heading'>
-                  <p> Team Information </p>
-                </div>
-                <div className='flex_row'>
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='team'
-                    label='Team name'
-                    onChange={createChangeHandler('team')}
-                    type='text'
-                    required={true}
-                  />
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='university'
-                    label='University'
-                    onChange={createChangeHandler('university')}
-                    type='text'
-                    required={true}
-                  />
-                </div>
-                <div className='flex_row'>
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='password'
-                    label='Password'
-                    onChange={createChangeHandler('password')}
-                    type='password'
-                    required={true}
-                    minLength='6'
-                  />
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='confirmPassword'
-                    label='Confirm password'
-                    onChange={createChangeHandler('confirmPassword')}
-                    type='password'
-                    required={true}
-                    minLength='6'
-                  />
-                </div>
-
-                <div
-                  className='secondary_heading'
-                  style={{ paddingTop: '2.2rem' }}
-                >
-                  <p> Coach Information </p>
-                </div>
-                <div className='flex_row'>
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='coachFirstname'
-                    label='First name'
-                    onChange={createChangeHandler('coachFirstname')}
-                    type='text'
-                    required={true}
-                  />
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='coachLastname'
-                    label={'Last name'}
-                    onChange={createChangeHandler('coachLastname')}
-                    type='text'
-                    required={true}
-                  />
-                </div>
-                <div className='flex_row'>
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='coachEmail'
-                    label='Email'
-                    onChange={createChangeHandler('coachEmail')}
-                    type='email'
-                    required={true}
-                  />
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='coachAffiliation'
-                    label='Affiliation'
-                    onChange={createChangeHandler('coachAffiliation')}
-                    type='text'
-                    required={true}
-                  />
-                </div>
-                <div className='flex_row'>
-                  <CustomTextField
-                    className={classes.TextField}
-                    name='coachDesignation'
-                    label='Designation'
-                    onChange={createChangeHandler('coachDesignation')}
-                    type='text'
-                    required={true}
-                  />
-                  <FormControl
-                    variant='outlined'
-                    className={classes.formControl}
-                  >
-                    <InputLabel
-                      htmlFor='coachTshirtSizeId'
-                      className={classes.label}
+          <div className='register_container'>
+            <div className='register_logo'>
+              <img src={logo} alt='icpc logo' />
+            </div>
+            <div className='register_your_team'>
+              <p>Register Your Team</p>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className='register_flex'>
+                <div className='register_flex_left'>
+                  {alert && (
+                    <Alert
+                      variant='filled'
+                      severity='error'
+                      style={{ marginBottom: '2rem', fontSize: '15px' }}
                     >
-                      Tshirt size
-                    </InputLabel>
-                    <Select
-                      native
-                      value={formFields.coachTshirtSize}
-                      onChange={createChangeHandler('coachTshirtSize')}
-                      label='Tshirt Size'
-                      inputProps={{
-                        name: 'coachTshirtSize',
-                        id: 'coachTshirtSizeId',
-                        style: { fontSize: '1.6rem' },
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          fontSize: '1.45rem',
-                          background: 'white',
-                          paddingRight: '5px',
-                        },
-                      }}
+                      {alert}
+                    </Alert>
+                  )}
+
+                  <div className='secondary_heading'>
+                    <p> Team Information </p>
+                  </div>
+                  <div className='flex_row'>
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='team'
+                      label='Team name'
+                      onChange={createChangeHandler('team')}
+                      type='text'
                       required={true}
-                    >
-                      <option aria-label='None' value='' />
-                      <option value={'XS'}>XS</option>
-                      <option value={'S'}>S</option>
-                      <option value={'M'}>M</option>
-                      <option value={'L'}>L</option>
-                      <option value={'XL'}>XL</option>
-                      <option value={'XXL'}>XXL</option>
-                      <option value={'XXXL'}>XXXL</option>
-                    </Select>
-                  </FormControl>
-                </div>
+                    />
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='university'
+                      label='University'
+                      onChange={createChangeHandler('university')}
+                      type='text'
+                      required={true}
+                    />
+                  </div>
+                  <div className='flex_row'>
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='password'
+                      label='Password'
+                      onChange={createChangeHandler('password')}
+                      type='password'
+                      required={true}
+                      minLength='6'
+                    />
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='confirmPassword'
+                      label='Confirm password'
+                      onChange={createChangeHandler('confirmPassword')}
+                      type='password'
+                      required={true}
+                      minLength='6'
+                    />
+                  </div>
 
-                <div>
-                  <input
-                    accept='image/*'
-                    className={classes.input}
-                    id='coachDpId'
-                    type='file'
-                    name='coachDp'
-                    onChange={createChangeHandler('coachDp', true)}
-                  />
-                  <label htmlFor='coachDpId'>
-                    <Button
-                      variant='contained'
-                      component='span'
-                      className={classes.button}
-                      startIcon={<CloudUploadIcon />}
+                  <div
+                    className='secondary_heading'
+                    style={{ paddingTop: '2.2rem' }}
+                  >
+                    <p> Coach Information </p>
+                  </div>
+                  <div className='flex_row'>
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='coachFirstname'
+                      label='First name'
+                      onChange={createChangeHandler('coachFirstname')}
+                      type='text'
+                      required={true}
+                    />
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='coachLastname'
+                      label={'Last name'}
+                      onChange={createChangeHandler('coachLastname')}
+                      type='text'
+                      required={true}
+                    />
+                  </div>
+                  <div className='flex_row'>
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='coachEmail'
+                      label='Email'
+                      onChange={createChangeHandler('coachEmail')}
+                      type='email'
+                      required={true}
+                    />
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='coachAffiliation'
+                      label='Affiliation'
+                      onChange={createChangeHandler('coachAffiliation')}
+                      type='text'
+                      required={true}
+                    />
+                  </div>
+                  <div className='flex_row'>
+                    <CustomTextField
+                      className={classes.TextField}
+                      name='coachDesignation'
+                      label='Designation'
+                      onChange={createChangeHandler('coachDesignation')}
+                      type='text'
+                      required={true}
+                    />
+                    <FormControl
+                      variant='outlined'
+                      className={classes.formControl}
                     >
-                      Upload your image
-                    </Button>
-                  </label>
-                </div>
-
-                <div
-                  className='secondary_heading'
-                  style={{ paddingTop: '3.8rem' }}
-                >
-                  <p> Participant's Information </p>
-                </div>
-                <div className='team_members'>
-                  {Array(numberOfParticipants)
-                    .fill()
-                    .map((_, i) => (
-                      <div
-                        key={`participant-${i}`}
-                        style={{ paddingBottom: '3.5rem' }}
+                      <InputLabel
+                        htmlFor='coachTshirtSizeId'
+                        className={classes.label}
                       >
-                        <div className='member_count'>
-                          <p>Participant {i + 1}</p>
-                        </div>
-                        <div className='flex_row'>
-                          <CustomTextField
-                            className={classes.TextField}
-                            name={`p${i + 1}Firstname`}
-                            label='First name'
-                            onChange={createChangeHandler(`p${i + 1}Firstname`)}
-                            type='text'
-                            required={true}
-                          />
-                          <CustomTextField
-                            className={classes.TextField}
-                            name={`p${i + 1}Lastname`}
-                            label='Last name'
-                            onChange={createChangeHandler(`p${i + 1}Lastname`)}
-                            type='text'
-                            required={true}
-                          />
-                        </div>
-                        <div className='flex_row'>
-                          <CustomTextField
-                            className={classes.TextField}
-                            name={`p${i + 1}Email`}
-                            label='Email'
-                            onChange={createChangeHandler(`p${i + 1}Email`)}
-                            type='email'
-                            required={true}
-                          />
-                          <FormControl
-                            variant='outlined'
-                            className={classes.formControl}
-                          >
-                            <InputLabel
-                              htmlFor={`p${i + 1}YearId`}
-                              className={classes.label}
-                            >
-                              Year
-                            </InputLabel>
-                            <Select
-                              native
-                              value={formFields[`p${i + 1}Year`]}
-                              onChange={createChangeHandler(`p${i + 1}Year`)}
-                              label='Year'
-                              inputProps={{
-                                name: `p${i + 1}Year`,
-                                id: `p${i + 1}YearId`,
-                                style: { fontSize: '1.6rem' },
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontSize: '1.45rem',
-                                  background: 'white',
-                                  paddingRight: '5px',
-                                },
-                              }}
-                              required={true}
-                            >
-                              <option aria-label='None' value='' />
-                              <option value={'1st'}>1st</option>
-                              <option value={'2nd'}>2nd</option>
-                              <option value={'3rd'}>3rd</option>
-                              <option value={'4th'}>4th</option>
-                              <option value={'Masters'}>Masters</option>
-                              <option value={'Others'}>Others</option>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <div className='flex_row'>
-                          <FormControl
-                            variant='outlined'
-                            className={classes.formControl}
-                          >
-                            <InputLabel
-                              htmlFor={`p${i + 1}SemesterId`}
-                              className={classes.label}
-                            >
-                              Semester
-                            </InputLabel>
-                            <Select
-                              native
-                              value={formFields[`p${i + 1}Semester`]}
-                              onChange={createChangeHandler(
-                                `p${i + 1}Semester`
-                              )}
-                              label={`p${i + 1}Semester`}
-                              inputProps={{
-                                name: `p${i + 1}Semester`,
-                                id: `p${i + 1}SemesterId`,
-                                style: { fontSize: '1.6rem' },
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontSize: '1.45rem',
-                                  background: 'white',
-                                  paddingRight: '5px',
-                                },
-                              }}
-                              required={true}
-                            >
-                              <option aria-label='None' value='' />
-                              <option value={'1st'}>1st</option>
-                              <option value={'2nd'}>2nd</option>
-                              <option value={'3rd'}>3rd</option>
-                              <option value={'4th'}>4th</option>
-                            </Select>
-                          </FormControl>
+                        Tshirt size
+                      </InputLabel>
+                      <Select
+                        native
+                        value={formFields.coachTshirtSize}
+                        onChange={createChangeHandler('coachTshirtSize')}
+                        label='Tshirt Size'
+                        inputProps={{
+                          name: 'coachTshirtSize',
+                          id: 'coachTshirtSizeId',
+                          style: { fontSize: '1.6rem' },
+                        }}
+                        InputLabelProps={{
+                          style: {
+                            fontSize: '1.45rem',
+                            background: 'white',
+                            paddingRight: '5px',
+                          },
+                        }}
+                        required={true}
+                      >
+                        <option aria-label='None' value='' />
+                        <option value={'XS'}>XS</option>
+                        <option value={'S'}>S</option>
+                        <option value={'M'}>M</option>
+                        <option value={'L'}>L</option>
+                        <option value={'XL'}>XL</option>
+                        <option value={'XXL'}>XXL</option>
+                        <option value={'XXXL'}>XXXL</option>
+                      </Select>
+                    </FormControl>
+                  </div>
 
-                          <FormControl
-                            variant='outlined'
-                            className={classes.formControl}
-                          >
-                            <InputLabel
-                              htmlFor={`p${i + 1}TshirtSizeId`}
-                              className={classes.label}
-                            >
-                              Tshirt size
-                            </InputLabel>
-                            <Select
-                              native
-                              value={formFields[`p${i + 1}TshirtSize`]}
+                  <div>
+                    <input
+                      accept='image/*'
+                      className={classes.input}
+                      id='coachDpId'
+                      type='file'
+                      name='coachDp'
+                      onChange={createChangeHandler('coachDp', true)}
+                    />
+                    <label htmlFor='coachDpId'>
+                      <Button
+                        variant='contained'
+                        component='span'
+                        className={classes.button}
+                        startIcon={<CloudUploadIcon />}
+                      >
+                        Upload your image
+                      </Button>
+                    </label>
+                  </div>
+
+                  <div
+                    className='secondary_heading'
+                    style={{ paddingTop: '3.8rem' }}
+                  >
+                    <p> Participant's Information </p>
+                  </div>
+                  <div className='team_members'>
+                    {Array(numberOfParticipants)
+                      .fill()
+                      .map((_, i) => (
+                        <div
+                          key={`participant-${i}`}
+                          style={{ paddingBottom: '3.5rem' }}
+                        >
+                          <div className='member_count'>
+                            <p>Participant {i + 1}</p>
+                          </div>
+                          <div className='flex_row'>
+                            <CustomTextField
+                              className={classes.TextField}
+                              name={`p${i + 1}Firstname`}
+                              label='First name'
                               onChange={createChangeHandler(
-                                `p${i + 1}TshirtSize`
+                                `p${i + 1}Firstname`
                               )}
-                              label={`p${i + 1}TshirtSize`}
-                              inputProps={{
-                                name: `p${i + 1}TshirtSize`,
-                                id: `p${i + 1}TshirtSizeId`,
-                                style: { fontSize: '1.6rem' },
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  fontSize: '1.45rem',
-                                  background: 'white',
-                                  paddingRight: '5px',
-                                },
-                              }}
+                              type='text'
                               required={true}
+                            />
+                            <CustomTextField
+                              className={classes.TextField}
+                              name={`p${i + 1}Lastname`}
+                              label='Last name'
+                              onChange={createChangeHandler(
+                                `p${i + 1}Lastname`
+                              )}
+                              type='text'
+                              required={true}
+                            />
+                          </div>
+                          <div className='flex_row'>
+                            <CustomTextField
+                              className={classes.TextField}
+                              name={`p${i + 1}Email`}
+                              label='Email'
+                              onChange={createChangeHandler(`p${i + 1}Email`)}
+                              type='email'
+                              required={true}
+                            />
+                            <FormControl
+                              variant='outlined'
+                              className={classes.formControl}
                             >
-                              <option aria-label='None' value='' />
-                              <option value={'XS'}>XS</option>
-                              <option value={'S'}>S</option>
-                              <option value={'M'}>M</option>
-                              <option value={'L'}>L</option>
-                              <option value={'XL'}>XL</option>
-                              <option value={'XXL'}>XXL</option>
-                              <option value={'XXXL'}>XXXL</option>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <div className='flex_row'>
-                          <CustomTextField
-                            className={classes.TextFieldFullWidth}
-                            name={`p${i + 1}Affiliation`}
-                            label={'Affiliation (Your department name)'}
-                            onChange={createChangeHandler(
-                              `p${i + 1}Affiliation`
-                            )}
-                            type='text'
-                            required={true}
-                          />
-                        </div>
-                        <div>
-                          <input
-                            accept='image/*'
-                            className={classes.input}
-                            id={`p${i + 1}DpId`}
-                            type='file'
-                            name={`p${i + 1}Dp`}
-                            onChange={createChangeHandler(`p${i + 1}Dp`, true)}
-                          />
-                          <label htmlFor={`p${i + 1}DpId`}>
-                            <Button
-                              variant='contained'
-                              component='span'
-                              className={classes.button}
-                              startIcon={<CloudUploadIcon />}
+                              <InputLabel
+                                htmlFor={`p${i + 1}YearId`}
+                                className={classes.label}
+                              >
+                                Year
+                              </InputLabel>
+                              <Select
+                                native
+                                value={formFields[`p${i + 1}Year`]}
+                                onChange={createChangeHandler(`p${i + 1}Year`)}
+                                label='Year'
+                                inputProps={{
+                                  name: `p${i + 1}Year`,
+                                  id: `p${i + 1}YearId`,
+                                  style: { fontSize: '1.6rem' },
+                                }}
+                                InputLabelProps={{
+                                  style: {
+                                    fontSize: '1.45rem',
+                                    background: 'white',
+                                    paddingRight: '5px',
+                                  },
+                                }}
+                                required={true}
+                              >
+                                <option aria-label='None' value='' />
+                                <option value={'1st'}>1st</option>
+                                <option value={'2nd'}>2nd</option>
+                                <option value={'3rd'}>3rd</option>
+                                <option value={'4th'}>4th</option>
+                                <option value={'Masters'}>Masters</option>
+                                <option value={'Others'}>Others</option>
+                              </Select>
+                            </FormControl>
+                          </div>
+                          <div className='flex_row'>
+                            <FormControl
+                              variant='outlined'
+                              className={classes.formControl}
                             >
-                              Upload your image
-                            </Button>
-                          </label>
+                              <InputLabel
+                                htmlFor={`p${i + 1}SemesterId`}
+                                className={classes.label}
+                              >
+                                Semester
+                              </InputLabel>
+                              <Select
+                                native
+                                value={formFields[`p${i + 1}Semester`]}
+                                onChange={createChangeHandler(
+                                  `p${i + 1}Semester`
+                                )}
+                                label={`p${i + 1}Semester`}
+                                inputProps={{
+                                  name: `p${i + 1}Semester`,
+                                  id: `p${i + 1}SemesterId`,
+                                  style: { fontSize: '1.6rem' },
+                                }}
+                                InputLabelProps={{
+                                  style: {
+                                    fontSize: '1.45rem',
+                                    background: 'white',
+                                    paddingRight: '5px',
+                                  },
+                                }}
+                                required={true}
+                              >
+                                <option aria-label='None' value='' />
+                                <option value={'1st'}>1st</option>
+                                <option value={'2nd'}>2nd</option>
+                                <option value={'3rd'}>3rd</option>
+                                <option value={'4th'}>4th</option>
+                              </Select>
+                            </FormControl>
+
+                            <FormControl
+                              variant='outlined'
+                              className={classes.formControl}
+                            >
+                              <InputLabel
+                                htmlFor={`p${i + 1}TshirtSizeId`}
+                                className={classes.label}
+                              >
+                                Tshirt size
+                              </InputLabel>
+                              <Select
+                                native
+                                value={formFields[`p${i + 1}TshirtSize`]}
+                                onChange={createChangeHandler(
+                                  `p${i + 1}TshirtSize`
+                                )}
+                                label={`p${i + 1}TshirtSize`}
+                                inputProps={{
+                                  name: `p${i + 1}TshirtSize`,
+                                  id: `p${i + 1}TshirtSizeId`,
+                                  style: { fontSize: '1.6rem' },
+                                }}
+                                InputLabelProps={{
+                                  style: {
+                                    fontSize: '1.45rem',
+                                    background: 'white',
+                                    paddingRight: '5px',
+                                  },
+                                }}
+                                required={true}
+                              >
+                                <option aria-label='None' value='' />
+                                <option value={'XS'}>XS</option>
+                                <option value={'S'}>S</option>
+                                <option value={'M'}>M</option>
+                                <option value={'L'}>L</option>
+                                <option value={'XL'}>XL</option>
+                                <option value={'XXL'}>XXL</option>
+                                <option value={'XXXL'}>XXXL</option>
+                              </Select>
+                            </FormControl>
+                          </div>
+                          <div className='flex_row'>
+                            <CustomTextField
+                              className={classes.TextFieldFullWidth}
+                              name={`p${i + 1}Affiliation`}
+                              label={'Affiliation (Your department name)'}
+                              onChange={createChangeHandler(
+                                `p${i + 1}Affiliation`
+                              )}
+                              type='text'
+                              required={true}
+                            />
+                          </div>
+                          <div>
+                            <input
+                              accept='image/*'
+                              className={classes.input}
+                              id={`p${i + 1}DpId`}
+                              type='file'
+                              name={`p${i + 1}Dp`}
+                              onChange={createChangeHandler(
+                                `p${i + 1}Dp`,
+                                true
+                              )}
+                            />
+                            <label htmlFor={`p${i + 1}DpId`}>
+                              <Button
+                                variant='contained'
+                                component='span'
+                                className={classes.button}
+                                startIcon={<CloudUploadIcon />}
+                              >
+                                Upload your image
+                              </Button>
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                  </div>
+                </div>
+                <div className='register_flex_right'>
+                  <div className='registrationFee'>
+                    <div className='registrationFee__header'>
+                      <p>Registration Fee</p>
+                    </div>
+                    <div className='registrationFee__amount'>
+                      <p>6000 BDT per team</p>
+                    </div>
+                    <div className='registrationFee__des'>
+                      <small>
+                        ** You will be redirected to the payment method after
+                        giving all the informations of the team, coach and
+                        participants.
+                      </small>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className='register_flex_right'>
-                <div className='registrationFee'>
-                  <div className='registrationFee__header'>
-                    <p>Registration Fee</p>
-                  </div>
-                  <div className='registrationFee__amount'>
-                    <p>6000 BDT per team</p>
-                  </div>
-                  <div className='registrationFee__des'>
-                    <small>
-                      ** You will be redirected to the payment method after
-                      giving all the informations of the team, coach and
-                      participants.
-                    </small>
-                  </div>
+              <div className='submit_login' style={{ textAlign: 'center' }}>
+                <div className='submit_btn'>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    style={{
+                      padding: '1rem 4rem',
+                      fontSize: '1.85rem',
+                      marginBottom: '1.2rem',
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <div className='login_option'>
+                  <p>
+                    Already registered your team?
+                    <Link style={linkStyles} to='/login'>
+                      Click here!
+                    </Link>
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className='submit_login' style={{ textAlign: 'center' }}>
-              <div className='submit_btn'>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  color='secondary'
-                  style={{
-                    padding: '1rem 4rem',
-                    fontSize: '1.85rem',
-                    marginBottom: '1.2rem',
-                  }}
-                >
-                  Submit
-                </Button>
-              </div>
-              <div className='login_option'>
-                <p>
-                  Already registered your team?
-                  <Link style={linkStyles} to='/login'>
-                    Click here!
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    
       )}
-      </div>
+    </div>
   );
 };
 
