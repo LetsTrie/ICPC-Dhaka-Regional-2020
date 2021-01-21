@@ -17,14 +17,16 @@ export default [
     link: '/contest-info',
     submenu: [
       {
-        name: 'Date and Venue',
-        link: '/contest-info/date-and-venue',
-      },
-      {
         name: 'Rules of ICPC Dhaka Regional',
         link: '/contest-info/rules-of-icpc-dhaka-regional',
         notPage: true,
         external: '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
+      },
+      {
+        name: 'Contest Outline',
+        link: '/contest-info/asia-west-dhaka-regional-participation-eligibility.pdf',
+        notPage: true,
+        external: '/NavigationFiles/asia-west-dhaka-regional-participation-eligibility.pdf',
       },
       {
         name: 'Accomodation',
@@ -38,6 +40,7 @@ export default [
         name: 'Program Schedule',
         link: '/contest-info/program-schedule',
       },
+     
     ],
   },
   {

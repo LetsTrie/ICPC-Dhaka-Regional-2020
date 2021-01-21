@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../../assests/css/home.css';
 import Header from '../ui/Header';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Countdown from '../ui/CountDown';
-import { useHistory } from 'react-router-dom';
 import Sponsors from '../ui/Sponsors';
 import ImportantInfos from '../ui/ImportantInfos';
 import Organizer from '../ui/Organizer';
-import {connect} from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -23,11 +21,15 @@ const useStyles = makeStyles({
   },
 });
 
-function Home(props) {
-  const { isAuthenticated } = props.cred;
+function Home() {
   const classes = useStyles();
-  const handleRegister = (e) => {
-    props.history.push('/registration/online');
+
+  const showFile = (url) => {
+    if (process.env.NODE_ENV === 'development') {
+      window.open('http://localhost:5000' + url);
+    } else {
+      window.open(window.location.protocol + '//' + window.location.host + url);
+    }
   };
 
   return (
@@ -44,17 +46,17 @@ function Home(props) {
             </h3>
           </div>
           <Countdown />
-          {!isAuthenticated && (
-            <div className='Home_banner_button'>
-              <Button
-                variant='contained'
-                className={classes.root}
-                onClick={handleRegister}
-              >
-                Register your team
-              </Button>
-            </div>
-          )}
+          <div className='Home_banner_button'>
+            <Button
+              variant='contained'
+              className={classes.root}
+              onClick={() => showFile(
+                '/NavigationFiles/asia-west-dhaka-regional-participation-eligibility.pdf'
+              )}
+            >
+              Contest Guideline
+            </Button>
+          </div>
         </div>
       </div>
       <Organizer />
@@ -64,9 +66,4 @@ function Home(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  cred: state.credentialReducer,
-});
-
-const mapDispatchToAction = {};
-export default connect(mapStateToProps, mapDispatchToAction)(Home);
+export default Home;

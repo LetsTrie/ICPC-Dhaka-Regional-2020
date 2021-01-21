@@ -31,18 +31,23 @@ const ImportantInfos = () => {
             <a href='#'>Date and Venue</a>
             <a href='#'>Online Preliminary Registration</a>
             <a href='#'>Onsite Contest Registration</a>
+            <a
+              onClick={(e) => redirectFiles(e,
+                '/NavigationFiles/asia-west-dhaka-regional-participation-eligibility.pdf'
+              )}
+            >
+              Contest Outline
+            </a>
             <a href='#'>Program Schedule</a>
-            <a href='#'>Payment</a>
             <a href='#'>System Configuration</a>
             <a
-              onClick={(e,) => redirectFiles(e,
+              onClick={(e) => redirectFiles(e,
                 '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf'
               )}
             >
-              ICPC Regional Rules for 2020{' '}
+              ICPC Regional Rules for 2020
             </a>
             <a href='#'>Onsite Contest Registration</a>
-            <a href='#'>Program Schedule</a>
             <a href='#'>Payment</a>
           </div>
         </div>
