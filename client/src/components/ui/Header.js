@@ -34,6 +34,7 @@ import { logoutAction } from '../../action/authentication';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '15px',
     color: 'white',
     fontSize: '1.7rem',
-    opacity: 0.8,
+    opacity: 0.9,
   },
   selectedTab: {
     color: 'white',
@@ -123,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.tab,
     fontSize: '1.4rem',
     padding: '1rem 1.6rem',
-    opacity: 0.7,
+    opacity: 0.9,
     '&:hover': {
       opacity: 1,
     },
@@ -227,7 +228,7 @@ function ScrollTop(props) {
 
   return (
     <Zoom in={trigger}>
-      <div onClick={handleClick} role='presentation' className={classes.root}>
+      <div onClick={handleClick} role="presentation" className={classes.root}>
         {children}
       </div>
     </Zoom>
@@ -239,11 +240,17 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 
-function redirectTo(url) {
-  if(process.env.NODE_ENV === 'development') {
-    window.open('http://localhost:5000' + url);
-  } else {
-    window.open(window.location.protocol + '//' + window.location.host + url);
+async function redirectTo(url) {
+  try {
+    await axios.get(url);
+    let completeUrl =
+      window.location.protocol + '//' + window.location.host + url;
+    if (process.env.NODE_ENV === 'development')
+      completeUrl = 'http://localhost:5000' + url;
+
+    window.open(completeUrl);
+  } catch (err) {
+    console.log(err);
   }
 }
 
@@ -261,7 +268,7 @@ function BackToTop(props) {
     if (isAuthenticated) {
       if (n.name === 'Registration') return false;
       if (isAdmin) {
-        if (n.name === 'Contact Us' || n.name === 'My Profile') return false;
+        if (n.name === 'My Profile') return false;
       }
     } else {
       if (n.name === 'My Profile') return false;
@@ -486,10 +493,10 @@ function BackToTop(props) {
         {menu.submenu ? (
           <Collapse
             in={menu.submenu && menuIndex === id}
-            timeout='auto'
+            timeout="auto"
             unmountOnExit
           >
-            <List component='div' disablePadding>
+            <List component="div" disablePadding>
               {menu.submenu.map((sm, jd) => (
                 <ListItem
                   className={classes.nested}
@@ -599,18 +606,18 @@ function BackToTop(props) {
           <Button
             onClick={() => setMenuIndex(0)}
             component={Link}
-            to='/'
+            to="/"
             className={classes.logoContainer}
           >
-            <img alt='ICPC' src={logo} className={classes.logo} />
+            <img alt="ICPC" src={logo} className={classes.logo} />
           </Button>
           {matches ? drawer : tabs}
         </Toolbar>
       </AppBar>
-      <Toolbar id='back-to-top-anchor' />
+      <Toolbar id="back-to-top-anchor" />
       {children}
       <ScrollTop {...props}>
-        <Fab color='secondary' size='small' aria-label='scroll back to top'>
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

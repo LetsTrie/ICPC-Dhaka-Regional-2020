@@ -1,19 +1,16 @@
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assests/images/icpclogo_big.png';
-import {  Redirect } from 'react-router-dom';
-
-import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
-import AdminHeader from '../ui/AdminHeader';
-import CustomTextField from '../ui/CustomTextField';
-
-import useFormFields from '../HandleForms';
-import { loginAction } from '../../action/authentication';
-import Loader from '../ui/Loader';
-
-import '../../assests/css/auth.css';
+import { Redirect } from 'react-router-dom';
+import { loginAction } from '../../../action/authentication';
+import '../../../assests/css/auth.css';
+import logo from '../../../assests/images/icpclogo_big.png';
+import useFormFields from '../../HandleForms';
+import AdminHeader from '../../ui/AdminHeader';
+import CustomTextField from '../../ui/CustomTextField';
+import Loader from '../../ui/Loader';
 
 const useStyles = makeStyles({
   TextField: {
@@ -32,7 +29,7 @@ const useStyles = makeStyles({
 const AdminLogin = (props) => {
   // Action
   const { loginAction } = props;
-  
+
   // Store
   const { isLoading, error } = props.auth;
   const { isAuthenticated, isAdmin } = props.cred;
@@ -70,20 +67,20 @@ const AdminLogin = (props) => {
   // };
 
   return (
-    <div className='login_wrapper admin_login_wrapper'>
+    <div className="login_wrapper admin_login_wrapper">
       {isLoading && <Loader />}
       <AdminHeader />
-      <div className='login'>
-        <div className='login_container admin_login_container'>
-          <div className='login_logo'>
-            <img src={logo} alt='icpc' />
+      <div className="login">
+        <div className="login_container admin_login_container">
+          <div className="login_logo">
+            <img src={logo} alt="icpc" />
           </div>
-          <div className='login_header'>
+          <div className="login_header">
             <p>Admin Login </p>
           </div>
           {error && (
             <div style={{ padding: '15px 0' }}>
-              <Alert variant='filled' severity='error'>
+              <Alert variant="filled" severity="error">
                 {error}
               </Alert>
             </div>
@@ -91,28 +88,28 @@ const AdminLogin = (props) => {
           <form onSubmit={handleSubmit}>
             <CustomTextField
               className={classes.TextField}
-              name='username'
-              label='Username'
+              name="username"
+              label="Username"
               onChange={createChangeHandler('username')}
-              type='text'
+              type="text"
               required={true}
             />
 
             <CustomTextField
               className={classes.TextField}
-              name='password'
-              label='Password'
+              name="password"
+              label="Password"
               onChange={createChangeHandler('password')}
-              type='password'
+              type="password"
               required={true}
             />
 
             <Button
               raised
-              type='submit'
-              variant='contained'
-              color='secondary'
-              size='large'
+              type="submit"
+              variant="contained"
+              color="secondary"
+              size="large"
               fullWidth={true}
               className={classes.submitButton}
             >

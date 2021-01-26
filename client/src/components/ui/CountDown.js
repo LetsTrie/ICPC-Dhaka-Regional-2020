@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-
-// 28 February 2021
-let eventTime = new Date(2021, 1, 28).getTime();
+import axios from 'axios';
 
 const getCountdown = (eventTime) => {
+  if (eventTime === null) return { valid: false };
   let currentTime = new Date().getTime();
   let remTime = eventTime - currentTime;
 
@@ -24,7 +23,8 @@ const getCountdown = (eventTime) => {
 };
 
 function CountDown() {
-  const remainingTimes = getCountdown(eventTime);
+  const [contestTime, setContestTime] = useState(null);
+  const remainingTimes = getCountdown(contestTime);
   const [day, setDay] = useState(
     remainingTimes.valid ? remainingTimes.d.toString().padStart(2, '0') : '00'
   );
@@ -42,7 +42,7 @@ function CountDown() {
 
   const startTime = () => {
     interval = setInterval(() => {
-      const times = getCountdown(eventTime);
+      const times = getCountdown(contestTime);
       if (times.valid) {
         const { d, h, m, s } = times;
         setDay(d.toString().padStart(2, '0'));
@@ -56,6 +56,14 @@ function CountDown() {
   };
 
   useEffect(() => {
+    axios
+      .get(`/api/v1/admin/contest-time`)
+      .then((r) => r.data)
+      .then((res) => setContestTime(new Date(res.date)))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
     startTime();
     return () => {
       clearInterval(interval.current);
@@ -63,20 +71,20 @@ function CountDown() {
   });
 
   return (
-    <div className='Home__banner_countdown'>
-      <div className='Home__banner_countdown-day'>
+    <div className="Home__banner_countdown">
+      <div className="Home__banner_countdown-day">
         <p>{day}</p>
         <p>Days</p>
       </div>
-      <div className='Home__banner_countdown-hour'>
+      <div className="Home__banner_countdown-hour">
         <p>{hour}</p>
         <p>Hours</p>
       </div>
-      <div className='Home__banner_countdown-minute'>
+      <div className="Home__banner_countdown-minute">
         <p>{minute}</p>
         <p>Minutes</p>
       </div>
-      <div className='Home__banner_countdown-second'>
+      <div className="Home__banner_countdown-second">
         <p>{second}</p>
         <p>Seconds</p>
       </div>

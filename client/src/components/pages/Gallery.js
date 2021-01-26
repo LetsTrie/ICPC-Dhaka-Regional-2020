@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import Header from '../ui/Header';
-import gImg from '../../assests/images/gallery1.jpg';
-
+import React from 'react';
 import '../../assests/css/gallery.css';
+import gImg from '../../assests/images/gallery1.jpg';
+import Header from '../ui/Header';
+
 
 function Gallery() {
   const _20Image = () => {

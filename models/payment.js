@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-const paymentSchema = Schema({
-  team: {
-    type: String,
-    required: true,
-  }
+
+const paymentSchema = mongoose.Schema({
+  team: { type: String, required: true },
 });
+
 module.exports = mongoose.model('payment', paymentSchema);

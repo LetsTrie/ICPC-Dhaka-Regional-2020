@@ -1,11 +1,10 @@
+import { Button } from '@material-ui/core';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import axios from 'axios';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-
-import Header from '../ui/Header';
 import '../../assests/css/paymentConfirm.css';
-import { Button } from '@material-ui/core';
-import axios from 'axios';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import Header from '../ui/Header';
 
 const Payment = ({ match }) => {
   let { teamId } = match.params;
@@ -28,48 +27,48 @@ const Payment = ({ match }) => {
   return (
     <div>
       <Header />
-      <div className='container'>
-        <div className='heading'>
-          <h1>{success ? 'Payment Completed' :'Confirm Payment'}</h1>
+      <div className="container">
+        <div className="heading">
+          <h1>{success ? 'Payment Completed' : 'Confirm Payment'}</h1>
         </div>
-        <div className='TeamInformations'>
-          <div className='TeamDetails'>
-            <div className='td'>
+        <div className="TeamInformations">
+          <div className="TeamDetails">
+            <div className="td">
               <p>Team:</p>
               <p>{teamName}</p>
             </div>
 
-            <div className='td'>
+            <div className="td">
               <p>Country:</p>
               <p>{country}</p>
             </div>
 
-            <div className='td'>
+            <div className="td">
               <p>Institution:</p>
               <p>{institution}</p>
             </div>
 
-            <div className='td'>
+            <div className="td">
               <p>Coach:</p>
               <p>{coach}</p>
             </div>
           </div>
 
           {!success ? (
-            <div className='RegFee'>
+            <div className="RegFee">
               <p>Registration Fee</p>
               <p>6000 BDT per team</p>
             </div>
           ) : (
             <div className="RegFee">
-              <DoneOutlineIcon style={{fontSize: 100, color: '#1fab89'}} />
+              <DoneOutlineIcon style={{ fontSize: 100, color: '#1fab89' }} />
             </div>
           )}
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 28, padding: 10 }}>
           <Button
-            variant='contained'
+            variant="contained"
             color={success ? 'primary' : 'secondary'}
             style={{ fontSize: 18 }}
             onClick={success ? undefined : paymentInitiate}

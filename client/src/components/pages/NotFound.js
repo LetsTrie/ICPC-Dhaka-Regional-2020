@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assests/css/pageNotFound.css';
-import Header from '../ui/Header';
 import data from '../../data/navbar';
+import Header from '../ui/Header';
 
 export default (props) => {
   const { pathname } = props.location;
@@ -24,18 +24,18 @@ export default (props) => {
 
   if (found) {
     return (
-      <div className='pageNotFound'>
+      <div className="pageNotFound">
         <Header />
-        <div className='pageNotFound__header'>
+        <div className="pageNotFound__header">
           <h1> Coming Soon </h1>
         </div>
       </div>
     );
   } else {
     return (
-      <div className='pageNotFound'>
+      <div className="pageNotFound">
         <Header />
-        <div className='pageNotFound__header'>
+        <div className="pageNotFound__header">
           <h1> PAGE NOT FOUND </h1>
         </div>
       </div>

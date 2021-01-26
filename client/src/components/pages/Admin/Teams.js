@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,10 +8,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import SaveIcon from '@material-ui/icons/Save';
+import Alert from '@material-ui/lab/Alert';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import '../../../assests/css/adminTeams.css';
-import Header from '../../ui/AdminHeader';
 import useFormFields from '../../HandleForms';
+import Header from '../../ui/AdminHeader';
+import Loader from '../../ui/Loader';
 
 const columns = [
   { id: 'Team', label: 'Team', minWidth: 170 },
@@ -63,7 +62,7 @@ const useStyles2 = makeStyles({
 
 const SubHeading = () => {
   return (
-    <div className='registeredTeams__subheader'>
+    <div className="registeredTeams__subheader">
       <h3> No teams have registered yet</h3>
     </div>
   );
@@ -72,7 +71,7 @@ const SubHeading = () => {
 const Teams = (props) => {
   const { accessToken } = props.cred;
   const [teams, setTeams] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [showSubmitButton, setShowSubmitButton] = useState(false);
   const [fileError, setFileError] = useState(null);
@@ -133,133 +132,138 @@ const Teams = (props) => {
   };
 
   return (
-    <div className='registeredTeamsWrapper'>
+    <div className="registeredTeamsWrapper">
       <Header />
-      <>
-        <div className='registeredTeams__header'>
-          <h1> Registered Teams </h1>
-        </div>
-        <div className='registeredTeams__table'>
-          <form onSubmit={handleSubmit} style={{ textAlign: 'right' }}>
-            <div>
-              <input
-                id='fileId'
-                type='file'
-                name='file'
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-                onClick={(e) => (e.target.value = null)}
-              />
-              <label htmlFor='fileId'>
-                <Button
-                  variant='contained'
-                  component='span'
-                  className={classes.button}
-                  startIcon={<CloudUploadIcon />}
-                  style={{ fontSize: 17 }}
-                >
-                  Upload your
-                  <span
-                    style={{
-                      paddingLeft: 7,
-                      paddingRight: 7,
-                      fontWeight: '700',
-                      textTransform: 'lowercase',
-                    }}
-                  >{`"teams.xls"`}</span>
-                  File
-                </Button>
-              </label>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="registeredTeams__header">
+            <h1> Registered Teams </h1>
+            <h4> (For priliminary) </h4>
+          </div>
+          <div className="registeredTeams__table">
+            <form onSubmit={handleSubmit} style={{ textAlign: 'right' }}>
+              <div>
+                <input
+                  id="fileId"
+                  type="file"
+                  name="file"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                  onClick={(e) => (e.target.value = null)}
+                />
+                <label htmlFor="fileId">
+                  <Button
+                    variant="contained"
+                    component="span"
+                    className={classes.button}
+                    startIcon={<CloudUploadIcon />}
+                    style={{ fontSize: 17 }}
+                  >
+                    Upload your
+                    <span
+                      style={{
+                        paddingLeft: 7,
+                        paddingRight: 7,
+                        fontWeight: '700',
+                        textTransform: 'lowercase',
+                      }}
+                    >{`"teams.xls"`}</span>
+                    File
+                  </Button>
+                </label>
 
-              {showSubmitButton && (
-                <Button
-                  variant='contained'
-                  color='primary'
-                  className={classes.button}
-                  startIcon={<SaveIcon />}
-                  style={{ fontSize: 17, marginLeft: 10 }}
-                  type='Submit'
-                >
-                  Submit File
-                </Button>
-              )}
-            </div>
-          </form>
-          {fileError && (
-            <Alert
-              severity='error'
-              style={{ fontSize: 18, marginTop: 15, fontWeight: '700' }}
-            >
-              {fileError}
-            </Alert>
-          )}
-          {teams.length === 0 ? (
-            <SubHeading />
-          ) : (
-            <Paper className={classes.root}>
-              <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label='sticky table'>
-                  <TableHead>
-                    <TableRow>
-                      {columns.map((column) => (
-                        <TableCell
-                          key={column.id}
-                          align={'center'}
-                          style={{ minWidth: column.minWidth, fontSize: 18 }}
-                        >
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {teams
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((row) => {
-                        return (
-                          <TableRow
-                            hover
-                            role='checkbox'
-                            tabIndex={-1}
-                            key={row.team}
+                {showSubmitButton && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<SaveIcon />}
+                    style={{ fontSize: 17, marginLeft: 10 }}
+                    type="Submit"
+                  >
+                    Submit File
+                  </Button>
+                )}
+              </div>
+            </form>
+            {fileError && (
+              <Alert
+                severity="error"
+                style={{ fontSize: 18, marginTop: 15, fontWeight: '700' }}
+              >
+                {fileError}
+              </Alert>
+            )}
+            {teams.length === 0 ? (
+              <SubHeading />
+            ) : (
+              <Paper className={classes.root}>
+                <TableContainer className={classes.container}>
+                  <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                      <TableRow>
+                        {columns.map((column) => (
+                          <TableCell
+                            key={column.id}
+                            align={'center'}
+                            style={{ minWidth: column.minWidth, fontSize: 18 }}
                           >
-                            {columns.map((column) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell
-                                  key={column.id}
-                                  align={'center'}
-                                  style={{ fontSize: 16 }}
-                                >
-                                  {column.format && typeof value === 'number'
-                                    ? column.format(value)
-                                    : value}
-                                </TableCell>
-                              );
-                            })}
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[100, 200, 300]}
-                colSpan={4}
-                component='div'
-                count={teams.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-              />
-            </Paper>
-          )}
-        </div>
-      </>
+                            {column.label}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {teams
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((row) => {
+                          return (
+                            <TableRow
+                              hover
+                              role="checkbox"
+                              tabIndex={-1}
+                              key={row.team}
+                            >
+                              {columns.map((column) => {
+                                const value = row[column.id];
+                                return (
+                                  <TableCell
+                                    key={column.id}
+                                    align={'center'}
+                                    style={{ fontSize: 16 }}
+                                  >
+                                    {column.format && typeof value === 'number'
+                                      ? column.format(value)
+                                      : value}
+                                  </TableCell>
+                                );
+                              })}
+                            </TableRow>
+                          );
+                        })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={[100, 200, 300]}
+                  colSpan={4}
+                  component="div"
+                  count={teams.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+              </Paper>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

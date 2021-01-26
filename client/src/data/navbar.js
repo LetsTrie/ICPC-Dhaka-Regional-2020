@@ -1,69 +1,51 @@
+const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
+const committee = [
+  'Steering Committee',
+  'Executive Committee',
+  'Judging Panel',
+  'Sub-Committee',
+];
+
+const contestInfo = [
+  'Rules of ICPC Dhaka Regional',
+  'Informations For Participants',
+  'Accomodation',
+  'Payment',
+  'Program Schedule',
+];
+
 export default [
   {
     name: 'Home',
     link: '/',
   },
   {
-    name: 'Gallery',
-    link: '/gallery',
-  },
-  {
-    name: 'Teams',
-    link: '/teams',
-    unAuthenticated: true,
+    name: 'Committee',
+    link: '/committee',
+    submenu: committee.map((c) => ({
+      name: c,
+      link: `/committee/${urlSlug(c)}`,
+      notPage: true,
+      external: `/${urlSlug(c)}.pdf`,
+    })),
   },
   {
     name: 'Contest Info',
     link: '/contest-info',
-    submenu: [
-      {
-        name: 'Rules of ICPC Dhaka Regional',
-        link: '/contest-info/rules-of-icpc-dhaka-regional',
-        notPage: true,
-        external: '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
-      },
-      {
-        name: 'Contest Outline',
-        link: '/contest-info/asia-west-dhaka-regional-participation-eligibility.pdf',
-        notPage: true,
-        external: '/NavigationFiles/asia-west-dhaka-regional-participation-eligibility.pdf',
-      },
-      {
-        name: 'Accomodation',
-        link: '/contest-info/accomodation',
-      },
-      {
-        name: 'Payment',
-        link: '/contest-info/payment',
-      },
-      {
-        name: 'Program Schedule',
-        link: '/contest-info/program-schedule',
-      },
-     
-    ],
+    submenu: contestInfo.map((c) => ({
+      name: c,
+      link: `/contest-info/${urlSlug(c)}`,
+      notPage: true,
+      external: `/${urlSlug(c)}.pdf`,
+    })),
   },
   {
-    name: 'Committee',
-    link: '/committee',
-    submenu: [
-      {
-        name: 'Steering Committee',
-        link: '/committee/steering-committee',
-      },
-      {
-        name: 'Executive Committee',
-        link: '/committee/executive-committee',
-      },
-      {
-        name: 'Judging Panel',
-        link: '/committee/judging-panel',
-      },
-      {
-        name: 'Sub-Committee',
-        link: '/committee/sub-committees',
-      },
-    ],
+    name: 'Teams',
+    link: '/teams',
+  },
+  {
+    name: 'Gallery',
+    link: '/gallery',
   },
   {
     name: 'Contact Us',
@@ -75,15 +57,3 @@ export default [
     teamAllowed: true,
   },
 ];
-
-/*
-link ba image thakle evabe notPage true kore dile ebong, external server pdf link othoba
-bairer kono link diye dilei hobe.. 
-
-{
-  name: 'Sub-Committee',
-  link: '/committee/sub-committees',
-  notPage: true,
-  external: '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf',
-},
-*/

@@ -44,8 +44,8 @@ const navMenu = [
     link: '/admin',
   },
   {
-    name: 'Contact',
-    link: '/admin/contact',
+    name: 'Customization',
+    link: '/admin/customize',
   },
 ];
 

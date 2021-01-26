@@ -1,231 +1,56 @@
-const Team = require('../models/team');
+// Packages
+const fs = require('fs').promises;
 const jwt = require('jsonwebtoken');
-const adminCred = require('../config/adminCredentials');
 const path = require('path');
-const Payment = require('../models/payment');
+// Models
+const Team = require('../models/team');
+// Config
+const adminCred = require('../config/adminCredentials');
+// Utils
+const ErrRes = require('../utils/errorResponse');
+// Middlewares
+const asyncHandler = require('../middlewares/asyncHandler');
+// Helper Functions
+const { parseFile } = require('./helpers');
 
-// const User = require('../models/users.js');
-// const fs = require('fs');
-// const path = require('path');
-// const { sendClusterMail } = require('../config/sendMail.js');
-const excelToJson = require('convert-excel-to-json');
-
-function urlSlug(d) {
-  return d.split(' ').join('.').split('_').join('-');
-}
-
-async function parseFile() {
-  let result = excelToJson({
-    sourceFile: path.join(__dirname, '..', 'uploads', 'teams.xls'),
-  }).allTeamsTable;
-  let teams = [];
-  const allTeamsFromDb = await Payment.find({});
-  let mapping = {};
-  for (let t of allTeamsFromDb) mapping[t.team] = 1;
-
-  for (let i = 1; i < result.length; i++) {
-    teams.push({
-      teamId: urlSlug(result[i]['C']),
-      [result[0]['C']]: result[i]['C'],
-      [result[0]['D']]: result[i]['D'],
-      [result[0]['E']]: result[i]['E'],
-      [result[0]['F']]: result[i]['F'],
-      'Payment Status': mapping[result[i]['C']] ? 'Paid' : 'Not Paid Yet',
-    });
-  }
-  console.log(teams);
-  teams.sort((a, b) => a.Team > b.Team);
-  return teams;
-}
-
-exports.getTeamInfo = async (req, res) => {
-  try {
-    const teams = await parseFile();
-    return res.status(200).json({
-      success: true,
-      teams,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err,
-    });
-  }
-};
-
-exports.storeTeamInfo = async (req, res) => {
-  try {
-    const teams = await parseFile();
-    return res.status(200).json({
-      success: true,
-      teams,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error',
-    });
-  }
-};
-
-exports.fetchRegisteredTeams = async (req, res) => {
-  try {
-    const teams = await Team.find().sort({ _id: -1 });
-    return res.status(200).json({
-      success: true,
-      teams,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error',
-    });
-  }
-};
-
-exports.login = async (req, res) => {
-  console.log(req.body);
+// Admin login
+exports.login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  if (username !== adminCred.username || password !== adminCred.password) {
-    return res.status(401).json({
-      success: false,
-      message: 'Invalid credentials',
-    });
-  }
+  if (username !== adminCred.username || password !== adminCred.password)
+    return next(new ErrRes('Invalid credentials', 401));
 
   const accessToken = await jwt.sign(
     { id: adminCred.id },
     process.env.JWT_SECRET,
     { expiresIn: '420h' }
   );
-  console.log(accessToken);
-  return res.status(200).json({
-    success: true,
-    accessToken,
-  });
-};
 
-// exports.getAllUsers = async (req, res) => {
-//   const users = await User.find();
-//   const participantCount = users
-//     .map((user) => user.membersInfo.length)
-//     .reduce((total, val) => {
-//       return total + val;
-//     });
-//   res.json({
-//     status: true,
-//     users,
-//     participantCount,
-//   });
-// };
+  return res.status(200).json({ success: true, accessToken });
+});
 
-// exports.uploadImage = async (req, res) => {
-//   const galleryFile = path.resolve('data', 'gallery-images.json');
-//   fs.readFile(galleryFile, 'utf8', function (err, data) {
-//     if (err) throw err;
-//     let gallery = JSON.parse(data);
-//     const image = {
-//       name: req.file.filename,
-//       visibility: true,
-//     };
-//     gallery.push(image);
-//     console.log(gallery);
-//     fs.writeFileSync(galleryFile, JSON.stringify(gallery));
-//     res.json({
-//       status: true,
-//       msg: 'Image added to the gallery',
-//       gallery,
-//     });
-//   });
-// };
+// Team Information from File...
+exports.teamInfo = asyncHandler(async (req, res) => {
+  const teams = await parseFile();
+  return res.status(200).json({ success: true, teams });
+});
 
-// exports.loadGallery = async (req, res) => {
-//   console.log('load');
-//   const galleryFile = path.resolve('data', 'gallery-images.json');
-//   fs.readFile(galleryFile, 'utf8', function (err, data) {
-//     if (err) throw err;
-//     let gallery = JSON.parse(data);
-//     res.json({
-//       status: true,
-//       msg: 'Gallery loaded',
-//       gallery,
-//     });
-//   });
-// };
+// Team Information from Database...
+exports.fetchRegisteredTeams = asyncHandler(async (req, res) => {
+  const teams = await Team.find().sort({ _id: -1 });
+  return res.status(200).json({ success: true, teams });
+});
 
-// exports.uploadPDF = async (req, res) => {
-//   res.json({
-//     status: true,
-//     msg: 'File upload successful',
-//   });
-// };
+// Get/Set Contest Time
+const contestTime = require('../data/contestTime.json');
+exports.getContestTime = asyncHandler(async (req, res, next) => {
+  return res.json({ ...contestTime });
+});
 
-// exports.updateImageVisibility = async (req, res) => {
-//   const galleryFile = path.resolve('data', 'gallery-images.json');
-//   const { name, visibility } = req.body;
-
-//   fs.readFile(galleryFile, 'utf8', function (err, data) {
-//     if (err) throw err;
-//     let gallery = JSON.parse(data);
-//     gallery[
-//       gallery.findIndex((img) => {
-//         return img.name == name;
-//       })
-//     ].visibility = visibility;
-//     gallery = JSON.stringify(gallery);
-//     fs.writeFileSync(galleryFile, gallery);
-//     res.json({
-//       status: true,
-//       msg: 'Gallery imge visibility updated',
-//       gallery,
-//     });
-//   });
-// };
-
-// exports.updateSubmenus = async (req, res) => {
-//   const navbarFile = path.resolve('data', 'navbar.json');
-//   const { index, body } = req.body;
-//   console.log(req.body);
-//   fs.readFile(navbarFile, 'utf8', function (err, data) {
-//     if (err) {
-//       throw err;
-//     }
-//     let navbar = JSON.parse(data);
-//     navbar[index].submenu = body;
-//     navbar = JSON.stringify(navbar);
-//     fs.writeFileSync(navbarFile, navbar);
-//     res.json({
-//       status: true,
-//       msg: 'Submenu updated',
-//     });
-//   });
-// };
-
-// exports.clusterMail = async (req, res) => {
-//   console.log(req.body);
-//   let mailingList = [];
-//   const { audience, subject, body } = req.body;
-//   const users = await User.find();
-//   mailingList = users.map((user) => user.email);
-//   let memberEmails = [];
-
-//   if (audience == 'all') {
-//     const memberArrays = users.map((user) => user.membersInfo);
-//     for (let arr of memberArrays) {
-//       for (let member of arr) {
-//         memberEmails.push(member.memberEmail);
-//       }
-//     }
-//     mailingList = mailingList.concat(memberEmails);
-//   }
-
-//   // for (let address of mailingList) {
-//   //   sendClusterMail(address, subject, body)
-//   // }
-
-//   res.json({
-//     status: true,
-//     msg: 'Email has been sent',
-//   });
-// };
+exports.setContestTime = asyncHandler(async (req, res, next) => {
+  await fs.writeFile(
+    path.join(__dirname, '..', 'data', 'contestTime.json'),
+    JSON.stringify({ date: req.body.date })
+  );
+  return res.status(200).json({ success: true });
+});

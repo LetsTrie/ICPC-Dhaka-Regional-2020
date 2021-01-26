@@ -8,79 +8,60 @@ let storage = multer.diskStorage({
   destination: function (req, res, cb) {
     cb(null, 'uploads');
   },
-  filename: function(req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
 
 let teamInfoFile = multer({ storage }).single('file');
 
 router.post('/login', C.login);
+
+// Teams
 router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
-router.get('/team-file-xls', C.getTeamInfo);
-router.post('/team-file-xls-upload', [M.AdminAccess, teamInfoFile], C.storeTeamInfo);
+router.get('/team-file-xls', C.teamInfo);
+router.post('/team-file-xls-upload', [M.AdminAccess, teamInfoFile], C.teamInfo);
 
-// const { auth } = require('../middlewares/auth.js')
-// const { adminAccess } = require('../middlewares/adminAcess')
-// const {
-//   login,
-//   getAllUsers,
-//   uploadImage,
-//    loadGallery,
-//    uploadPDF,
-//    updateImageVisibility,
-//    updateSubmenus,
-//    clusterMail
-//   } = require('../controller/admin.js')
+// Committee
+const committee = [
+  'Steering Committee',
+  'Executive Committee',
+  'Judging Panel',
+  'Sub-Committee',
+];
 
-// const multer = require('multer')
-// const path = require('path')
+const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
+for (let com of committee) {
+  router.post(
+    `/committee/${urlSlug(com)}`,
+    [M.AdminAccess, multer({ storage }).single(urlSlug(com))],
+    (req, res, next) => {
+      return res.status(200).json({ success: true });
+    }
+  );
+}
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'client/src/assests/gallery/');
-//   },
-//   filename: (req, file, cb) => {
-//     const filename = 'gallery-image-' + Date.now().toString() + path.extname(file.originalname);
-//     console.log('filename', filename)
-//     cb(null, filename);
-//   },
-// });
+// Contest Info
+const contestInfo = [
+  'Rules of ICPC Dhaka Regional',
+  'Informations for participants',
+  'Accomodation',
+  'Payment',
+  'Program Schedule',
+];
 
-// const pdfStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'data/demo');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.originalname+'.pdf');
-//   },
-// });
+for (let con of contestInfo) {
+  router.post(
+    `/contestInfo/${urlSlug(con)}`,
+    [M.AdminAccess, multer({ storage }).single(urlSlug(con))],
+    (req, res, next) => {
+      return res.status(200).json({ success: true });
+    }
+  );
+}
 
-// const fileFilter = (req, file, cb) => {
-//   if (
-//     file.mimetype === 'image/png' ||
-//     file.mimetype === 'image/jpg' ||
-//     file.mimetype === 'image/jpeg'
-//   ) {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
-// const uploads = multer({
-//   storage: storage,
-// }).single('image')
-
-// const pdfUploads = multer({
-//   storage: pdfStorage
-// }).single('pdf')
-
-// router.get('/getAllUsers', [auth, adminAccess], getAllUsers)
-// router.post('/upload-image', [auth, adminAccess, uploads], uploadImage)
-// router.get('/load-gallery', [auth, adminAccess], loadGallery)
-// router.post('/upload-pdf', [auth, adminAccess, pdfUploads], uploadPDF)
-// router.post('/update-image-visibility', [auth, adminAccess], updateImageVisibility)
-// router.post('/update-submenu', [auth, adminAccess], updateSubmenus)
-// router.post('/email', [auth, adminAccess], clusterMail)
+// Contest Time
+router.get('/contest-time', C.getContestTime);
+router.post('/contest-time', M.AdminAccess, C.setContestTime);
 
 module.exports = router;

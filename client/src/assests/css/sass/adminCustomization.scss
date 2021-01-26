@@ -1,0 +1,41 @@
+@import '_main';
+
+.container {
+  padding: 20px;
+  padding-top: 23px;
+}
+
+.mainHeader {
+  font-weight: 300;
+  font-size: 60px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.block {
+  max-width: 1000px;
+  padding: 10;
+  margin: auto;
+  padding-bottom: 10px;
+  margin-top: 12px;
+  &__heading {
+    font-size: 3.9rem;
+    font-weight: 400;
+  }
+}
+
+.DateTimeContainer {
+  display: flex;
+  .DateTimeBlock {
+    padding: 5px;
+    padding-right: 20px;
+  }
+}
+
+.subBlock {
+  padding-top: 10px;
+  .subBlockHeader {
+    font-size: 18px;
+    font-weight: 500;
+  }
+}

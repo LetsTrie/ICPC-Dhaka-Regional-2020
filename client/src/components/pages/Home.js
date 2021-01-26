@@ -1,12 +1,13 @@
-import React from 'react';
-import '../../assests/css/home.css';
-import Header from '../ui/Header';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import React from 'react';
+import '../../assests/css/home.css';
 import Countdown from '../ui/CountDown';
-import Sponsors from '../ui/Sponsors';
+import Header from '../ui/Header';
 import ImportantInfos from '../ui/ImportantInfos';
 import Organizer from '../ui/Organizer';
+import Sponsors from '../ui/Sponsors';
 
 const useStyles = makeStyles({
   root: {
@@ -24,37 +25,49 @@ const useStyles = makeStyles({
 function Home() {
   const classes = useStyles();
 
-  const showFile = (url) => {
-    if (process.env.NODE_ENV === 'development') {
-      window.open('http://localhost:5000' + url);
-    } else {
-      window.open(window.location.protocol + '//' + window.location.host + url);
+  const showFile = async (url) => {
+    try {
+      await axios.get(url);
+      let completeUrl =
+        window.location.protocol + '//' + window.location.host + url;
+      if (process.env.NODE_ENV === 'development')
+        completeUrl = 'http://localhost:5000' + url;
+
+      window.open(completeUrl);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   return (
-    <div className='Home'>
-      <div className='Home__navbar'>
+    <div className="Home">
+      <div className="Home__navbar">
         <Header />
-        <div className='Home__banner_text'>
-          <div className='Home__banner_text-primary'>
+        <div className="Home__banner_text">
+          <div className="Home__banner_text-primary">
             <h1>ICPC Dhaka Regional 2020</h1>
           </div>
-          <div className='Home__banner_text-secondary'>
+          <div className="Home__banner_text-secondary">
             <h3>
               Organized by <span>University of Dhaka</span>
             </h3>
           </div>
           <Countdown />
-          <div className='Home_banner_button'>
+          <div className="Home_banner_button">
             <Button
-              variant='contained'
+              variant="contained"
               className={classes.root}
-              onClick={() => showFile(
-                '/NavigationFiles/asia-west-dhaka-regional-participation-eligibility.pdf'
-              )}
+              onClick={() => showFile('/informations-for-participants.pdf')}
             >
               Contest Guideline
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.root}
+              onClick={() => showFile('/program-schedule.pdf')}
+              style={{ marginLeft: 13 }}
+            >
+              Program Schedule
             </Button>
           </div>
         </div>

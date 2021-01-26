@@ -35,6 +35,4 @@ router.post('/update-password', M.verifyToken, C.updatePassword);
 
 router.get('/teamPaymentInitiate', C.teamPaymentInitiate);
 
-// router.post('/create', auth, C.createPost);
-
 module.exports = router;

@@ -1,14 +1,29 @@
 const express = require('express');
-const app = express();
 const path = require('path');
+const mongoose = require('mongoose');
+
+const errorHandler = require('./middlewares/error');
+
+const app = express();
 
 // Configure .env
 require('dotenv').config();
 
-// Data setup
-require('./config/databaseSetup.js')();
+// Database setup
+let dbAddress = process.env.mongoString;
+if (process.env.NODE_ENV === 'production')
+  dbAddress = process.env.mongoStringProd;
 
-app.use(require('cors')());
+mongoose.connect(
+  dbAddress,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  },
+  () => console.log('connected to database!')
+);
 
 // Express set up
 app.use(require('cors')());
@@ -28,6 +43,8 @@ if (process.env.NODE_ENV === 'production') {
     );
   });
 }
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`server is running at port: ${PORT}`));

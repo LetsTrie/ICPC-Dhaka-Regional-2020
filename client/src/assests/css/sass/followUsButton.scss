@@ -1,0 +1,44 @@
+.button_container {
+  margin: 0;
+  padding: 0;
+  background: rgb(255, 255, 255);
+  box-shadow: 1px 0px 2px #fff;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  color: #3B5998;
+  max-width: 280px;
+  border-radius: 6px;
+  display: flex;
+
+  .icon_container {
+    display: flex;
+    align-items: center;
+    .icon {
+      font-size: 80px;
+    }
+  }
+  .follow_us_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5px;
+    padding-left: 5px;
+    span {
+      &:first-child {
+        padding-left: 2px;
+        font-size: 15.2px;
+        color: #2e519c;
+      }
+
+      &:last-child {
+        font-weight: bolder;
+        font-size: 28px;
+        color: #2e519c;
+      }
+    }
+  }
+}

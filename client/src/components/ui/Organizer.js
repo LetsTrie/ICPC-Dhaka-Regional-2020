@@ -37,7 +37,7 @@ const Organizer = () => {
             </div>
             <div className='organizer_info_left_see_more'>
               <a href='https://www.du.ac.bd/' target='_blank' rel="noopener noreferrer">
-                See more →
+                Learn more →
               </a>
             </div>
           </div>
