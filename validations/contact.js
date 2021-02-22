@@ -4,6 +4,7 @@ exports.contactValidation = data => {
   const compareWith = joi.object({
     name: joi.string().min(3).required(),
     email: joi.string().email().required(),
+    category: joi.string().required(),
     message: joi.string().min(10).required(),
   })
 
