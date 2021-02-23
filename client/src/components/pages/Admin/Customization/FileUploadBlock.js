@@ -13,10 +13,11 @@ const FileUploadBlock = ({
   container,
   setContainer,
   section,
+  extension,
   ...props
 }) => {
   const { accessToken } = props.cred;
-  const slugTitle = urlSlug(title);
+  let slugTitle = urlSlug(title)+`.${extension}`;
 
   const [formSuccess, setFormSuccess] = useState(null);
   const [formError, setFormError] = useState(null);
@@ -25,7 +26,7 @@ const FileUploadBlock = ({
 
   const handleFileChange = async (e) => {
     if (e.target.files[0].name !== slugTitle) {
-      setFormError(`File name should be "${slugTitle}.pdf"`);
+      setFormError(`File name should be "${slugTitle}"`);
     } else {
       setShowSubmitButton(true);
       setContainer((prev) => ({
@@ -36,6 +37,7 @@ const FileUploadBlock = ({
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    slugTitle = slugTitle.split('.')[0]
     const reqFiles = new FormData();
     reqFiles.append(slugTitle, container[slugTitle]);
     const headers = { Authorization: `Bearer ${accessToken}` };
@@ -43,7 +45,7 @@ const FileUploadBlock = ({
       headers,
     });
     setShowSubmitButton(false);
-    setFormSuccess(`"${slugTitle}.pdf" has updated!!`);
+    setFormSuccess(`"${slugTitle}" has updated!!`);
   };
 
   useEffect(() => {
@@ -98,7 +100,7 @@ const FileUploadBlock = ({
                   fontWeight: '700',
                   textTransform: 'lowercase',
                 }}
-              >{`"${slugTitle}.pdf"`}</span>
+              >{`"${slugTitle}"`}</span>
               File
             </Button>
           </label>

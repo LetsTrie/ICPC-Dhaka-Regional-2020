@@ -44,6 +44,10 @@ const navMenu = [
     link: '/admin',
   },
   {
+    name: 'FAQ',
+    link: '/admin/faq'
+  },
+  {
     name: 'Customization',
     link: '/admin/customize',
   },

@@ -62,56 +62,20 @@ const Customization = (props) => {
     <div>
       <Header />
       <div className="container">
-        <h1 className="mainHeader"> Page Customization </h1>
+        <h1 className="mainHeader"> Admin FAQ </h1>
+
 
         <div className="block">
-          <h2 className="block__heading">Contest Time</h2>
-          <DateTime
-            selectedDate={selectedDate}
-            handleDateChange={handleDateChange}
-          />
-          {dateChanged && (
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<SaveIcon />}
-              style={{ fontSize: 13.3 }}
-              type="Submit"
-              onClick={submitDateChange}
-            >
-              Save changes
-            </Button>
-          )}
-        </div>
+          <h2 className="block__heading">FAQ File</h2>
 
-        <div className="block">
-          <h2 className="block__heading">Committee</h2>
-
-          {committeeArray.map((c) => (
-            <FileUploadBlock
-              title={c}
-              key={c}
+          <FileUploadBlock
+              title={'FAQ'}
+              key={1}
               container={committee}
               setContainer={setCommittee}
-              section={'committee'}
-              extension={'pdf'}
+              section={'faq'}
+              extension={'xls'}
             />
-          ))}
-        </div>
-
-        <div className="block">
-          <h2 className="block__heading">Contest Info</h2>
-
-          {contestInfoArray.map((c) => (
-            <FileUploadBlock
-              title={c}
-              key={c}
-              container={contestInfo}
-              setContainer={setContestInfo}
-              section={'contestInfo'}
-              extension={'pdf'}
-            />
-          ))}
         </div>
       </div>
     </div>

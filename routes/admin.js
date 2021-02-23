@@ -64,4 +64,10 @@ for (let con of contestInfo) {
 router.get('/contest-time', C.getContestTime);
 router.post('/contest-time', M.AdminAccess, C.setContestTime);
 
+// FAQ file
+faqStore = multer({ storage }).single('faq')
+// Post the faq.xls file
+router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ)
+// Get request handled in controller/contact.js
+
 module.exports = router;
