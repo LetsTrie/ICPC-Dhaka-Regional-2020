@@ -125,9 +125,10 @@ const Teams = (props) => {
         <Loader />
       ) : (
         <>
-          <div className="registeredTeams__header">
+          <div className="registeredTeams__header" style={{ userSelect: 'none' }}>
             <h1> Registered Teams </h1>
             <h4> (For priliminary) </h4>
+            <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}> If you don't find your team, please wait. It'll be updated very soon. </p>
           </div>
           <div className="registeredTeams__table">
             {error && (

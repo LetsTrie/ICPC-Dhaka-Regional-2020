@@ -79,28 +79,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="copyright">
-          <p>Copyright © 2021. Department of CSE, University of Dhaka</p>
-          <p>
-            Developed by{' '}
-            <a
-              href="https://www.facebook.com/profile.php?id=100006045795110"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Sakib
-            </a>
-            {' & '}
-            <a
-              href="https://www.facebook.com/hussain.safwan/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Safwan
-            </a>
-          </p>
-        </div>
-      </div>
+       </div>
     </>
   );
 };
