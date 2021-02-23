@@ -3,15 +3,15 @@ import '../../assests/css/gallery.css';
 import gImg from '../../assests/images/gallery1.jpg';
 import Header from '../ui/Header';
 
-
+const numberOfImages = 36
 function Gallery() {
   const _20Image = () => {
-    return [...Array(9  )].map((e, i) => (
+    return [...Array(numberOfImages )].map((e, i) => (
       <div
         key={`${Math.ceil(i * 10000 * Math.random())}`}
         className='gallery_img_wrapper'
       >
-        <img src={gImg} alt='Gallery' />
+        <img src={require(`../../assests/gallery/gallery-${i+1}.jpg`)} alt='Gallery' />
       </div>
     ));
   };
