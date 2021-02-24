@@ -32,7 +32,8 @@ exports.login = asyncHandler(async (req, res) => {
 // Team Information from File...
 exports.teamInfo = asyncHandler(async (req, res) => {
   const teams = await parseFile();
-  return res.status(200).json({ success: true, teams });
+  if (teams != null) return res.status(200).json({ success: true, teams })
+  else return res.status(200).json({ success: false })
 });
 
 // Team Information from Database...

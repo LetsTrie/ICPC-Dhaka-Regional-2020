@@ -29,20 +29,20 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list">
             <a href="#">Date and Venue</a>
-            <a href="#">Online Preliminary Registration</a>
-            <a href="#">Onsite Contest Registration</a>
+            <a href="https://icpc.global/">Online Preliminary Registration</a>
+            {/* <a href="#">Onsite Contest Registration</a> */}
             <a
               onClick={(e) =>
                 redirectFiles(
                   e,
-                  '/NavigationFiles/asia-west-dhaka-regional-participation-eligibility.pdf'
+                  '/informations-for-participants.pdf'
                 )
               }
             >
-              Contest Outline
+              Contest Guideline
             </a>
             <a href="#">Program Schedule</a>
-            <a href="#">System Configuration</a>
+            {/* <a href="#">System Configuration</a> */}
             <a
               onClick={(e) =>
                 redirectFiles(
@@ -53,8 +53,8 @@ const ImportantInfos = () => {
             >
               ICPC Regional Rules for 2020
             </a>
-            <a href="#">Onsite Contest Registration</a>
-            <a href="#">Payment</a>
+            {/* <a href="#">Onsite Contest Registration</a> */}
+            <a href="/payment/teamid">Payment</a>
           </div>
         </div>
         <div

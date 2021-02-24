@@ -22,22 +22,31 @@ export default [
   {
     name: 'Committee',
     link: '/committee',
-    submenu: committee.map((c) => ({
-      name: c,
-      link: `/committee/${urlSlug(c)}`,
-      notPage: true,
-      external: `/${urlSlug(c)}.pdf`,
-    })),
+    submenu: committee.map((c) => (
+      {
+        name: c,
+        link: `/committee/${urlSlug(c)}`,
+        notPage: true,
+        external: `/${urlSlug(c)}.pdf`,
+      } 
+    )),
   },
   {
     name: 'Contest Info',
     link: '/contest-info',
-    submenu: contestInfo.map((c) => ({
+    submenu: contestInfo.map((c, i) => (
+      i == 3 ? {
+        name: c,
+        link: `/payment/teamid`,
+        notPage: false,
+        // external: `/${urlSlug(c)}.pdf`
+    } : {
       name: c,
       link: `/contest-info/${urlSlug(c)}`,
       notPage: true,
-      external: `/${urlSlug(c)}.pdf`,
-    })),
+      external: `/${urlSlug(c)}.pdf`
+  }
+    )),
   },
   {
     name: 'Teams',

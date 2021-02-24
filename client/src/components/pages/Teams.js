@@ -103,9 +103,13 @@ const Teams = (props) => {
   useEffect(() => {
     setIsLoading(true);
     axios.get('/api/v1/admin/team-file-xls').then((res) => {
-      const { teams } = res.data;
-      setTeams(teams);
+      const {success, teams} = res.data;
       setIsLoading(false);
+      if (success) {
+        setTeams(teams);
+      } else {
+        
+      }
     });
   }, []);
 

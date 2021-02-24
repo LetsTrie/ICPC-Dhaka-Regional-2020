@@ -108,3 +108,5 @@ todo.txt
 .vscode/settings.json
 
 /client/build
+
+upload/*
