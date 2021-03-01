@@ -8,7 +8,7 @@ export default (props) => {
     <div className="pageNotFound">
       <Header />
       <div className="pageNotFound__header">
-        <h1> Payment will start from March 1st, 2021 </h1>
+        <h1> Payment will start from March 5th, 2021 </h1>
       </div>
     </div>
   );

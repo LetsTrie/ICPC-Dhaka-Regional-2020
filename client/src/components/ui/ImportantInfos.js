@@ -67,21 +67,21 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list imp_dates">
             <div className="each_imp_dates">
-              <p>February 22, 2021</p>
+              <p>March 05, 2021</p>
               <p>Registration Starts (Ends in 25/03/2021)</p>
             </div>
             <div className="each_imp_dates">
               <p>March 31, 2021</p>
-              <p>Payment last Date (With Priliminary Fee)</p>
+              <p>Priliminary Fee collection end date</p>
             </div>
             <div className="each_imp_dates">
-              <p>April 10, 2021</p>
+              <p>April 07, 2021</p>
               <p>Preliminary Contest Date</p>
             </div>
-            <div className="each_imp_dates">
+            {/* <div className="each_imp_dates">
               <p>May 20, 2021</p>
               <p>Payment last date for Final</p>
-            </div>
+            </div> */}
             <div className="each_imp_dates">
               <p>May 29, 2021</p>
               <p>Final Contest Date</p>
