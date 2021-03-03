@@ -9,6 +9,7 @@ const initialState = {
   formSuccess: false,
   error: undefined,
   isLoading: false,
+  query_id: null
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +32,7 @@ export default function (state = initialState, action) {
       return {
         ...initialState,
         formSuccess: true,
+        query_id: action.payload
       };
     default:
       return state;
