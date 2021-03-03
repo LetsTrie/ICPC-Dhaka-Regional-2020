@@ -57,7 +57,7 @@ const Payment = ({ match }) => {
           {!success ? (
             <div className="RegFee">
               <p>Registration Fee</p>
-              <p>6000 BDT per team</p>
+              <p>300 BDT per team</p>
             </div>
           ) : (
             <div className="RegFee">

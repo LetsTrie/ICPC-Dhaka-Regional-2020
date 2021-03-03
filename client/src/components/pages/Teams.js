@@ -103,12 +103,11 @@ const Teams = (props) => {
   useEffect(() => {
     setIsLoading(true);
     axios.get('/api/v1/admin/team-file-xls').then((res) => {
-      const {success, teams} = res.data;
+      const { success, teams } = res.data;
       setIsLoading(false);
       if (success) {
         setTeams(teams);
       } else {
-        
       }
     });
   }, []);
@@ -125,16 +124,21 @@ const Teams = (props) => {
   return (
     <div className="registeredTeamsWrapper">
       <Header />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="registeredTeams__header" style={{ userSelect: 'none' }}>
-            <h1> Registered Teams </h1>
-            <h4> (For priliminary) </h4>
-            <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}> If you don't find your team, please wait. It'll be updated very soon. </p>
-          </div>
-          <div className="registeredTeams__table">
+      <>
+        <div className="registeredTeams__header" style={{ userSelect: 'none' }}>
+          <h1> Registered Teams </h1>
+          <h4> (For priliminary) </h4>
+          <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}>
+            If you don't find your team, please wait. It'll be updated very
+            soon.
+          </p>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <h1 style={{ fontWeight: 'lighter', fontSize: 32, paddingTop: 30 }}>
+            Payment Procedure will start in a few days.
+          </h1>
+        </div>
+        {/* <div className="registeredTeams__table">
             {error && (
               <Alert
                 severity="error"
@@ -203,8 +207,8 @@ const Teams = (props) => {
               </Paper>
             )}
           </div>
-        </>
-      )}
+         */}
+      </>
     </div>
   );
 };
