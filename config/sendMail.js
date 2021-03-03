@@ -23,7 +23,7 @@ exports.sendEmail = async (address, data) => {
   const query_id = Math.floor(1000000 + Math.random() * 9000000)
   let mailOptions = {
     from: process.env.EMAIL_USERNAME,
-    to: 'safwan.du16@gmail.com',
+    to: address,
     subject: `ICPC Query - ${category} - ${query_id}`,
     html: `<strong>Name:</strong> ${name}<br /><strong>Email:</strong> ${email}<br /><strong>Query:</strong> ${message}<br /><a href="mailto:${email}">Reply to ${email}</a>`,
   };
