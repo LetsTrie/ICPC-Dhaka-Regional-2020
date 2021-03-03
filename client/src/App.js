@@ -17,11 +17,10 @@ import { connect } from 'react-redux';
 
 import RegisteredTeams from './components/pages/Admin/Teams';
 import AdminCustomization from './components/pages/Admin/Customization';
-import AdminFAQ from './components/pages/Admin/FAQ'
+import AdminFAQ from './components/pages/Admin/FAQ';
 
 import FailedPayment from './components/pages/FailedPayment';
 import CancelPayment from './components/pages/CancelPayment';
-import PaymentNotice from './components/pages/PaymentNotice'
 
 function App(props) {
   const { isAuthenticated, isAdmin } = props.cred;
@@ -40,7 +39,7 @@ function App(props) {
               <Route exact path="/gallery" component={Gallery} />
               <Route exact path="/payment/failed" component={FailedPayment} />
               <Route exact path="/payment/cancel" component={CancelPayment} />
-              <Route exact path="/payment/:teamId" component={PaymentNotice} />
+              <Route exact path="/payment/:teamId" component={Payment} />
               <Route exact path="/teams" component={Teams} />
               <Route exact path="/contact" component={ContactUs} />
               <Route exact path="/admin/login" component={AdminLogin} />
