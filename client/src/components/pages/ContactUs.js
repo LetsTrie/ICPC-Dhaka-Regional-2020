@@ -59,7 +59,9 @@ function ContactUs(props) {
       }
     }
     axios.get('/api/v1/contact/getFAQ', config).then(res => {
-      setFAQs(res.data.data)
+      if (res.data.success) {
+        setFAQs(res.data.data)
+      }
     })
     if (formSuccess) {
       resetForm();
@@ -147,7 +149,7 @@ function ContactUs(props) {
                         Select your option
                       </option>
                       <option value="Registration Fee Related">
-                        Registration Fee Related
+                        Registration Related
                       </option>
                       <option value="Contest Related">Contest Related</option>
                       <option value="Others">Others</option>

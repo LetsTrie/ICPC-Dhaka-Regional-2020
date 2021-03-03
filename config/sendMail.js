@@ -1,41 +1,32 @@
 const nodemailer = require('nodemailer');
 
 const Transport = nodemailer.createTransport({
-  service: 'Gmail',
+  // name: 'gmail.com',
+  host: 'smtp.gmail.com',
+  port: 587,
   auth: {
-    user: 'safwan.du16@gmail.com',
-    pass: process.env.Mail_Password,
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD,
   },
+  logger: true,
+  debug: true,
+  // secureConnection: 'false',
+  secure: false,
+  // tls: {
+  //   ciphers: 'SSLv3',
+  //   rejectUnauthorized: false,
+  // },
 });
 
-exports.passwordResetMail = async (email, type) => {
-  const mailBody = ` <strong>Dear User</strong>
-  <br>
-  Seems like you just forgot your password.
-  <br>
-  Click 
-  <a href="http://bad-blogger.herokuapp.com/admin/reset_password?email=${email}&usertype=${type}">here</a>
-  to reset your password.<br>
-  
-   <br> 
-   Nice day!`;
+exports.sendEmail = async (address, subject, body) => {
   let mailOptions = {
-    from: 'manager@trin-innovation.com',
-    to: email,
-    subject: 'Moner Shastho - Password reset link',
-    html: mailBody,
-  };
-
-  return await Transport.sendMail(mailOptions);
-};
-
-exports.sendClusterMail = async (address, subject, body) => {
-  let mailOptions = {
-    from: 'ICPC Dhaka Regionals 2021',
-    to: address, //zaidfarzan@aol.com
+    from: process.env.EMAIL_USERNAME,
+    to: 'safwan.du16@gmail.com',
     subject: subject,
     html: body,
   };
 
-  return await Transport.sendMail(mailOptions);
+  res =  await Transport.sendMail(mailOptions);
+  console.log(res)
+  return 
 };
