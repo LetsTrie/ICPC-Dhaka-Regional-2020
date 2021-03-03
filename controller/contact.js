@@ -17,8 +17,8 @@ exports.receiveMessage = async (req, res, next) => {
         message: error.details[0].message,
       });
     }
-
-  sendEmail(categoryAddress[req.category], req.category, req.message)
+  const { name, email, category, message } = req.body
+  sendEmail(categoryAddress[category], req.body)
 
     return res.status(201).json({ success: true });
   } catch (err) {

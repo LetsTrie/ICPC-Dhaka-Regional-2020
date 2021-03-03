@@ -18,14 +18,14 @@ const Transport = nodemailer.createTransport({
   // },
 });
 
-exports.sendEmail = async (address, subject, body) => {
+exports.sendEmail = async (address, data) => {
+  const { name, email, category, message } = data
   let mailOptions = {
     from: process.env.EMAIL_USERNAME,
-    to: 'safwan.du16@gmail.com',
-    subject: subject,
-    html: body,
+    to: address,
+    subject: `ICPC Query - ${category}`,
+    html: `<strong>Name:</strong> ${name}<br /><strong>Email:</strong> ${email}<br /><strong>Query:</strong> ${message}<br /><a href="mailto:${email}">Reply to ${email}</a>`,
   };
-
   res =  await Transport.sendMail(mailOptions);
   console.log(res)
   return 
