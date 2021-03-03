@@ -18,9 +18,8 @@ exports.receiveMessage = async (req, res, next) => {
       });
     }
   const { name, email, category, message } = req.body
-  sendEmail(categoryAddress[category], req.body)
-
-    return res.status(201).json({ success: true });
+  const query_id = await sendEmail(categoryAddress[category], req.body)
+    return res.status(201).json({ success: true, query_id });
   } catch (err) {
     console.log(err)
     return res.status(500).json({

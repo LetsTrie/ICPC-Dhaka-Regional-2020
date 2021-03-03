@@ -27,7 +27,6 @@ function ContactUs(props) {
   const [FAQs, setFAQs] = useState([])
 
   const handleChange = (e) => {
-    console.log(e.target.value)
     setCategory(e.target.value);
   };
 
@@ -42,7 +41,7 @@ function ContactUs(props) {
 
   // Action & Store
   const { contactUsAction } = props;
-  const { error, isLoading, formSuccess } = props.contact;
+  const { error, isLoading, formSuccess, query_id } = props.contact;
 
   // Submit Handler
   const handleSubmit = async (e) => {
@@ -66,7 +65,7 @@ function ContactUs(props) {
     if (formSuccess) {
       resetForm();
       setCategory('')
-      setTimeout(() => dispatch({ type: CONTACT_INIT }), 5000);
+      setTimeout(() => dispatch({ type: CONTACT_INIT }), 10000);
     }
   }, [formSuccess]);
 
@@ -88,7 +87,7 @@ function ContactUs(props) {
               <div className="contactUsForm_flx_form">
                 {formSuccess && (
                   <Alert severity="success" style={{ marginBottom: '1.2rem' }}>
-                    We've received your message. We'll get back to you shortly.
+                    We've received your message. The id of this query is <b>{query_id}</b>. We'll get back to you shortly.
                   </Alert>
                 )}
                 {error && (
