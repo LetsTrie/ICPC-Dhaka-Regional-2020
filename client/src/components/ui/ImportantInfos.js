@@ -28,33 +28,26 @@ const ImportantInfos = () => {
             <p> Latest Information </p>
           </div>
           <div className="flex_child_list">
-            <a href="#">Date and Venue</a>
             <a href="https://icpc.global/">Online Preliminary Registration</a>
-            {/* <a href="#">Onsite Contest Registration</a> */}
             <a
               onClick={(e) =>
-                redirectFiles(
-                  e,
-                  '/informations-for-participants.pdf'
-                )
+                redirectFiles(e, '/informations-for-participants.pdf')
               }
             >
               Contest Guideline
             </a>
-            <a href="#">Program Schedule</a>
-            {/* <a href="#">System Configuration</a> */}
+            <a onClick={(e) => redirectFiles(e, '/program-schedule.pdf')}>
+              Program Schedule
+            </a>
+
             <a
               onClick={(e) =>
-                redirectFiles(
-                  e,
-                  '/NavigationFiles/rules-of-icpc-dhaka-regional.pdf'
-                )
+                redirectFiles(e, '/rules-of-icpc-dhaka-regional.pdf')
               }
             >
               ICPC Regional Rules for 2020
             </a>
-            {/* <a href="#">Onsite Contest Registration</a> */}
-            <a href="/payment/teamid">Payment</a>
+            <a onClick={(e) => redirectFiles(e, '/payment.pdf')}>Payment</a>
           </div>
         </div>
         <div
@@ -78,10 +71,6 @@ const ImportantInfos = () => {
               <p>April 07, 2021</p>
               <p>Preliminary Contest Date</p>
             </div>
-            {/* <div className="each_imp_dates">
-              <p>May 20, 2021</p>
-              <p>Payment last date for Final</p>
-            </div> */}
             <div className="each_imp_dates">
               <p>May 29, 2021</p>
               <p>Final Contest Date</p>
@@ -99,7 +88,9 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list">
             <a href="https://icpc.global/">ACM ICPC HQ</a>
-            <a href="https://icpc.global/auth/realms/cm5/protocol/openid-connect/registrations?client_id=cm5-frontend&redirect_uri=https%3A%2F%2Ficpc.global%2Fprivate&state=8ecb856b-1a4a-4a80-a84a-8618b21e5209&response_mode=fragment&response_type=code&scope=openid&nonce=f54beb72-c3ef-4822-864b-c52ecfbb7e92">ACM ICPC Registration</a>
+            <a href="https://icpc.global/auth/realms/cm5/protocol/openid-connect/registrations?client_id=cm5-frontend&redirect_uri=https%3A%2F%2Ficpc.global%2Fprivate&state=8ecb856b-1a4a-4a80-a84a-8618b21e5209&response_mode=fragment&response_type=code&scope=openid&nonce=f54beb72-c3ef-4822-864b-c52ecfbb7e92">
+              ACM ICPC Registration
+            </a>
             <a href="https://du.ac.bd/">Host University</a>
             <a href="http://www.cse.du.ac.bd/">Dept. of CSE, DU</a>
           </div>

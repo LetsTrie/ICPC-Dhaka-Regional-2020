@@ -57,7 +57,7 @@ const Payment = ({ match }) => {
           {!success ? (
             <div className="RegFee">
               <p>Registration Fee</p>
-              <p>6000 BDT per team</p>
+              <p>300 BDT per team</p>
             </div>
           ) : (
             <div className="RegFee">
@@ -66,7 +66,7 @@ const Payment = ({ match }) => {
           )}
         </div>
 
-        {/* <div style={{ textAlign: 'center', marginTop: 28, padding: 10 }}>
+        <div style={{ textAlign: 'center', marginTop: 28, padding: 10 }}>
           <Button
             variant="contained"
             color={success ? 'primary' : 'secondary'}
@@ -75,9 +75,6 @@ const Payment = ({ match }) => {
           >
             {success ? 'Payment Successful' : 'Proceed to pay'}
           </Button>
-        </div> */}
-        <div style={{ textAlign: 'center', marginTop: 28, padding: 10 }}>
-         <p style={{ fontSize: 23, color: '#333' }} >Payment process will be open after 01 March 2021</p>
         </div>
       </div>
     </div>

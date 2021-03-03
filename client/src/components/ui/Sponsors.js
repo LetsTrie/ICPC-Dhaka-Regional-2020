@@ -7,22 +7,26 @@ import ICPC_Foundation from '../../assests/images/ICPC-Foundation.png';
 function Sponsors() {
   return (
     <div>
-      <section className='sponsor' data-aos="zoom-in-down" data-aos-duration="1000">
-        <div className='sponsor__heading'>
+      <section
+        className="sponsor"
+        data-aos="zoom-in-down"
+        data-aos-duration="1000"
+      >
+        <div className="sponsor__heading">
           <h2> Our Sponsors </h2>
         </div>
-        <div className='sponsors'>
-          <div className='sponsor_img'>
+        <div className="sponsors">
+          {/* <div className='sponsor_img'>
             <img src={JetBrain} alt='sponsor' />
           </div>
           <div className='sponsor_img'>
             <img src={ACM} alt='sponsor' />
+          </div> */}
+          <div className="sponsor_img">
+            <img src={AcmICPC} alt="sponsor" />
           </div>
-          <div className='sponsor_img'>
-            <img src={AcmICPC} alt='sponsor' />
-          </div>
-          <div className='sponsor_img'>
-            <img src={ICPC_Foundation} alt='sponsor' />
+          <div className="sponsor_img">
+            <img src={ICPC_Foundation} alt="sponsor" />
           </div>
         </div>
       </section>
