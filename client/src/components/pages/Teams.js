@@ -124,16 +124,20 @@ const Teams = (props) => {
   return (
     <div className="registeredTeamsWrapper">
       <Header />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="registeredTeams__header" style={{ userSelect: 'none' }}>
-            <h1> Registered Teams </h1>
-            <h4> (For preliminary) </h4>
-            <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}> If you don't find your team, please wait. It'll be updated very soon. </p>
-          </div>
-          <div className="registeredTeams__table">
+        <div className="registeredTeams__header" style={{ userSelect: 'none' }}>
+          <h1> Registered Teams </h1>
+          <h4> (For preliminary) </h4>
+          <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}>
+            If you don't find your team, please wait. It'll be updated very
+            soon.
+          </p>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <h1 style={{ fontWeight: 'lighter', fontSize: 32, paddingTop: 30 }}>
+            Payment Procedure will start in a few days.
+          </h1>
+        </div>
+        {/* <div className="registeredTeams__table">
             {error && (
               <Alert
                 severity="error"
@@ -142,7 +146,6 @@ const Teams = (props) => {
                 {error}
               </Alert>
             )}
-
             {teams.length === 0 ? (
               <SubHeading />
             ) : (
@@ -203,7 +206,6 @@ const Teams = (props) => {
             )}
           </div>
          */}
-      </>
     </div>
   );
 };
