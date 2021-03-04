@@ -176,15 +176,15 @@ function ContactUs(props) {
                 </form>
               </div>
               <div className="contactUsForm_flx_contact">
-                <div className="contactUsForm_flx_contact_header">
+                {/* <div className="contactUsForm_flx_contact_header">
                   <p>Reach us</p>
-                </div>
-                <div className="contactUsForm_flx_contact_info">
+                </div> */}
+                <div className="contactUsForm_flx_contact_info" style={{marginTop: '50px'}}>
                   <div className="contactUsForm_flx_contact_info_icon">
                     <span className="fa fa-envelope"></span>
                   </div>
                   <div className="contactUsForm_flx_contact_info_des">
-                    <p>office@cse.du.ac.bd</p>
+                    <p>icpc@cse.du.ac.bd</p>
                   </div>
                 </div>
                 <div className="contactUsForm_flx_contact_info">

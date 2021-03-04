@@ -304,20 +304,15 @@
       font-weight: 300;
       margin-bottom: 0;
       padding-bottom: 2px;
-      &:hover {
-        font-weight: 400;
-      }
-
       &:first-child {
-        font-weight: 400;
-        font-size: 1.6rem;
-        color: #333;
+        font-size: 1.4rem;
       }
 
       &:last-child {
-        font-size: 1.4rem;
-        color: #555;
+        font-size: 1.65rem;
+        color: #000;
         padding-bottom: 6px;
+        font-weight: 400;
       }
     }
   }
@@ -372,6 +367,13 @@
     &_list {
       padding: 12px 25px 25px 25px;
       min-height: 235px;
+      ul {
+        padding-left: 10px;
+        li {
+          list-style-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='-1 -1 2 2'><circle r='1' /></svg>");
+          font-size: 1.6rem;
+        }
+      }
       a {
         display: block;
         text-decoration: none;

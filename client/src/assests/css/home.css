@@ -413,20 +413,15 @@ button.MuiButtonBase-root:active {
   padding-bottom: 2px;
 }
 
-.imp_dates .each_imp_dates p:hover {
-  font-weight: 400;
-}
-
 .imp_dates .each_imp_dates p:first-child {
-  font-weight: 400;
-  font-size: 1.6rem;
-  color: #333;
+  font-size: 1.4rem;
 }
 
 .imp_dates .each_imp_dates p:last-child {
-  font-size: 1.4rem;
-  color: #555;
+  font-size: 1.65rem;
+  color: #000;
   padding-bottom: 6px;
+  font-weight: 400;
 }
 
 .important_infos {
@@ -503,6 +498,15 @@ button.MuiButtonBase-root:active {
 .important_infos .flex_child_list {
   padding: 12px 25px 25px 25px;
   min-height: 235px;
+}
+
+.important_infos .flex_child_list ul {
+  padding-left: 10px;
+}
+
+.important_infos .flex_child_list ul li {
+  list-style-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='-1 -1 2 2'><circle r='1' /></svg>");
+  font-size: 1.6rem;
 }
 
 .important_infos .flex_child_list a {
