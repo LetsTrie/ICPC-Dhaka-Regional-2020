@@ -71,7 +71,7 @@ ul {
 
 .Home__navbar .Home__banner_text {
   padding: 10rem;
-  padding-top: 16vh;
+  padding-top: 13.5vh;
   text-align: center;
   color: white;
 }
@@ -120,8 +120,8 @@ ul {
 }
 
 .Home__navbar .Home__banner_text-secondary h5 {
-  font-size: 4.6rem;
-  padding-bottom: 2.7rem;
+  font-size: 4.45rem;
+  padding-bottom: 2.8rem;
   font-weight: 400;
 }
 

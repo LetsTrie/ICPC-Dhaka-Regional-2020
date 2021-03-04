@@ -81,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
   mainIcpcLogo: {
     marginTop: '7.5px',
     marginBottom: '14px',
+    marginRight: 5,
 
     [theme.breakpoints.down('sm')]: {
       display: 'none',
