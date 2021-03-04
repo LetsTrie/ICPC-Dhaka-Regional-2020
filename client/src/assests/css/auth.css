@@ -53,6 +53,13 @@ ul {
   text-align: center;
 }
 
+button.MuiButtonBase-root:active {
+  -webkit-transform: none;
+      -ms-transform: none;
+       -o-transform: none;
+          transform: none;
+}
+
 .register_wrapper {
   min-height: 100vh;
   padding-bottom: 5rem;

@@ -16,7 +16,7 @@ export default (props) => {
 
     if (menu.submenu) {
       for (let submenu of menu.submenu) {
-        found = found || matched(submenu.link, pathname);
+        found = found || matched(submenu.external, pathname);
         if (found) break;
       }
     }

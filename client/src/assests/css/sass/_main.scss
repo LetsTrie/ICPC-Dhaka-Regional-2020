@@ -46,3 +46,7 @@ ul {
 .text-center {
   text-align: center;
 }
+
+button.MuiButtonBase-root:active {
+  transform: none;
+}
