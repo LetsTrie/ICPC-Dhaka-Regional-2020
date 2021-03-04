@@ -13,7 +13,7 @@
 
     .Home__banner_text {
       padding: 10rem;
-      padding-top: 16vh;
+      padding-top: 13.5vh;
       text-align: center;
       color: white;
 
@@ -42,7 +42,8 @@
           font-size: 4.4rem;
           letter-spacing: 1.5px;
           font-weight: 400;
-          padding-bottom: 3.3rem;
+          padding-bottom: 2rem;
+
           user-select: none;
           font-family: 'Roboto', sans-serif;
 
@@ -53,7 +54,30 @@
           span {
           }
         }
+
+        h5 {
+          font-size: 4.45rem;
+          padding-bottom: 2.8rem;
+          font-weight: 400;
+        }
       }
+    }
+  }
+}
+.Home_banner_button {
+  button:nth-child(2) {
+    margin-left: 13px;
+    @media (max-width: 700px) {
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 700px) {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      margin: 0;
+      margin-bottom: 10px;
     }
   }
 }
@@ -221,11 +245,13 @@
 
         &-primary {
           h1 {
+            line-height: normal;
           }
         }
 
         &-secondary {
           h3 {
+            font-size: 3rem;
           }
         }
       }
@@ -462,6 +488,11 @@
           line-height: 170%;
           color: #686868;
           font-size: 1.5rem;
+
+          b {
+            font-size: 1.7rem;
+            color: '#000';
+          }
         }
       }
 
@@ -550,4 +581,8 @@
       }
     }
   }
+}
+
+.mainIcpcLogo {
+  display: none;
 }

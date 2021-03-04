@@ -49,8 +49,11 @@ function Home() {
           </div>
           <div className="Home__banner_text-secondary">
             <h3>
-              Organized by <span>University of Dhaka</span>
+              Organized by{' '}
+              <span>Department of Computer Science and Engineering</span>
             </h3>
+
+            <h5>University of Dhaka</h5>
           </div>
           <Countdown />
           <div className="Home_banner_button">
@@ -65,7 +68,6 @@ function Home() {
               variant="contained"
               className={classes.root}
               onClick={() => showFile('/program-schedule.pdf')}
-              style={{ marginLeft: 13 }}
             >
               Program Schedule
             </Button>
