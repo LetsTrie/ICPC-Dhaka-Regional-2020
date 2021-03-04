@@ -73,7 +73,7 @@ const Footer = () => {
                 </div>
                 <div className="flex_single_child_info">
                   <p className="info_heading">Email</p>
-                  <p className="info_details">office@cse.du.ac.bd</p>
+                  <p className="info_details">icpc@cse.du.ac.bd</p>
                 </div>
               </div>
             </div>

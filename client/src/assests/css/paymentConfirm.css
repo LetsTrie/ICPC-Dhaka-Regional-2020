@@ -53,6 +53,13 @@ ul {
   text-align: center;
 }
 
+button.MuiButtonBase-root:active {
+  -webkit-transform: none;
+      -ms-transform: none;
+       -o-transform: none;
+          transform: none;
+}
+
 .container {
   min-height: 80vh;
   padding: 10px;

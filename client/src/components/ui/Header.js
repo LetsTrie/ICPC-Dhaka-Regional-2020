@@ -73,18 +73,25 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     marginTop: '7.5px',
     marginBottom: '14px',
+    paddingRight: '15px',
 
     [theme.breakpoints.down('sm')]: {
-      height: '52px',
+      height: '28px',
+      padding: 0,
+      marginLeft: 5,
+      marginTop: 15,
     },
   },
   mainIcpcLogo: {
     marginTop: '7.5px',
     marginBottom: '14px',
     marginRight: 5,
+    paddingRight: '15px',
 
     [theme.breakpoints.down('sm')]: {
-      display: 'none',
+      height: '40px',
+      padding: 0,
+      marginRight: 3,
     },
   },
 
@@ -97,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '15px',
     color: 'white',
     fontSize: '1.7rem',
-    opacity: 0.9,
+    opacity: 0.94,
   },
   selectedTab: {
     color: 'white',
@@ -135,16 +142,18 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     ...theme.typography.tab,
-    fontSize: '1.4rem',
+    fontSize: '1.6rem',
     padding: '1rem 1.6rem',
-    opacity: 0.9,
+    opacity: 1,
+    color: 'white',
+
     '&:hover': {
       opacity: 1,
     },
   },
   selectedMenuItem: {
     ...theme.typography.tab,
-    fontSize: '1.6rem',
+    fontSize: '1.7rem',
     padding: '1rem 1.6rem',
     opacity: 1,
     color: 'white',
@@ -617,33 +626,17 @@ function BackToTop(props) {
         <Toolbar>
           {/* After clicking Top-left icon, It'll redirect to home.  */}
           <Button
-            onClick={() => setMenuIndex(0)}
+            className={classes.logoContainer}
             component={Link}
             to="/"
-            className={classes.logoContainer}
+            onClick={() => setMenuIndex(0)}
           >
-            <img
-              alt="ICPC"
-              src={logo}
-              className={classes.mainIcpcLogo}
-              style={{ paddingRight: 15 }}
-            />
-            <img
-              alt="ICPC"
-              src={logo1}
-              className={classes.logo}
-              height="70"
-              style={{ paddingRight: 15 }}
-            />
-            <img
-              alt="ICPC"
-              src={logo2}
-              className={classes.logo}
-              height="70"
-              style={{ paddingRight: 15 }}
-            />
-            <img alt="ICPC" src={logo3} className={classes.logo} height="70" />
+            <img alt="ICPC" src={logo} className={classes.mainIcpcLogo} />
           </Button>
+
+          <img alt="ICPC" src={logo1} className={classes.logo} height="70" />
+          <img alt="ICPC" src={logo2} className={classes.logo} height="70" />
+          <img alt="ICPC" src={logo3} className={classes.logo} height="70" />
           {matches ? drawer : tabs}
         </Toolbar>
       </AppBar>

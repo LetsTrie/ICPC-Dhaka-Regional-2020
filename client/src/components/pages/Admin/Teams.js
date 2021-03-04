@@ -116,12 +116,11 @@ const Teams = (props) => {
   useEffect(() => {
     setIsLoading(true);
     axios.get('/api/v1/admin/team-file-xls').then((res) => {
-      const {success, teams} = res.data;
+      const { success, teams } = res.data;
       setIsLoading(false);
       if (success) {
         setTeams(teams);
       } else {
-        
       }
     });
   }, []);
@@ -144,7 +143,7 @@ const Teams = (props) => {
         <>
           <div className="registeredTeams__header">
             <h1> Registered Teams </h1>
-            <h4> (For priliminary) </h4>
+            <h4> (For preliminary) </h4>
           </div>
           <div className="registeredTeams__table">
             <form onSubmit={handleSubmit} style={{ textAlign: 'right' }}>

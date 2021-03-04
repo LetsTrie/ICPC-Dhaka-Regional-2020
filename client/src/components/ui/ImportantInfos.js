@@ -17,7 +17,7 @@ const ImportantInfos = () => {
   }, []);
 
   return (
-    <div className="importantInfosWrappers">
+    <div className="importantInfosWrappers" id="">
       <div className="important_infos">
         <div
           className="flex_child"

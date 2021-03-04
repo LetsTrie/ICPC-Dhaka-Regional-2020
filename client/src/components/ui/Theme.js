@@ -23,7 +23,12 @@ export default createMuiTheme({
       textTransform: 'none',
       fontWeight: 700,
       fontSize: '1rem',
-      letterSpacing: '1px'
+      letterSpacing: '1px',
+    },
+  },
+  props: {
+    MuiTab: {
+      disableRipple: true,
     },
   },
 });
