@@ -9,6 +9,9 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 import logo from '../../assests/images/logo.png';
+import logo1 from '../../assests/images/TopLeft/1.png';
+import logo2 from '../../assests/images/TopLeft/2.png';
+import logo3 from '../../assests/images/TopLeft/3.png';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
@@ -72,9 +75,18 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '14px',
 
     [theme.breakpoints.down('sm')]: {
-      height: '45px',
+      height: '52px',
     },
   },
+  mainIcpcLogo: {
+    marginTop: '7.5px',
+    marginBottom: '14px',
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+
   tabContainer: {
     marginLeft: 'auto',
   },
@@ -609,7 +621,27 @@ function BackToTop(props) {
             to="/"
             className={classes.logoContainer}
           >
-            <img alt="ICPC" src={logo} className={classes.logo} />
+            <img
+              alt="ICPC"
+              src={logo}
+              className={classes.mainIcpcLogo}
+              style={{ paddingRight: 15 }}
+            />
+            <img
+              alt="ICPC"
+              src={logo1}
+              className={classes.logo}
+              height="70"
+              style={{ paddingRight: 15 }}
+            />
+            <img
+              alt="ICPC"
+              src={logo2}
+              className={classes.logo}
+              height="70"
+              style={{ paddingRight: 15 }}
+            />
+            <img alt="ICPC" src={logo3} className={classes.logo} height="70" />
           </Button>
           {matches ? drawer : tabs}
         </Toolbar>
