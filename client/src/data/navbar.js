@@ -3,13 +3,13 @@ const committee = [
   'Steering Committee',
   'Executive Committee',
   'Judging Panel',
-  'Sub-Committee',
+  'Sub-Committees',
 ];
 
 const contestInfo = [
   'Rules of ICPC Dhaka Regional',
-  'Informations For Participants',
-  'Accomodation',
+  'Information for Participants',
+  'Accommodation',
   'Payment',
   'Program Schedule',
 ];

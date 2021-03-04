@@ -8,7 +8,7 @@ exports.receiveMessage = async (req, res, next) => {
   categoryAddress = new Map()
   categoryAddress['Registration Fee Related'] = 'reg.icpc@cse.du.ac.bd'
   categoryAddress['Contest Related'] = 'icpc@cse.du.ac.bd'
-  categoryAddress['Others'] = 'office@cse.du.ac.bd'
+  categoryAddress['Others'] = 'icpc@cse.du.ac.bd'
   try {
     const { error } = contactValidation(req.body);
     if (error) {

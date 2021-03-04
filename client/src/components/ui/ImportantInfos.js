@@ -28,8 +28,8 @@ const ImportantInfos = () => {
             <p> Latest Information </p>
           </div>
           <div className="flex_child_list">
-            <a href="https://icpc.global/">Online Preliminary Registration</a>
-            <a
+            <a href="https://icpc.global/">Preliminary contest registration started</a>
+            {/* <a
               onClick={(e) =>
                 redirectFiles(e, '/informations-for-participants.pdf')
               }
@@ -47,7 +47,7 @@ const ImportantInfos = () => {
             >
               ICPC Regional Rules for 2020
             </a>
-            <a onClick={(e) => redirectFiles(e, '/payment.pdf')}>Payment</a>
+            <a onClick={(e) => redirectFiles(e, '/payment.pdf')}>Payment</a> */}
           </div>
         </div>
         <div
@@ -60,20 +60,24 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list imp_dates">
             <div className="each_imp_dates">
+              <p>Registration starts</p>
               <p>March 05, 2021</p>
-              <p>Registration Starts (Ends in 25/03/2021)</p>
             </div>
             <div className="each_imp_dates">
+              <p>Registration ends</p>
+              <p>March 25, 2021</p>
+            </div>
+            <div className="each_imp_dates">
+              <p>Preliminary fee collection end date</p>
               <p>March 31, 2021</p>
-              <p>Priliminary Fee collection end date</p>
             </div>
             <div className="each_imp_dates">
+              <p>Preliminary contest date</p>
               <p>April 07, 2021</p>
-              <p>Preliminary Contest Date</p>
             </div>
             <div className="each_imp_dates">
+              <p>Final contest date</p>
               <p>May 29, 2021</p>
-              <p>Final Contest Date</p>
             </div>
           </div>
         </div>
