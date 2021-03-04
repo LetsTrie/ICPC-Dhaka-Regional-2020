@@ -71,7 +71,7 @@ ul {
 
 .Home__navbar .Home__banner_text {
   padding: 10rem;
-  padding-top: 16vh;
+  padding-top: 13.5vh;
   text-align: center;
   color: white;
 }
@@ -105,7 +105,7 @@ ul {
   font-size: 4.4rem;
   letter-spacing: 1.5px;
   font-weight: 400;
-  padding-bottom: 3.3rem;
+  padding-bottom: 2rem;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -116,6 +116,40 @@ ul {
 @media (max-width: 1200px) {
   .Home__navbar .Home__banner_text-secondary h3 {
     font-size: 4rem;
+  }
+}
+
+.Home__navbar .Home__banner_text-secondary h5 {
+  font-size: 4.45rem;
+  padding-bottom: 2.8rem;
+  font-weight: 400;
+}
+
+.Home_banner_button button:nth-child(2) {
+  margin-left: 13px;
+}
+
+@media (max-width: 700px) {
+  .Home_banner_button button:nth-child(2) {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .Home_banner_button {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .Home_banner_button button {
+    margin: 0;
+    margin-bottom: 10px;
   }
 }
 
@@ -306,6 +340,12 @@ ul {
     padding: 2rem;
     padding-top: 5vh;
     padding-bottom: 5vh;
+  }
+  .Home__navbar .Home__banner_text-primary h1 {
+    line-height: normal;
+  }
+  .Home__navbar .Home__banner_text-secondary h3 {
+    font-size: 3rem;
   }
   .Home__banner_countdown > div {
     margin: 0.5rem 0.4rem;
@@ -619,6 +659,11 @@ ul {
   font-size: 1.5rem;
 }
 
+.organizer_info_left_info p b {
+  font-size: 1.7rem;
+  color: '#000';
+}
+
 .organizer_info_left_see_more {
   margin-top: 1.3rem;
 }
@@ -724,4 +769,8 @@ ul {
       -ms-transform: translate(80px, 120px);
        -o-transform: translate(80px, 120px);
           transform: translate(80px, 120px);
+}
+
+.mainIcpcLogo {
+  display: none;
 }
