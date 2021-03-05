@@ -21,8 +21,11 @@ let sslcommerz = new SSLCommerz(settings);
 
 exports.teamPaymentInitiate = async (req, res) => {
   try {
-    const payload = require('../data/paymentInit')(req);
+    const team = await Team.findById(req.params.id);
+    if (!team) return res.send('<h1> Team not found with this ID </h1>');
+    const payload = require('../data/paymentInit')(req, team);
     const init = await sslcommerz.init_transaction(payload);
+
     return res.status(200).json({
       success: true,
       GatewayPageURL: init.GatewayPageURL,
@@ -45,12 +48,15 @@ exports.paymentIpnListener = async (req, res) => {
   if (status === 'INVALID_TRANSACTION ') {
     return res.send('<h1>INVALID TRANSACTION</h1>');
   }
-  const payment = new Payment({
-    team: teamName
-  });
-  await payment.save();
+  const team = await Team.findById(teamId);
+  team.payment_status = 'Paid';
+  team.payment_date = new Date(Date.now());
+  await team.save();
+
+  // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...]
+
   return res.send(
-    `<script>window.location="${hostname}/payment/${teamId}?Team=${teamName}&Country=${country}&Institution=${institution}&Coach=${coach}&Success=true"</script>`
+    `<script>window.location="${hostname}/payment/${teamId}"</script>`
   );
 };
 

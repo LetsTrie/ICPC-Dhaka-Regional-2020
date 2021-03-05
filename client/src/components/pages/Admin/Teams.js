@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import SaveIcon from '@material-ui/icons/Save';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
@@ -18,9 +19,10 @@ import '../../../assests/css/adminTeams.css';
 import useFormFields from '../../HandleForms';
 import Header from '../../ui/AdminHeader';
 import Loader from '../../ui/Loader';
+import moment from 'moment';
 
 const columns = [
-  { id: 'Team', label: 'Team', minWidth: 170 },
+  { id: 'Team_Name', label: 'Team', minWidth: 170 },
   {
     id: 'Country',
     label: 'Country',
@@ -28,7 +30,7 @@ const columns = [
     align: 'right',
   },
   {
-    id: 'Institution',
+    id: 'University',
     label: 'Institution',
     minWidth: 170,
     align: 'right',
@@ -39,8 +41,14 @@ const columns = [
     minWidth: 170,
   },
   {
-    id: 'Payment Status',
+    id: 'payment_status',
     label: 'Payment Status',
+    minWidth: 170,
+    align: 'right',
+  },
+  {
+    id: 'payment_date',
+    label: 'Payment Time',
     minWidth: 170,
     align: 'right',
   },
@@ -84,8 +92,8 @@ const Teams = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formFields.file.name !== 'teams.xls') {
-      setFileError('Spreadsheet name should be "teams.xls"');
+    if (formFields.file.name != 'teams.xlsx') {
+      setFileError('Spreadsheet name should be "teams.xlsx"');
     } else if (formFields.file.size / 1000 / 1000 > 5) {
       setFileError('Spreadsheet size should be less than 5MB');
     } else {
@@ -95,13 +103,12 @@ const Teams = (props) => {
       reqFiles.append('file', formFields.file);
       const headers = { Authorization: `Bearer ${accessToken}` };
       const { data: response } = await axios.post(
-        '/api/v1/admin/team-file-xls-upload',
+        '/api/v1/admin/team-file-xlsx-upload',
         reqFiles,
         {
           headers,
         }
       );
-      console.log(response.teams);
       setTeams(response.teams);
       setShowSubmitButton(false);
       setIsLoading(false);
@@ -113,16 +120,37 @@ const Teams = (props) => {
     createChangeHandler('file', true)(e);
   };
 
+  const modifyDate = (key, value) => {
+    if (key === 'payment_date') {
+      if (value && value != '-') {
+        return moment(value).format('MMMM Do YYYY, h:mm:ss a');
+      }
+    }
+    return value;
+  };
+
+  const handleTeamInfoDownload = async () => {
+    setIsLoading(true);
+    let url = window.location.protocol + '//' + window.location.host;
+    if (process.env.NODE_ENV === 'development') url = 'http://localhost:5000';
+    window.location = `${url}/api/v1/admin/download-team`;
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    axios.get('/api/v1/admin/team-file-xls').then((res) => {
-      const { success, teams } = res.data;
-      setIsLoading(false);
-      if (success) {
-        setTeams(teams);
-      } else {
-      }
-    });
+    axios
+      .get('/api/v1/admin/team-file-xlsx')
+      .then((res) => {
+        const { success, teams } = res.data;
+        setIsLoading(false);
+        if (success) setTeams(teams);
+        else setTeams([]);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setTeams([]);
+      });
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -172,7 +200,7 @@ const Teams = (props) => {
                         fontWeight: '700',
                         textTransform: 'lowercase',
                       }}
-                    >{`"teams.xls"`}</span>
+                    >{`"teams.xlsx"`}</span>
                     File
                   </Button>
                 </label>
@@ -191,6 +219,20 @@ const Teams = (props) => {
                 )}
               </div>
             </form>
+            {teams.length != 0 && (
+              <div style={{ textAlign: 'right', marginTop: '10px' }}>
+                <Button
+                  variant="contained"
+                  component="span"
+                  className={classes.button}
+                  startIcon={<CloudDownloadIcon />}
+                  style={{ fontSize: 17 }}
+                  onClick={handleTeamInfoDownload}
+                >
+                  Download Team Informations
+                </Button>
+              </div>
+            )}
             {fileError && (
               <Alert
                 severity="error"
@@ -233,7 +275,10 @@ const Teams = (props) => {
                               key={row.team}
                             >
                               {columns.map((column) => {
-                                const value = row[column.id];
+                                const value = modifyDate(
+                                  column.id,
+                                  row[column.id]
+                                );
                                 return (
                                   <TableCell
                                     key={column.id}

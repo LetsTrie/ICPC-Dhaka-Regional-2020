@@ -126,6 +126,7 @@ button.MuiButtonBase-root:active {
 
 .TeamInformations .TeamDetails {
   padding: 2rem;
+  max-width: 60%;
 }
 
 @media (max-width: 800px) {
@@ -158,6 +159,10 @@ button.MuiButtonBase-root:active {
   font-weight: 700;
   font-size: 25px;
   letter-spacing: 0.1;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+              -ms-grid-row-align: center;
+          align-self: center;
 }
 
 .TeamInformations .TeamDetails .td p:last-child {

@@ -9,27 +9,28 @@ const urlSlug = (url) =>
 
 exports.parseFile = async () => {
   try {
-    let result = excelToJson({
-      sourceFile: path.join(__dirname, '..', 'uploads', 'teams.xls'),
-    }).allTeamsTable;
-    let teams = [];
+    let sourceFile = path.join(__dirname, '..', 'uploads', 'teams.xlsx');
+    let result = excelToJson({ sourceFile })['Sheet1'];
+
+    const keys = Object.values(result[0]).map((k) => k.split(' ').join('_'));
+    const infos = result.slice(1);
+
     const allTeamsFromDb = await Payment.find({});
     let mapping = {};
-    for (let t of allTeamsFromDb) mapping[t.team] = 1;
-  
-    for (let i = 1; i < result.length; i++) {
-      teams.push({
-        teamId: urlSlug(result[i]['C']),
-        [result[0]['C']]: result[i]['C'],
-        [result[0]['D']]: result[i]['D'],
-        [result[0]['E']]: result[i]['E'],
-        [result[0]['F']]: result[i]['F'],
-        'Payment Status': mapping[result[i]['C']] ? 'Paid' : 'Not Paid Yet',
-      });
+    for (let t of allTeamsFromDb) mapping[t.Team_Name] = 1;
+
+    let teams = [];
+    for (let i = 0; i < infos.length; i++) {
+      let team = {};
+      let values = Object.values(infos[i]);
+      for (let j = 0; j < keys.length; j++) team[keys[j]] = values[j];
+      team['payment_status'] = 'Not Paid Yet';
+      if (mapping[team.Team_Name]) team['payment_status'] = 'Paid';
+      teams.push(team);
     }
-    teams.sort((a, b) => a.Team > b.Team);
+    teams.sort((a, b) => a.University > b.University);
     return teams;
   } catch (error) {
-    return null
+    return null;
   }
 };

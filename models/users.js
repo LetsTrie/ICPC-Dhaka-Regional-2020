@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const User = mongoose.Schema({
   teamName: String,
@@ -7,15 +7,17 @@ const User = mongoose.Schema({
   university: String,
   email: String,
   password: String,
-  membersInfo: [{
+  membersInfo: [
+    {
       memberFirstName: String,
       memberLastName: String,
       memberYear: String,
       memberSemester: String,
       memberEmail: String,
       tshirtSize: String,
-      image: String
-    }]
-})
+      image: String,
+    },
+  ],
+});
 
-module.exports = mongoose.model('users', User)
+module.exports = mongoose.model('users', User);

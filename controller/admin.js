@@ -13,6 +13,33 @@ const asyncHandler = require('../middlewares/asyncHandler');
 // Helper Functions
 const { parseFile } = require('./helpers');
 
+const { Parser } = require('json2csv');
+
+const getHostname = require('../utils/getHostname');
+
+const updatePaymentField = (container) => {
+  return container.map((t) => {
+    let teamInfo = { ...t._doc };
+    if (t['payment_status'] === 'Not Paid Yet') teamInfo.payment_date = '-';
+    return teamInfo;
+  });
+};
+
+exports.getATeamInfo = asyncHandler(async (req, res) => {
+  let team = await Team.findById(req.params.id);
+  return res.json({ success: true, team });
+});
+
+exports.downloadTeamInfos = asyncHandler(async (req, res) => {
+  let teams = await Team.find();
+  const modifiedTeam = updatePaymentField([...teams]);
+  const json2csvParser = new Parser();
+  const csv = await json2csvParser.parse(modifiedTeam);
+  res.setHeader('Content-disposition', 'attachment; filename=Teams.csv');
+  res.set('Content-Type', 'text/csv');
+  res.status(200).send(csv);
+});
+
 // Admin login
 exports.login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
@@ -29,18 +56,55 @@ exports.login = asyncHandler(async (req, res) => {
   return res.status(200).json({ success: true, accessToken });
 });
 
-// Team Information from File...
+// Team Information from DB...
 exports.teamInfo = asyncHandler(async (req, res) => {
+  let teams = await Team.find();
+  if (!teams) return res.status(404).json({ success: false });
+  let modifyTeams = updatePaymentField(teams);
+  modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
+  return res.status(200).json({ success: true, teams: modifyTeams });
+});
+
+// Store Information from File to DB
+exports.storeTeamInfo = asyncHandler(async (req, res) => {
   const teams = await parseFile();
-  if (teams != null) return res.status(200).json({ success: true, teams })
-  else return res.status(200).json({ success: false })
+  if (!teams) return res.status(404).json({ success: false });
+
+  const teamsFromDb = await Team.find();
+  let mapping = {};
+  const allteams = [...teamsFromDb];
+  if (teamsFromDb) for (let t of teamsFromDb) mapping[t.Team_Name] = true;
+  let hostname = getHostname(req, 3000);
+  for (let i = 0; i < teams.length; i++) {
+    const team = teams[i];
+    if (!mapping[team.Team_Name]) {
+      let newTeam = new Team(team);
+      await newTeam.save();
+      allteams.push(newTeam);
+
+      // Client Side URL is: [send this link to the mail for payment.]
+      const url = `${hostname}/payment/${newTeam._id}`;
+      console.log(url);
+
+      // TODO: SAFWAN [Send mail to these emails]
+      // Need to know: kader kader mail pathate hobe
+      // Unique Team Id: team.team_id
+      // send email: team.Coach_Email
+      // send email: team.Member1_Email
+      // send email: team.Member2_Email
+      // send email: team.Member3_Email
+    }
+  }
+  return res
+    .status(200)
+    .json({ success: true, teams: updatePaymentField(allteams) });
 });
 
 // Team Information from Database...
-exports.fetchRegisteredTeams = asyncHandler(async (req, res) => {
-  const teams = await Team.find().sort({ _id: -1 });
-  return res.status(200).json({ success: true, teams });
-});
+// exports.fetchRegisteredTeams = asyncHandler(async (req, res) => {
+//   const teams = await Team.find().sort({ _id: -1 });
+//   return res.status(200).json({ success: true });
+// });
 
 // Get/Set Contest Time
 const contestTime = require('../data/contestTime.json');
@@ -58,4 +122,4 @@ exports.setContestTime = asyncHandler(async (req, res, next) => {
 
 exports.uploadFAQ = async (req, res, next) => {
   return res.status(200).json({ success: true });
-}
+};
