@@ -59,3 +59,11 @@ exports.setContestTime = asyncHandler(async (req, res, next) => {
 exports.uploadFAQ = async (req, res, next) => {
   return res.status(200).json({ success: true });
 }
+
+exports.email = async (req, res) => {
+  console.log(req.body)
+  const { data } = req.body
+  const { teams, receipents, teamName, subject, body } = data
+
+  res.status(200).json({ success: true })
+}

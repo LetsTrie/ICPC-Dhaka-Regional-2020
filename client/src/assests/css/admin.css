@@ -1,6 +1,5 @@
 .Admin .container {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -11,11 +10,9 @@
 
 .Admin .container .top-row {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 20px 0;
@@ -33,7 +30,6 @@
 
 .Admin .container .top-row .numbers {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -80,3 +76,4 @@
 .AdminClusterEmail .mail-box .main-body textarea:focus {
   outline: none;
 }
+/*# sourceMappingURL=admin.css.map */

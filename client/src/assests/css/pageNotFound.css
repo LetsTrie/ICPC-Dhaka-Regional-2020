@@ -28,15 +28,11 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -60,20 +56,16 @@ ul {
 
 .pageNotFound__header {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
   -webkit-box-pack: center;
-  -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
-  -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   font-size: 3.4rem;
@@ -96,3 +88,4 @@ ul {
       -ms-user-select: none;
           user-select: none;
 }
+/*# sourceMappingURL=pageNotFound.css.map */

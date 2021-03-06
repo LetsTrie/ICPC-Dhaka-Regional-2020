@@ -70,4 +70,6 @@ faqStore = multer({ storage }).single('faq')
 router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ)
 // Get request handled in controller/contact.js
 
+router.post('/email', C.email)
+
 module.exports = router;

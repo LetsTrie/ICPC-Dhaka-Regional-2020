@@ -28,15 +28,11 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -80,7 +76,6 @@ ul {
 
 .DateTimeContainer {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -98,3 +93,4 @@ ul {
   font-size: 18px;
   font-weight: 500;
 }
+/*# sourceMappingURL=adminCustomization.css.map */

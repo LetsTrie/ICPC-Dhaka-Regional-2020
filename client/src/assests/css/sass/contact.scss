@@ -226,3 +226,138 @@
     }
   }
 }
+
+
+/* -- Admin Emails -- */
+
+.EmailBox {
+  padding: 50px;
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
+  .EmailPalette {
+    background: #fff;
+    width: 50%;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px 2px #ccc;
+
+    @media (max-width: 1350px) {
+      width: 70%;
+    }
+
+    @media (max-width: 900px) {
+      width: 95%;
+    }
+
+    .EmailContents {
+      width: 70%;
+      margin: auto;
+      padding-top: 10px;
+      padding-bottom: 50px;
+      @media (max-width: 600px) {
+        width: 100%;
+      }
+      .flex-parent {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 600px) {
+          flex-direction: column;
+          margin: auto;
+          margin-top: 20px;
+        }
+        .flex-child {
+          width: 40%;
+          @media (max-width: 600px) {
+            margin: auto;
+            width: 90%;
+            margin-top: 15px;
+          }
+          .title {
+            h3 {
+              font-size: 20px;
+              color: #0fa06f;
+              @media (max-width: 600px) {
+                font-size: 15px;
+              }
+            }
+          }
+          .select-box {
+            margin-top: 20px;
+            @media (max-width: 600px) {
+              margin-top: 10px;
+            }
+            select {
+              padding: 15px;
+              cursor: pointer;
+              background-color: #fff;
+              width: 100%;
+              font-size: 18px;
+              border: 1px solid #ccc;
+              border-radius: 10px;
+              @media (max-width: 600px) {
+                padding: 10px;
+                font-size: 13.5px;
+              }
+            }
+          }
+        }
+      }
+
+      .single-parent {
+        width: 100%;
+        @media (max-width: 600px) {
+          width: 90%;
+          margin: auto;
+        }
+        .single-child {
+          margin-top: 40px;
+          .title {
+            h3 {
+              font-size: 20px;
+              color: #0fa06f;
+            }
+          }
+          .text-box {
+            .TextField {
+              width: 100%;
+            }
+            textarea {
+              width: 100%;
+              padding: 10px;
+              background-color: #fff;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+            }
+          }
+        }
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 1.1rem 2.5rem;
+        font-weight: 700;
+        font-size: 2.2rem;
+        border: none;
+        outline: none;
+        background: linear-gradient(to right, #7ed56f, #28b485);
+        color: white;
+        // border: 1px solid #90db83;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:active,
+        &:focus,
+        &:visited {
+          outline: none;
+          border: none;
+        }
+      }
+    }
+  }
+}
