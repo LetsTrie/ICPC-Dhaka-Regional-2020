@@ -17,7 +17,7 @@ const ImportantInfos = () => {
   }, []);
 
   return (
-    <div className="importantInfosWrappers">
+    <div className="importantInfosWrappers" id="">
       <div className="important_infos">
         <div
           className="flex_child"
@@ -28,26 +28,9 @@ const ImportantInfos = () => {
             <p> Latest Information </p>
           </div>
           <div className="flex_child_list">
-            <a href="https://icpc.global/">Preliminary contest registration started</a>
-            {/* <a
-              onClick={(e) =>
-                redirectFiles(e, '/informations-for-participants.pdf')
-              }
-            >
-              Contest Guideline
-            </a>
-            <a onClick={(e) => redirectFiles(e, '/program-schedule.pdf')}>
-              Program Schedule
-            </a>
-
-            <a
-              onClick={(e) =>
-                redirectFiles(e, '/rules-of-icpc-dhaka-regional.pdf')
-              }
-            >
-              ICPC Regional Rules for 2020
-            </a>
-            <a onClick={(e) => redirectFiles(e, '/payment.pdf')}>Payment</a> */}
+            <ul>
+              <li>Preliminary contest registration started.</li>
+            </ul>
           </div>
         </div>
         <div

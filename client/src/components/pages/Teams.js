@@ -18,25 +18,20 @@ import Loader from '../ui/Loader';
 
 const columns = [
   { id: 'Serial', label: 'Serial', minWidth: 100 },
-  { id: 'Team', label: 'Team', minWidth: 170 },
+  { id: 'Team_Name', label: 'Team', minWidth: 170 },
   {
     id: 'Country',
     label: 'Country',
     minWidth: 170,
   },
   {
-    id: 'Institution',
+    id: 'University',
     label: 'Institution',
     minWidth: 170,
   },
   {
     id: 'Coach',
     label: 'Coach',
-    minWidth: 170,
-  },
-  {
-    id: 'Payment Status',
-    label: 'Payment Status',
     minWidth: 170,
   },
 ];
@@ -68,16 +63,20 @@ const CustomTableCell = ({ columns, row }) => {
     const value = row[column.id];
     if (column.id === 'Payment Status') {
       if (value === 'Not Paid Yet') {
+        console.log(
+          `/payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}`
+        );
         return (
           <TableCell key={column.id} align={'center'} style={{ fontSize: 18 }}>
-            <Button variant="contained" color="secondary">
+            {/* <Button variant="contained" color="secondary">
               <Link
                 to={`/payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}`}
                 style={{ textDecoration: 'none', color: 'black' }}
               >
                 Proceed to pay
               </Link>
-            </Button>
+            </Button> */}
+            -
           </TableCell>
         );
       }
@@ -102,7 +101,7 @@ const Teams = (props) => {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get('/api/v1/admin/team-file-xls').then((res) => {
+    axios.get('/api/v1/admin/team-file-xlsx').then((res) => {
       const { success, teams } = res.data;
       setIsLoading(false);
       if (success) {
@@ -124,20 +123,22 @@ const Teams = (props) => {
   return (
     <div className="registeredTeamsWrapper">
       <Header />
-        <div className="registeredTeams__header" style={{ userSelect: 'none' }}>
-          <h1> Registered Teams </h1>
-          <h4> (For preliminary) </h4>
-          <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}>
-            If you don't find your team, please wait. It'll be updated very
-            soon.
-          </p>
-        </div>
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontWeight: 'lighter', fontSize: 32, paddingTop: 30 }}>
-            Payment Procedure will start in a few days.
-          </h1>
-        </div>
-        {/* <div className="registeredTeams__table">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div
+            className="registeredTeams__header"
+            style={{ userSelect: 'none' }}
+          >
+            <h1> Registered Teams </h1>
+            <h4> (For preliminary) </h4>
+            <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}>
+              If you don't find your team, please wait. It'll be updated very
+              soon.
+            </p>
+          </div>
+          <div className="registeredTeams__table">
             {error && (
               <Alert
                 severity="error"
@@ -205,7 +206,8 @@ const Teams = (props) => {
               </Paper>
             )}
           </div>
-         */}
+        </>
+      )}
     </div>
   );
 };

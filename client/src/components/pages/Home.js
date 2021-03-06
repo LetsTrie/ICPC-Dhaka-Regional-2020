@@ -48,11 +48,8 @@ function Home() {
             <h1>ICPC Dhaka Regional 2020</h1>
           </div>
           <div className="Home__banner_text-secondary">
-            <h3>
-              Organized by{' '}
-              <span>Department of Computer Science and Engineering</span>
-            </h3>
-
+            <h2>Organized by</h2>
+            <h3>Department of Computer Science and Engineering</h3>
             <h5>University of Dhaka</h5>
           </div>
           <Countdown />
@@ -70,6 +67,14 @@ function Home() {
               onClick={() => showFile('/program-schedule.pdf')}
             >
               Program Schedule
+            </Button>
+
+            <Button
+              variant="contained"
+              className={classes.root}
+              onClick={() => (window.location = '#importantDatesId')}
+            >
+              Important Date
             </Button>
           </div>
         </div>

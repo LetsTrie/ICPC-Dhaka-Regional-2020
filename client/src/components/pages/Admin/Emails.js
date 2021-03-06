@@ -11,6 +11,7 @@ import Loader from '../../ui/Loader';
 import AdminHeader from '../../ui/AdminHeader'
 import TextField from '@material-ui/core/TextField'
 import axios from 'axios';
+import Autocomplete from 'react-autocomplete'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -29,14 +30,34 @@ function ContactUs(props) {
 const [state, setState] = useState({
   teams: '',
   receipents: '',
-  teamName: '',
   subject: '',
   body: ''
 })
 
-const [singleTeam, setSingleTeam] = useState(false)
+const [teamName, setTeamName] = useState('')
 
-const [formSuccess, setFormSuccess] = useState(null)
+const [singleTeam, setSingleTeam] = useState(true)
+
+const [alert, setAlert] = useState({
+  visible: false,
+  msg: ''
+})
+
+const [Teams, setTeams] = useState(null)
+
+useEffect(() => {
+  if (Teams == null) {
+    const config = {
+      headers: {
+        "x-auth-token": localStorage.getItem('token')
+      }
+    }
+    axios.get('/api/v1/admin/getTeams', config).then(res => {
+      const { teams } = res.data
+      setTeams(teams)
+    })
+  } 
+}, [])
 
   // Dispatch
 const dispatch = useDispatch();
@@ -49,12 +70,21 @@ const handleChanges = e => {
 
 const handleSubmit = async e => {
   e.preventDefault()
+
+  let temp = { ...alert }
+  temp.visible = true
+  temp.msg = 'Email sending in progress. Please wait...'
+  setAlert(temp)
+
+  if (state.teams == 'Single team') {
+    state['teamName'] = teamName
+  }
+
   console.log(state)
   const headers = { 'Content-Type': 'application/json' }
   const res = await axios.post('/api/v1/admin/email', { data: state }, headers)
 
   if (res.data.success) {
-    setFormSuccess(true)
     let temp = {...state}
     temp = {
       teams: '',
@@ -63,9 +93,17 @@ const handleSubmit = async e => {
       subject: '',
       body: ''
     }
+
+    let tempAlert = { ...alert }
+    tempAlert.visible = true
+    tempAlert.msg = res.data.msg
+    setAlert(tempAlert)
+
     setState(temp)
     setTimeout(() => {
-      setFormSuccess(false)
+      tempAlert = { ...alert }
+      // tempAlert.visible = false
+      setAlert(tempAlert)
     }, 3000)
   }
 }
@@ -96,7 +134,7 @@ useEffect(() => {
 
               <form onSubmit={handleSubmit}>
               {
-                formSuccess && 
+                alert.visible && 
                   <Alert severity="success" style={{marginTop: '1.2rem'}}>
                     Email sent successfully. 
                 </Alert>
@@ -130,17 +168,23 @@ useEffect(() => {
               </div>
 
               {
-                singleTeam ? <div className='flex-parent'>
+                singleTeam && Teams != null ? <div className='flex-parent'>
 
                 <div className='flex-child'>
                   <div className='title'><h3>Select team name</h3></div>
                   <div className='select-box'>
-                    <select name='teamName'onChange={handleChanges} value={state.teamName} required>
-                    <option value='' disabled > Select team name</option>
-                      <option>All teams</option>
-                      <option>Unpaid teams</option>
-                      <option>Paid teams</option>
-                    </select>
+                  <Autocomplete
+                    getItemValue={(item) => item.label}
+                    items={Teams.map(team => ({ label: team.Team_Name   }))}
+                    renderItem={(item, isHighlighted) =>
+                      <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        {item.label}
+                      </div>
+                    }
+                    value={teamName}
+                    onChange={e => setTeamName(e.target.value)}
+                    onSelect={val => setTeamName(val)}
+                  />
                   </div>
                 </div>
 

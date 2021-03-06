@@ -8,11 +8,11 @@ let storage = multer.diskStorage({
   destination: function (req, res, cb) {
     cb(null, 'uploads');
   },
-  filename: function(req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + '-' + file.originalname)
-  }
-})
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
+  },
+});
 
 var registerUpload = multer({ storage }).fields([
   { name: 'coachDp' },
@@ -33,6 +33,6 @@ router.post('/login', C.teamLogin);
 router.get('/teamInformation', M.verifyToken, C.teamInformation);
 router.post('/update-password', M.verifyToken, C.updatePassword);
 
-router.get('/teamPaymentInitiate', C.teamPaymentInitiate);
+router.get('/teamPaymentInitiate/:id', C.teamPaymentInitiate);
 
 module.exports = router;

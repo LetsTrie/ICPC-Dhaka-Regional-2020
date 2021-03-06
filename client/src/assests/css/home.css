@@ -49,6 +49,11 @@ ul {
   text-align: center;
 }
 
+button.MuiButtonBase-root:active {
+  -webkit-transform: none;
+          transform: none;
+}
+
 .Home {
   background: white;
 }
@@ -94,11 +99,12 @@ ul {
   }
 }
 
+.Home__navbar .Home__banner_text-secondary h2,
 .Home__navbar .Home__banner_text-secondary h3 {
-  font-size: 4.4rem;
-  letter-spacing: 1.5px;
+  font-size: 4rem;
+  letter-spacing: 1.6px;
   font-weight: 400;
-  padding-bottom: 2rem;
+  padding-bottom: 1.3rem;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -107,13 +113,25 @@ ul {
 }
 
 @media (max-width: 1200px) {
+  .Home__navbar .Home__banner_text-secondary h2,
   .Home__navbar .Home__banner_text-secondary h3 {
-    font-size: 4rem;
+    font-size: 3rem;
+  }
+}
+
+.Home__navbar .Home__banner_text-secondary h2 {
+  font-size: 5.5rem;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .Home__navbar .Home__banner_text-secondary h2 {
+    font-size: 3.9rem;
   }
 }
 
 .Home__navbar .Home__banner_text-secondary h5 {
-  font-size: 4.45rem;
+  font-size: 4rem;
   padding-bottom: 2.8rem;
   font-weight: 400;
 }
@@ -124,6 +142,16 @@ ul {
 
 @media (max-width: 700px) {
   .Home_banner_button button:nth-child(2) {
+    margin-left: 0;
+  }
+}
+
+.Home_banner_button button:nth-child(3) {
+  margin-left: 13px;
+}
+
+@media (max-width: 700px) {
+  .Home_banner_button button:nth-child(3) {
     margin-left: 0;
   }
 }
@@ -338,6 +366,7 @@ ul {
   background-repeat: no-repeat;
   background-size: cover;
   padding: 3rem 1rem;
+  position: relative;
 }
 
 @media (min-width: 772px) {
@@ -358,20 +387,15 @@ ul {
   padding-bottom: 2px;
 }
 
-.imp_dates .each_imp_dates p:hover {
-  font-weight: 400;
-}
-
 .imp_dates .each_imp_dates p:first-child {
-  font-weight: 400;
-  font-size: 1.6rem;
-  color: #333;
+  font-size: 1.4rem;
 }
 
 .imp_dates .each_imp_dates p:last-child {
-  font-size: 1.4rem;
-  color: #555;
+  font-size: 1.65rem;
+  color: #000;
   padding-bottom: 6px;
+  font-weight: 400;
 }
 
 .important_infos {
@@ -444,6 +468,15 @@ ul {
 .important_infos .flex_child_list {
   padding: 12px 25px 25px 25px;
   min-height: 235px;
+}
+
+.important_infos .flex_child_list ul {
+  padding-left: 10px;
+}
+
+.important_infos .flex_child_list ul li {
+  list-style-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='-1 -1 2 2'><circle r='1' /></svg>");
+  font-size: 1.6rem;
 }
 
 .important_infos .flex_child_list a {
@@ -729,5 +762,15 @@ ul {
 
 .mainIcpcLogo {
   display: none;
+}
+
+#importantSectionId {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100px;
+  background-color: 'red';
+  color: white;
 }
 /*# sourceMappingURL=home.css.map */

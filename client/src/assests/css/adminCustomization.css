@@ -49,6 +49,11 @@ ul {
   text-align: center;
 }
 
+button.MuiButtonBase-root:active {
+  -webkit-transform: none;
+          transform: none;
+}
+
 .container {
   padding: 20px;
   padding-top: 23px;

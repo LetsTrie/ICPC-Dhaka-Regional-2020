@@ -16,11 +16,15 @@ let storage = multer.diskStorage({
 let teamInfoFile = multer({ storage }).single('file');
 
 router.post('/login', C.login);
-
-// Teams
-router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
-router.get('/team-file-xls', C.teamInfo);
-router.post('/team-file-xls-upload', [M.AdminAccess, teamInfoFile], C.teamInfo);
+// router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
+router.get('/team-file-xlsx', C.teamInfo);
+router.post(
+  '/team-file-xlsx-upload',
+  [M.AdminAccess, teamInfoFile],
+  C.storeTeamInfo
+);
+router.get('/download-team', C.downloadTeamInfos);
+router.get('/teamInfo/:id', C.getATeamInfo);
 
 // Committee
 const committee = [
@@ -65,11 +69,11 @@ router.get('/contest-time', C.getContestTime);
 router.post('/contest-time', M.AdminAccess, C.setContestTime);
 
 // FAQ file
-faqStore = multer({ storage }).single('faq')
+faqStore = multer({ storage }).single('faq');
 // Post the faq.xls file
-router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ)
+router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ);
 // Get request handled in controller/contact.js
 
 router.post('/email', C.email)
-
+router.get('/getTeams', C.getTeams)
 module.exports = router;

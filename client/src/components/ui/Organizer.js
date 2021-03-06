@@ -39,6 +39,7 @@ const Organizer = () => {
                 href="https://www.du.ac.bd/"
                 target="_blank"
                 rel="noopener noreferrer"
+                id="importantDatesId"
               >
                 Learn more →
               </a>

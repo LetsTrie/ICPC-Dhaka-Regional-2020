@@ -51,7 +51,7 @@ exports.AdminAccess = async (req, res, next) => {
 
     try {
       const decoded = await jwt.verify(accessToken, process.env.JWT_SECRET);
-      
+
       if (decoded.id !== adminCred.id) {
         return res.status(401).json({
           success: false,
