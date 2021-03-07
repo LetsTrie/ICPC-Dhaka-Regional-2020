@@ -28,15 +28,11 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -55,8 +51,6 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
-      -ms-transform: none;
-       -o-transform: none;
           transform: none;
 }
 
@@ -100,7 +94,6 @@ button.MuiButtonBase-root:active {
 
 .TeamInformations {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   border: 1px solid #c5c5c5;
@@ -118,7 +111,6 @@ button.MuiButtonBase-root:active {
   .TeamInformations {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
-    -webkit-flex-direction: column-reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
   }
@@ -126,6 +118,7 @@ button.MuiButtonBase-root:active {
 
 .TeamInformations .TeamDetails {
   padding: 2rem;
+  max-width: 60%;
 }
 
 @media (max-width: 800px) {
@@ -138,7 +131,6 @@ button.MuiButtonBase-root:active {
   padding: 0;
   margin: 0;
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   padding-bottom: 1.35rem;
@@ -148,7 +140,6 @@ button.MuiButtonBase-root:active {
   .TeamInformations .TeamDetails .td {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -158,35 +149,34 @@ button.MuiButtonBase-root:active {
   font-weight: 700;
   font-size: 25px;
   letter-spacing: 0.1;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .TeamInformations .TeamDetails .td p:last-child {
-  -webkit-align-self: flex-end;
-      -ms-flex-item-align: end;
-          align-self: flex-end;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
   font-size: 20px;
   padding-left: 1rem;
 }
 
 @media (max-width: 500px) {
   .TeamInformations .TeamDetails .td p:last-child {
-    -webkit-align-self: flex-start;
-        -ms-flex-item-align: start;
-            align-self: flex-start;
+    -ms-flex-item-align: start;
+        align-self: flex-start;
     padding-left: 0rem;
   }
 }
 
 .RegFee {
   -webkit-box-flex: 1;
-  -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;
   text-align: center;
-  -webkit-align-self: center;
-      -ms-flex-item-align: center;
-              -ms-grid-row-align: center;
-          align-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
   font-size: 30px;
 }
 
@@ -219,3 +209,4 @@ button.MuiButtonBase-root:active {
     font-size: 20px;
   }
 }
+/*# sourceMappingURL=paymentConfirm.css.map */

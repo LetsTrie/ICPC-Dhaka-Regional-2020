@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import RegisteredTeams from './components/pages/Admin/Teams';
 import AdminCustomization from './components/pages/Admin/Customization';
 import AdminFAQ from './components/pages/Admin/FAQ';
+import AdminEmails from './components/pages/Admin/Emails'
 
 import FailedPayment from './components/pages/FailedPayment';
 import CancelPayment from './components/pages/CancelPayment';
@@ -57,6 +58,11 @@ function App(props) {
                 exact
                 path="/admin/faq"
                 component={adminRoutes(AdminFAQ)}
+              />
+              <Route
+                exact
+                path="/admin/emails"
+                component={adminRoutes(AdminEmails)}
               />
               <Route component={NotFound} />
             </Switch>

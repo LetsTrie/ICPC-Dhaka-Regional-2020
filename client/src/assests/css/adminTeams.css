@@ -28,15 +28,11 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -55,8 +51,6 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
-      -ms-transform: none;
-       -o-transform: none;
           transform: none;
 }
 
@@ -113,3 +107,4 @@ button.MuiButtonBase-root:active {
     width: 98%;
   }
 }
+/*# sourceMappingURL=adminTeams.css.map */

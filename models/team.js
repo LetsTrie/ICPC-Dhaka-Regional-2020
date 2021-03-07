@@ -1,96 +1,29 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
 const teamSchema = Schema(
   {
-    team: {
+    Team_Name: String,
+    University: String,
+    University_Short_Form: String,
+    Country: String,
+    Coach: String,
+    Coach_Email: String,
+    Member1: String,
+    Member1_Email: String,
+    Member2: String,
+    Member2_Email: String,
+    Member3: String,
+    Member3_Email: String,
+    team_id: String,
+    payment_status: {
       type: String,
-      required: true,
+      default: 'Not Paid',
     },
-    university: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    transactionId: {
-      type: String,
-      required: true,
-    },
-    transactionSuccess: {
-      type: Boolean,
-      required: false,
-    },
-    coach: {
-      firstname: {
-        type: String,
-        required: true,
-      },
-      lastname: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-      },
-      affiliation: {
-        type: String,
-        required: true,
-      },
-      designation: {
-        type: String,
-        required: true,
-      },
-      tshirtSize: {
-        type: String,
-        required: true,
-      },
-      dp: {
-        type: String,
-        required: true,
-      },
-    },
-    participants: [
-      {
-        firstname: {
-          type: String,
-          required: true,
-        },
-        lastname: {
-          type: String,
-          required: true,
-        },
-        email: {
-          type: String,
-          required: true,
-        },
-        year: {
-          type: String,
-          required: true,
-        },
-        semester: {
-          type: String,
-          required: true,
-        },
-        tshirtSize: {
-          type: String,
-          required: true,
-        },
-        affiliation: {
-          type: String,
-          required: true,
-        },
-        dp: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+    payment_date: Date,
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('teams', teamSchema);
+const Team = mongoose.model('teams', teamSchema);
+
+module.exports = Team;

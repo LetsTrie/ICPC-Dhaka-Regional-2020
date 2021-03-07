@@ -30,3 +30,31 @@ exports.sendEmail = async (address, data) => {
   res =  await Transport.sendMail(mailOptions);
   return query_id
 };
+
+const sendCustomMail = async (address, subject, body) => {
+  let mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: address,
+    subject: subject,
+    html: body,
+  };
+  await Transport.sendMail(mailOptions);
+  return 
+};
+
+exports.sendTeamEmail = async (team, data) => {
+  const { subject, body } = data
+  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
+  // const emails = ['safwan.du16@gmail.com', 'ifsan75@gmail.com', 'delowarfivdb@gmail.com']
+  // const emails = team
+  let promises = []
+  for (let email of emails) {
+    promise = new Promise(async(resolve, reject) => {
+       await sendCustomMail(email, subject, body)
+       resolve(true)
+    })
+    promises.push(promise)
+  }
+
+  Promise.all(promises).then((data) => { console.log(data) })
+}

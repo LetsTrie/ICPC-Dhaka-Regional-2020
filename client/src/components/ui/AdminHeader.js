@@ -51,6 +51,10 @@ const navMenu = [
     name: 'Customization',
     link: '/admin/customize',
   },
+  {
+    name: 'Emails',
+    link: '/admin/emails',
+  },
 ];
 
 const useStyles = makeStyles((theme) => ({
