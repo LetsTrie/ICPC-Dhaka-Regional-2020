@@ -134,7 +134,7 @@ exports.uploadFAQ = async (req, res, next) => {
 
 exports.email = async (req, res) => {
   const { data } = req.body
-  const { teams, receipents, teamName, subject, body } = data
+  const { teams, teamName, subject, body } = data
 
   if (teams == 'Single team') {
     const team = await Team.findOne({ Team_Name: teamName })

@@ -43,14 +43,15 @@ const sendCustomMail = async (address, subject, body) => {
 };
 
 exports.sendTeamEmail = async (team, data) => {
-  const { subject, body } = data
+  let { subject, body } = data
   let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  // const emails = ['safwan.du16@gmail.com', 'ifsan75@gmail.com', 'delowarfivdb@gmail.com']
-  // const emails = team
+  let names = [team.Coach, team.Member1, team.Member2, team.Member3]
+  
   let promises = []
-  for (let email of emails) {
+  for (let i=0; i<emails.length; i++) {
+    const replacedBody = body.replace('<team>', team.Team_Name).replace('<name>', names[i])
     promise = new Promise(async(resolve, reject) => {
-       await sendCustomMail(email, subject, body)
+       await sendCustomMail(emails[i], subject, replacedBody)
        resolve(true)
     })
     promises.push(promise)

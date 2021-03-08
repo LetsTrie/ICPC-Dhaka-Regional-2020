@@ -79,7 +79,6 @@ const handleSubmit = async e => {
   if (state.teams == 'Single team') {
     state['teamName'] = teamName
   }
-
   console.log(state)
   const headers = { 'Content-Type': 'application/json' }
   const res = await axios.post('/api/v1/admin/email', { data: state }, headers)
@@ -88,7 +87,6 @@ const handleSubmit = async e => {
     let temp = {...state}
     temp = {
       teams: '',
-      receipents: '',
       teamName: '',
       subject: '',
       body: ''
@@ -155,7 +153,7 @@ useEffect(() => {
                 </div>
 
                 <div className='flex-child'>
-                  <div className='title'><h3>Select receipents</h3></div>
+                  {/* <div className='title'><h3>Select receipents</h3></div>
                   <div className='select-box'>
                     <select name='receipents' onChange={handleChanges} value={state.receipents} required>
                     <option value='' disabled > Select receipents</option>
@@ -163,14 +161,10 @@ useEffect(() => {
                       <option value='Coaches only'>Coaches only</option>
                       <option value='Members only'>Members only</option>
                     </select>
-                  </div>
-                </div>
-              </div>
+                  </div> */}
 
-              {
-                singleTeam && Teams != null ? <div className='flex-parent'>
-
-                <div className='flex-child'>
+{
+                singleTeam && Teams != null ? (<>
                   <div className='title'><h3>Select team name</h3></div>
                   <div className='select-box'>
                   <Autocomplete
@@ -185,11 +179,11 @@ useEffect(() => {
                     onChange={e => setTeamName(e.target.value)}
                     onSelect={val => setTeamName(val)}
                   />
-                  </div>
-                </div>
-
-              </div> : <div></div>
+                  </div></>) : <div></div>
               }
+
+                </div>
+              </div>
 
               <div className='single-parent'>
 
@@ -204,6 +198,7 @@ useEffect(() => {
 
                 <div className='single-child'>
                   {/* <div className='title'><h3>Subject</h3></div> */}
+                  <div style={{fontSize: '12px', color: '#333', padding: '7.5px'}}>{`Use <team> and <name> as placeholders`}</div>
                   <div className='text-box'><textarea rows='10' name='body' onChange={handleChanges} value={state.body} required /></div>
                 </div>
                 
