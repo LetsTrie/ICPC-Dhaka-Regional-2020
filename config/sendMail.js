@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const getHostname = require('../utils/getHostname')
 
 const Transport = nodemailer.createTransport({
   // name: 'gmail.com',
@@ -33,29 +34,40 @@ exports.sendEmail = async (address, data) => {
 
 const sendCustomMail = async (address, subject, body) => {
   let mailOptions = {
-    from: process.env.EMAIL_USERNAME,
+    from: 'ICPC 2020',
     to: address,
     subject: subject,
     html: body,
   };
   await Transport.sendMail(mailOptions);
-  return 
+  return
 };
 
-exports.sendTeamEmail = async (team, data) => {
+exports.sendTeamEmail = async (team, req, data) => {
   let { subject, body } = data
-  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  let names = [team.Coach, team.Member1, team.Member2, team.Member3]
-  
+  // let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
+  // let names = [team.Coach, team.Member1, team.Member2, team.Member3]
+  const hostname = getHostname(req, 3000)
+  const url = `${hostname}/payment/${team._id}`;
+
+  emails = new Array(4).fill('jecile7288@netjook.com')
+
   let promises = []
   for (let i=0; i<emails.length; i++) {
-    const replacedBody = body.replace('<team>', team.Team_Name).replace('<name>', names[i])
+    const replacedBody = body
+    // .replace('<team>', team.Team_Name)
+    // .replace('<name>', names[i])
+    // .replace('<coach>', team.Coach)
+    // .replace('<member1>', team.Member1)
+    // .replace('<member2>', team.Member2)
+    // .replace('<member3>', team.Member3)
+    // .replace('<payment_link>', url)
+    console.log(replacedBody)
     promise = new Promise(async(resolve, reject) => {
-       await sendCustomMail(emails[i], subject, replacedBody)
-       resolve(true)
+      result = await sendCustomMail(emails[i], subject, replacedBody)
     })
     promises.push(promise)
   }
 
-  Promise.all(promises).then((data) => { console.log(data) })
+  return Promise.all(promises)
 }

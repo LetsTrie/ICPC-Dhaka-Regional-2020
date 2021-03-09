@@ -100,7 +100,7 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
         subject: `ICPC Payment`,
         body: `Please click on the following link, ${url}`
       }
-      sendTeamEmail(newTeam, data)
+      sendTeamEmail(newTeam, req, data)
     }
   }
   return res
@@ -138,7 +138,8 @@ exports.email = async (req, res) => {
 
   if (teams == 'Single team') {
     const team = await Team.findOne({ Team_Name: teamName })
-    await sendTeamEmail(team, { subject, body })
+    const P = await sendTeamEmail(team, req, { subject, body })
+    console.log(P)
     res.status(200).json({ success: true, msg: 'Emails sent successfully' })
 
 } else if (teams == 'Unpaid teams') {
@@ -147,7 +148,7 @@ exports.email = async (req, res) => {
 
   for (let team of unpaidTeams) {
     const promise = new Promise((resolve, reject) => {
-      sendTeamEmail(team, {subject, body})
+      sendTeamEmail(team, req, {subject, body})
       resolve(true)
     })
     promises.push(promise)
@@ -156,13 +157,22 @@ exports.email = async (req, res) => {
   Promise.all(promises).then(data => res.status(200).json({ success: true, msg: 'Emails sent successfully' })).catch(data => res.status(200).json({ success: false, msg: 'Error sending emails' }))
 
 } else if (teams == 'Paid teams') {
-  const paidTeams = await Team.find({ payment_status: 'Paid' })
+  // const paidTeams = await Team.find({ payment_status: 'Paid' })
   const promises = []
-
+  const paidTeams = new Array(50).fill('team')
+  console.log(paidTeams)
+  let t = 0
   for (let team of paidTeams) {
     const promise = new Promise((resolve, reject) => {
-      sendTeamEmail(team, {subject, body})
-      resolve(true)
+      setTimeout(() => {
+        sendTeamEmail(team, req, {subject, body}).then(data => {
+          resolve(true)
+        }).catch(e => {
+          reject(e)
+        })
+        console.log(t)
+      }, t*30);
+      t++
     })
     promises.push(promise)
   }
@@ -176,7 +186,7 @@ exports.email = async (req, res) => {
 
   for (let team of allTeams) {
     const promise = new Promise((resolve, reject) => {
-      sendTeamEmail(team, {subject, body})
+      sendTeamEmail(team, req, {subject, body})
       resolve(true)
     })
     promises.push(promise)
