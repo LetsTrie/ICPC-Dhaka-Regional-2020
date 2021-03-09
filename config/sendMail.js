@@ -1,18 +1,19 @@
 const nodemailer = require('nodemailer');
-const getHostname = require('../utils/getHostname')
+const getHostname = require('../utils/getHostname');
 
 const Transport = nodemailer.createTransport({
-  // name: 'gmail.com',
+  pool: true,
   host: 'smtp.gmail.com',
   port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-  logger: true,
-  debug: true,
+  logger: false,
+  debug: false,
   // secureConnection: 'false',
-  secure: false,
+  // secure: false,
   // tls: {
   //   ciphers: 'SSLv3',
   //   rejectUnauthorized: false,
@@ -20,16 +21,16 @@ const Transport = nodemailer.createTransport({
 });
 
 exports.sendEmail = async (address, data) => {
-  const { name, email, category, message } = data
-  const query_id = Math.floor(1000000 + Math.random() * 9000000)
+  const { name, email, category, message } = data;
+  const query_id = Math.floor(1000000 + Math.random() * 9000000);
   let mailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: address,
     subject: `ICPC Query - ${category} - ${query_id}`,
     html: `<strong>Name:</strong> ${name}<br /><strong>Email:</strong> ${email}<br /><strong>Query:</strong> ${message}<br /><a href="mailto:${email}">Reply to ${email}</a>`,
   };
-  res =  await Transport.sendMail(mailOptions);
-  return query_id
+  res = await Transport.sendMail(mailOptions);
+  return query_id;
 };
 
 const sendCustomMail = async (address, subject, body) => {
@@ -39,35 +40,46 @@ const sendCustomMail = async (address, subject, body) => {
     subject: subject,
     html: body,
   };
-  await Transport.sendMail(mailOptions);
-  return
+  return Transport.sendMail(mailOptions);
 };
 
 exports.sendTeamEmail = async (team, req, data) => {
-  let { subject, body } = data
+  let { subject, body } = data;
   // let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
   // let names = [team.Coach, team.Member1, team.Member2, team.Member3]
-  const hostname = getHostname(req, 3000)
-  const url = `${hostname}/payment/${team._id}`;
+  // const hostname = getHostname(req, 3000);
+  // const url = `${hostname}/payment/${team._id}`;
 
-  emails = new Array(4).fill('jecile7288@netjook.com')
+  emails = new Array(4).fill('sakibkhan111296@gmail.com');
 
-  let promises = []
-  for (let i=0; i<emails.length; i++) {
-    const replacedBody = body
-    // .replace('<team>', team.Team_Name)
-    // .replace('<name>', names[i])
-    // .replace('<coach>', team.Coach)
-    // .replace('<member1>', team.Member1)
-    // .replace('<member2>', team.Member2)
-    // .replace('<member3>', team.Member3)
-    // .replace('<payment_link>', url)
-    console.log(replacedBody)
-    promise = new Promise(async(resolve, reject) => {
-      result = await sendCustomMail(emails[i], subject, replacedBody)
-    })
-    promises.push(promise)
+  // let promises = [];
+  let responses = [];
+  try {
+    for (let i = 0; i < emails.length; i++) {
+      const replacedBody = body;
+
+      const response = await sendCustomMail(emails[i], subject, replacedBody);
+      responses.push(response?.accepted[0]);
+
+      // TODO: Use regular expression. otherwise only the first one will be replaced.
+      // .replace('<team>', team.Team_Name)
+      // .replace('<name>', names[i])
+      // .replace('<coach>', team.Coach)
+      // .replace('<member1>', team.Member1)
+      // .replace('<member2>', team.Member2)
+      // .replace('<member3>', team.Member3)
+      // .replace('<payment_link>', url)
+      // console.log(replacedBody);
+      // promise = new Promise(async (resolve, reject) => {
+      //   result = await sendCustomMail(emails[i], subject, replacedBody);
+      // });
+      // promises.push(promise);
+    }
+    console.log(team);
+    // Team model e ektu update kore dite hobe j email has sent.
+  } catch (e) {
+    // console.log(e.message);
   }
-
-  return Promise.all(promises)
-}
+  Transport.close();
+  return responses;
+};

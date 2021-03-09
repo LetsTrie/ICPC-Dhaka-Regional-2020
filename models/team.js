@@ -15,9 +15,10 @@ const teamSchema = Schema(
     Member3: String,
     Member3_Email: String,
     team_id: String,
+    payment_transition_id: String,
     payment_status: {
       type: String,
-      default: 'Not Paid',
+      default: 'Not Paid Yet',
     },
     payment_date: Date,
   },
