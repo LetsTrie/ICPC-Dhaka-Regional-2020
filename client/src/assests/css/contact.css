@@ -405,6 +405,23 @@ button.MuiButtonBase-root:active {
   }
 }
 
+.EmailBox .EmailPalette .auto-suggest {
+  padding: 15px;
+  cursor: pointer;
+  background-color: #fff;
+  width: 100%;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  .EmailBox .EmailPalette .auto-suggest {
+    padding: 10px;
+    font-size: 13.5px;
+  }
+}
+
 .EmailBox .EmailPalette .EmailContents {
   width: 70%;
   margin: auto;

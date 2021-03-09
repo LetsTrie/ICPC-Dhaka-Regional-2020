@@ -12,6 +12,7 @@ import AdminHeader from '../../ui/AdminHeader'
 import TextField from '@material-ui/core/TextField'
 import axios from 'axios';
 import Autocomplete from 'react-autocomplete'
+import Autosuggest from 'react-autosuggest'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -34,8 +35,10 @@ const [state, setState] = useState({
 })
 
 const [teamName, setTeamName] = useState('')
-
+const [suggestions, setSuggestions] = useState([])
 const [singleTeam, setSingleTeam] = useState(true)
+
+// const countries = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland"]
 
 const [alert, setAlert] = useState({
   visible: false,
@@ -166,18 +169,32 @@ useEffect(() => {
                 singleTeam && Teams != null ? (<>
                   <div className='title'><h3>Select team name</h3></div>
                   <div className='select-box'>
-                  <Autocomplete
-                    getItemValue={(item) => item.label}
-                    items={Teams.map(team => ({ label: team.Team_Name   }))}
-                    renderItem={(item, isHighlighted) =>
-                      <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                        {item.label}
-                      </div>
-                    }
-                    value={teamName}
-                    onChange={e => setTeamName(e.target.value)}
-                    onSelect={val => setTeamName(val)}
+                  <Autosuggest 
+                    inputProps={{
+                      className: 'auto-suggest',
+                      placeholder: 'Type team name',
+                      autoComplete: 'junk-value',
+                      name: 'teamName',
+                      value: teamName,
+                      onChange: ( e, {newValue} ) => {
+						  setTeamName(newValue)
+					  }
+					}}
+					onSuggestionsFetchRequested = {({ value }) => {
+						if (!value) {
+							setSuggestions([])
+							return
+						}
+						setSuggestions(Teams.map(team => team.Team_Name).filter(team => team.startsWith(value)))
+					}}
+					onSuggestionsClearRequested = {() => {
+						setSuggestions([])
+					}}
+                    renderSuggestion={ suggestion => ( <div>{suggestion}</div> )}
+                    getSuggestionValue = { suggestion => suggestion }
+                    suggestions={suggestions}
                   />
+
                   </div></>) : <div></div>
               }
 
