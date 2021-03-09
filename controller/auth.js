@@ -64,7 +64,7 @@ exports.paymentIpnListener = async (req, res) => {
     subject: `ICPC Registration`,
     body: `This is to confirm that your registration has been accosmplished successfully and payment received. Thanks`,
   };
-  sendTeamEmail(team, data);
+  sendTeamEmail(team, req, data);
 
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`

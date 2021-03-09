@@ -29,7 +29,6 @@ function ContactUs(props) {
   // Initial State
 const [state, setState] = useState({
   teams: '',
-  receipents: '',
   subject: '',
   body: ''
 })
