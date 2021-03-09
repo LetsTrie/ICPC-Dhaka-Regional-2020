@@ -10,7 +10,7 @@ const Payment = require('../models/payment');
 
 const getHostname = require('../utils/getHostname');
 const SSLCommerz = require('../services/sslcommerz');
-const { sendTeamEmail } = require('../config/sendMail')
+const { sendTeamEmail } = require('../config/sendMail');
 
 let settings = {
   isSandboxMode: process.env.isSandboxMode === 'false' ? false : true,
@@ -24,6 +24,9 @@ exports.teamPaymentInitiate = async (req, res) => {
   try {
     const team = await Team.findById(req.params.id);
     if (!team) return res.send('<h1> Team not found with this ID </h1>');
+    if (team.payment_status === 'Paid') {
+      return res.send('<h1> Your payment is already completed. </h1>');
+    }
     const payload = require('../data/paymentInit')(req, team);
     const init = await sslcommerz.init_transaction(payload);
 
@@ -50,17 +53,18 @@ exports.paymentIpnListener = async (req, res) => {
     return res.send('<h1>INVALID TRANSACTION</h1>');
   }
   const team = await Team.findById(teamId);
+  team.payment_transition_id = tran_id;
   team.payment_status = 'Paid';
-  team.payment_date = new Date(Date.now());
+  team.payment_date = tran_date;
   await team.save();
 
   // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
 
   const data = {
     subject: `ICPC Registration`,
-    body: `This is to confirm that your registration has been accosmplished successfully and payment received. Thanks`
-  }
-  sendTeamEmail(team, data)
+    body: `This is to confirm that your registration has been accosmplished successfully and payment received. Thanks`,
+  };
+  sendTeamEmail(team, data);
 
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`

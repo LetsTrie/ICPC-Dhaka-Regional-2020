@@ -28,11 +28,15 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -51,6 +55,8 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
+      -ms-transform: none;
+       -o-transform: none;
           transform: none;
 }
 
@@ -81,6 +87,7 @@ button.MuiButtonBase-root:active {
 
 .DateTimeContainer {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -98,4 +105,3 @@ button.MuiButtonBase-root:active {
   font-size: 18px;
   font-weight: 500;
 }
-/*# sourceMappingURL=adminCustomization.css.map */
