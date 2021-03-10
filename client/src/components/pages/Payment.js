@@ -72,6 +72,21 @@ const Payment = ({ match }) => {
                   <p>Coach:</p>
                   <p>{team.Coach}</p>
                 </div>
+
+                <div className="td">
+                  <p>Member 1:</p>
+                  <p>{team.Member1}</p>
+                </div>
+
+                <div className="td">
+                  <p>Member 2:</p>
+                  <p>{team.Member2}</p>
+                </div>
+
+                <div className="td">
+                  <p>Member 3:</p>
+                  <p>{team.Member3}</p>
+                </div>
               </div>
 
               {!success ? (

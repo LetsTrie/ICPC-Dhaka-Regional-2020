@@ -10,7 +10,7 @@ const Payment = require('../models/payment');
 
 const getHostname = require('../utils/getHostname');
 const SSLCommerz = require('../services/sslcommerz');
-const { sendTeamEmail } = require('../config/sendMail');
+const { confirmationEmail } = require('../config/sendMail');
 
 let settings = {
   isSandboxMode: process.env.isSandboxMode === 'false' ? false : true,
@@ -61,10 +61,27 @@ exports.paymentIpnListener = async (req, res) => {
   // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
 
   const data = {
-    subject: `ICPC Registration`,
-    body: `This is to confirm that your registration has been accosmplished successfully and payment received. Thanks`,
+    subject: `ICPC Dhaka Regional 2020 payment confirmation for the
+    preliminary contest`,
+    body: `
+    
+    Dear <strong> ${team.Team_Name} </strong> Team Members, <br>
+    Thank you for making payment for participating in the preliminary contest
+    of ICPC Dhaka Regional 2020. Your place for the preliminary contest is
+    now confirmed. 
+    <br> <br>
+    Team Name: <strong> ${team.Team_Name} </strong> <br>
+    Transaction ID: <strong> ${tran_id} </strong>
+    <br><br>
+    We look forward to seeing you at the event.
+    <br><br>
+    Best regards, <br>
+    Professor Dr. Md Mustafizur Rahman <br>
+    Regional Contest Director <br>
+    ICPC Dhaka Regional 2020
+    `,
   };
-  sendTeamEmail(team, req, data);
+  await confirmationEmail(team, data);
 
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`

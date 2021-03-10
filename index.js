@@ -38,13 +38,14 @@ app.use('/api/v1', require('./index.route'));
 // Temp email route
 const { sendTeamEmail } = require('./config/sendMail');
 const Team = require('./models/team');
+const { resolve } = require('path');
 app.post('/email', async (req, res) => {
-  const paidTeams = new Array(30).fill('team').map((t, i) => `${t}-${i}`);
+  const paidTeams = await Team.find()
+  // new Array(30).fill('team').map((t, i) => `${t}-${i}`);
   const promises = [];
-
   for (let team of paidTeams) {
     promises.push({
-      teamId: '1',
+      teamId: team._id,
       promise: sendTeamEmail(team, req, {
         subject: 'subject',
         body: 'body',
@@ -55,17 +56,39 @@ app.post('/email', async (req, res) => {
     if (promises.length === index) return;
     const { teamId, promise } = promises[index];
     const re = await promise;
-    console.log(re);
-    // ei teamId diye search kore, new kisu data insert korte hobe
-    // such as, teamPaymentMailSend = true
-    // teamPaymentMailSendTime = new Date(Date.now())
-    // save in db
-    // model eo update korte hobe...
-    setTimeout(() => trigger(index + 1), 5000);
+    console.log(teamId);
+    await Team.findByIdAndUpdate(teamId, { teamPaymentMailSend: true, teamPaymentMailSendTime: new Date() })
+    setTimeout(() => trigger(index + 1), 10000);
   }
   trigger(0);
   return res.json({ success: true });
 });
+// generate dummy xls file
+app.get('/dummy-xls', async(req, res) => {
+  const {tempMail} = require('./config/sendMail')
+  await tempMail()
+  res.json('sent')
+   let promises = []
+   const email = 'jecile7288@netjook.com'
+   for (let i=0; i<300; i++) {
+     let team = {
+       Team_Name: `team-${i+1}`,
+       Coach_Email: email,
+       Member1_Email: email,
+       Member2_Email: email,
+       Member3_Email: email
+     }
+
+     let promise = new Promise((resolve, reject) => {
+      const newTeam = new Team(team)
+      newTeam.save()
+      resolve('Done!')
+    })
+     promises.push(promise)
+   }
+
+   Promise.all(promises).then(data => console.log(data))
+})
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));

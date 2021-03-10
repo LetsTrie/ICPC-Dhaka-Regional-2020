@@ -16,6 +16,11 @@ const teamSchema = Schema(
     Member3_Email: String,
     team_id: String,
     payment_transition_id: String,
+    teamPaymentMailSend: {
+      type: Boolean,
+      default: false
+    },
+    teamPaymentMailSendTime: Date,
     payment_status: {
       type: String,
       default: 'Not Paid Yet',

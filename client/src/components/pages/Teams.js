@@ -34,6 +34,11 @@ const columns = [
     label: 'Coach',
     minWidth: 170,
   },
+  {
+    id: 'payment_status',
+    label: 'Payment Status',
+    minWidth: 170,
+  },
 ];
 
 const useStyles2 = makeStyles({
@@ -61,22 +66,21 @@ const SubHeading = () => {
 const CustomTableCell = ({ columns, row }) => {
   return columns.slice(1).map((column) => {
     const value = row[column.id];
-    if (column.id === 'Payment Status') {
+    // console.log(column.id === 'payment_status', value)
+    if (column.id === 'payment_status') {
       if (value === 'Not Paid Yet') {
-        console.log(
-          `/payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}`
-        );
         return (
           <TableCell key={column.id} align={'center'} style={{ fontSize: 18 }}>
-            {/* <Button variant="contained" color="secondary">
+            <Button variant="contained" color="secondary">
               <Link
-                to={`/payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}`}
+                to={`/payment/${row._id}`}
+                // /payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}
                 style={{ textDecoration: 'none', color: 'black' }}
               >
                 Proceed to pay
               </Link>
-            </Button> */}
-            -
+            </Button>
+            
           </TableCell>
         );
       }

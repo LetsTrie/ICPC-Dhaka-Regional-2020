@@ -88,19 +88,13 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       const url = `${hostname}/payment/${newTeam._id}`;
       console.log(url);
 
-      // TODO: SAFWAN [Send mail to these emails] -- DONE
-      // Need to know: kader kader mail pathate hobe
-      // Unique Team Id: team.team_id
-      // send email: team.Coach_Email
-      // send email: team.Member1_Email
-      // send email: team.Member2_Email
-      // send email: team.Member3_Email
 
-      const data = {
-        subject: `ICPC Payment`,
-        body: `Please click on the following link, ${url}`
-      }
-      sendTeamEmail(newTeam, req, data)
+      /* -- Email senction, commented out -- */ 
+      // const data = {
+      //   subject: `ICPC Payment`,
+      //   body: `Please click on the following link, ${url}`
+      // }
+      // sendTeamEmail(newTeam, req, data)
     }
   }
   return res

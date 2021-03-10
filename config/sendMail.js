@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const getHostname = require('../utils/getHostname');
+const Team = require('../models/team')
 
 const Transport = nodemailer.createTransport({
   pool: true,
@@ -43,43 +44,54 @@ const sendCustomMail = async (address, subject, body) => {
   return Transport.sendMail(mailOptions);
 };
 
+
 exports.sendTeamEmail = async (team, req, data) => {
   let { subject, body } = data;
-  // let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  // let names = [team.Coach, team.Member1, team.Member2, team.Member3]
-  // const hostname = getHostname(req, 3000);
-  // const url = `${hostname}/payment/${team._id}`;
+  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
+  let names = [team.Coach, team.Member1, team.Member2, team.Member3]
+  const hostname = getHostname(req, 3000);
+  const url = `${hostname}/payment/${team._id}`;
 
-  emails = new Array(4).fill('sakibkhan111296@gmail.com');
-
-  // let promises = [];
   let responses = [];
   try {
     for (let i = 0; i < emails.length; i++) {
-      const replacedBody = body;
+      const replacedBody = body
+      .replace(/<team>/g, team.Team_Name)
+      .replace(/<name>/g, names[i])
+      .replace(/<coach>/g, team.Coach)
+      .replace(/<member1>/g, team.Member1)
+      .replace(/<member2>/g, team.Member2)
+      .replace(/<member3>/g, team.Member3)
+      .replace(/<payment_link>/g, url)
 
       const response = await sendCustomMail(emails[i], subject, replacedBody);
-      responses.push(response?.accepted[0]);
+      responses.push(response.accepted[0]);
 
       // TODO: Use regular expression. otherwise only the first one will be replaced.
-      // .replace('<team>', team.Team_Name)
-      // .replace('<name>', names[i])
-      // .replace('<coach>', team.Coach)
-      // .replace('<member1>', team.Member1)
-      // .replace('<member2>', team.Member2)
-      // .replace('<member3>', team.Member3)
-      // .replace('<payment_link>', url)
       // console.log(replacedBody);
       // promise = new Promise(async (resolve, reject) => {
       //   result = await sendCustomMail(emails[i], subject, replacedBody);
       // });
       // promises.push(promise);
     }
-    console.log(team);
-    // Team model e ektu update kore dite hobe j email has sent.
+    return responses;
   } catch (e) {
-    // console.log(e.message);
+    throw e
   }
   Transport.close();
-  return responses;
 };
+
+exports.confirmationEmail = async (team, data) => {
+  const { subject, body } = data
+  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
+  let promises = []
+
+  for (let email of emails) {
+    promises.push(new Promise ((resolve, reject) => {
+      sendCustomMail(email, subject, body)
+      resolve(true)
+    }))
+  }
+
+  Promise.all(promises)
+}
