@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const getHostname = require('../utils/getHostname');
-const Team = require('../models/team')
+const Team = require('../models/team');
 
 const Transport = nodemailer.createTransport({
   pool: true,
@@ -36,7 +36,7 @@ exports.sendEmail = async (address, data) => {
 
 const sendCustomMail = async (address, subject, body) => {
   let mailOptions = {
-    from: 'ICPC 2020',
+    from: '"ICPC Dhaka Regional 2020" <icpcwebmaster@cse.du.ac.bd>',
     to: address,
     subject: subject,
     html: body,
@@ -44,11 +44,15 @@ const sendCustomMail = async (address, subject, body) => {
   return Transport.sendMail(mailOptions);
 };
 
-
 exports.sendTeamEmail = async (team, req, data) => {
   let { subject, body } = data;
-  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  let names = [team.Coach, team.Member1, team.Member2, team.Member3]
+  let emails = [
+    team.Coach_Email,
+    team.Member1_Email,
+    team.Member2_Email,
+    team.Member3_Email,
+  ];
+  let names = [team.Coach, team.Member1, team.Member2, team.Member3];
   const hostname = getHostname(req, 3000);
   const url = `${hostname}/payment/${team._id}`;
 
@@ -56,13 +60,13 @@ exports.sendTeamEmail = async (team, req, data) => {
   try {
     for (let i = 0; i < emails.length; i++) {
       const replacedBody = body
-      .replace(/<team>/g, team.Team_Name)
-      .replace(/<name>/g, names[i])
-      .replace(/<coach>/g, team.Coach)
-      .replace(/<member1>/g, team.Member1)
-      .replace(/<member2>/g, team.Member2)
-      .replace(/<member3>/g, team.Member3)
-      .replace(/<payment_link>/g, url)
+        .replace(/<team>/g, team.Team_Name)
+        .replace(/<name>/g, names[i])
+        .replace(/<coach>/g, team.Coach)
+        .replace(/<member1>/g, team.Member1)
+        .replace(/<member2>/g, team.Member2)
+        .replace(/<member3>/g, team.Member3)
+        .replace(/<payment_link>/g, url);
 
       const response = await sendCustomMail(emails[i], subject, replacedBody);
       responses.push(response.accepted[0]);
@@ -74,24 +78,31 @@ exports.sendTeamEmail = async (team, req, data) => {
       // });
       // promises.push(promise);
     }
+    Transport.close();
     return responses;
   } catch (e) {
-    throw e
+    throw e;
   }
-  Transport.close();
 };
 
 exports.confirmationEmail = async (team, data) => {
-  const { subject, body } = data
-  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  let promises = []
+  const { subject, body } = data;
+  let emails = [
+    team.Coach_Email,
+    team.Member1_Email,
+    team.Member2_Email,
+    team.Member3_Email,
+  ];
+  let promises = [];
 
   for (let email of emails) {
-    promises.push(new Promise ((resolve, reject) => {
-      sendCustomMail(email, subject, body)
-      resolve(true)
-    }))
+    promises.push(
+      new Promise((resolve, reject) => {
+        sendCustomMail(email, subject, body);
+        resolve(true);
+      })
+    );
   }
 
-  Promise.all(promises)
-}
+  Promise.all(promises);
+};
