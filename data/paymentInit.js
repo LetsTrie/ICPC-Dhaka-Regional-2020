@@ -28,7 +28,6 @@ module.exports = (req, team) => {
     ship_state: 'Dhaka',
     ship_postcode: 1000,
     ship_country: 'Bangladesh',
-    multi_card_name:
-      'internetbank,mobilebank,othercard,visacard,mastercard,amexcard',
+    multi_card_name: 'internetbank,mobilebank,visacard,mastercard,amexcard',
   };
 };
