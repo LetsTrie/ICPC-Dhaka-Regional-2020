@@ -28,6 +28,6 @@ module.exports = (req, team) => {
     ship_state: 'Dhaka',
     ship_postcode: 1000,
     ship_country: 'Bangladesh',
-    multi_card_name: 'mastercard',
+    multi_card_name: 'internetbank',
   };
 };
