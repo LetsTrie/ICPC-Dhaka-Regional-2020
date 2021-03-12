@@ -1,9 +1,11 @@
 const { v4: uuidv4 } = require('uuid');
 const getHostname = require('../utils/getHostname');
+const fs = require('fs');
 
 module.exports = (req, team) => {
   const { _id, Team_Name, Country, University, Coach, Coach_Email } = team;
   const host = getHostname(req, 5000);
+  fs.writeFileSync('log.txt', host);
   return {
     total_amount: parseInt(process.env.Fee),
     currency: 'BDT',
