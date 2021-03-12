@@ -11,6 +11,7 @@ module.exports = (req, team) => {
     success_url: `${host}/api/v1/auth/register/payment/IpnListener?teamId=${_id}&teamName=${Team_Name}&country=${Country}&institution=${University}&coach=${Coach}`,
     fail_url: `${host}/api/v1/auth/register/payment/unsuccessful`,
     cancel_url: `${host}/api/v1/auth/register/payment/failed`,
+    ipn_url: `${host}/api/v1/auth/register/payment/IpnListener`,
     shipping_method: 'Courier',
     product_name: 'icpc',
     product_category: 'contestFee',
