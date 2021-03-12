@@ -8,10 +8,9 @@ module.exports = (req, team) => {
     total_amount: parseInt(process.env.Fee),
     currency: 'BDT',
     tran_id: uuidv4(),
-    success_url: `${host}/api/v1/auth/register/payment/IpnListener?teamId=${_id}&teamName=${Team_Name}&country=${Country}&institution=${University}&coach=${Coach}`,
+    success_url: `${host}/api/v1/auth/register/payment/success`,
     fail_url: `${host}/api/v1/auth/register/payment/unsuccessful`,
     cancel_url: `${host}/api/v1/auth/register/payment/failed`,
-    ipn_url: `${host}/api/v1/auth/register/payment/IpnListener`,
     shipping_method: 'Courier',
     product_name: 'icpc',
     product_category: 'contestFee',
@@ -29,5 +28,6 @@ module.exports = (req, team) => {
     ship_state: 'Dhaka',
     ship_postcode: 1000,
     ship_country: 'Bangladesh',
+    value_a: _id,
   };
 };
