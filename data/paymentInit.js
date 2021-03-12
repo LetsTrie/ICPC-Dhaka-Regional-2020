@@ -1,11 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
 const getHostname = require('../utils/getHostname');
-const fs = require('fs');
 
 module.exports = (req, team) => {
   const { _id, Team_Name, Country, University, Coach, Coach_Email } = team;
   const host = getHostname(req, 5000);
-  fs.writeFileSync('log.txt', host);
   return {
     total_amount: parseInt(process.env.Fee),
     currency: 'BDT',
@@ -13,23 +11,23 @@ module.exports = (req, team) => {
     success_url: `${host}/api/v1/auth/register/payment/success`,
     fail_url: `${host}/api/v1/auth/register/payment/unsuccessful`,
     cancel_url: `${host}/api/v1/auth/register/payment/failed`,
-    shipping_method: 'Courier',
-    product_name: 'icpc',
-    product_category: 'contestFee',
+    shipping_method: 'NO',
+    product_name: 'ICPC Dhaka Regional 2020',
+    product_category: 'Preliminary Registration',
     product_profile: 'general',
     cus_name: Team_Name,
     cus_email: Coach_Email,
     cus_add1: University,
-    cus_city: 'Dhaka',
-    cus_postcode: '1000',
+    cus_city: 'N/A',
+    cus_postcode: 'N/A',
     cus_country: Country,
-    cus_phone: '01711111111',
+    cus_phone: 'N/A',
     ship_name: Coach,
-    ship_add1: 'Dhaka',
-    ship_city: 'Dhaka',
-    ship_state: 'Dhaka',
-    ship_postcode: 1000,
-    ship_country: 'Bangladesh',
+    ship_add1: 'N/A',
+    ship_city: 'N/A',
+    ship_state: 'N/A',
+    ship_postcode: 'N/A',
+    ship_country: 'N/A',
     value_a: _id,
   };
 };
