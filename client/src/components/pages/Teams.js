@@ -109,6 +109,11 @@ const Teams = (props) => {
       const { success, teams } = res.data;
       setIsLoading(false);
       if (success) {
+        teams.sort((a, b) => {
+          if (a.Team_Name < b.Team_Name) return -1
+          if (b.Team_Name < a.Team_Name) return 1
+          return 0
+        })
         setTeams(teams);
       } else {
       }

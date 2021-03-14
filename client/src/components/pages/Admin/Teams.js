@@ -144,7 +144,17 @@ const Teams = (props) => {
       .then((res) => {
         const { success, teams } = res.data;
         setIsLoading(false);
-        if (success) setTeams(teams);
+        if (success) {
+          teams.sort((a, b) => {
+            if (a.Team_Name < b.Team_Name) return -1
+            if (b.Team_Name < a.Team_Name) return 1
+            return 0
+          })
+          for (let team of teams) {
+            console.log(team.Team_Name)
+          }
+          setTeams(teams);
+        }
         else setTeams([]);
       })
       .catch((err) => {

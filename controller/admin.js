@@ -60,7 +60,8 @@ exports.login = asyncHandler(async (req, res) => {
 
 // Team Information from DB...
 exports.teamInfo = asyncHandler(async (req, res) => {
-  let teams = await Team.find();
+  let teams = await Team.find().sort({ 'Team_Name': 1 });
+
   if (!teams) return res.status(404).json({ success: false });
   let modifyTeams = updatePaymentField(teams);
   modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);

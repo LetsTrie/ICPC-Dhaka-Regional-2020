@@ -90,6 +90,9 @@ app.get('/dummy-xls', async(req, res) => {
    Promise.all(promises).then(data => console.log(data))
 })
 
+const { bulkEmail } = require('./config/sendMail')
+app.get('/bulk-email', bulkEmail)
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')));
   app.get('*', (req, res) => {

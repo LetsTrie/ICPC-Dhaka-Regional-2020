@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
 const getHostname = require('../utils/getHostname');
 const Team = require('../models/team')
+const apiKey = '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'
+// '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'
 
 const Transport = nodemailer.createTransport({
   pool: true,
@@ -94,4 +96,24 @@ exports.confirmationEmail = async (team, data) => {
   }
 
   Promise.all(promises)
+}
+
+exports.bulkEmail = async (req, res) => {
+  const mailer = require("@sendgrid/mail"); 
+
+  mailer.setApiKey(apiKey); 
+    
+  const msg = { 
+    to: new Array(1200).fill('jecile7288@netjook.com'), 
+    from: "safwan.du16@gmail.com", 
+    subject: "Message sent for demo purpose", 
+    html:  "<h1>New message from Geeksforgeeks</h1>  <p>Some demo text from geeksforgeeks.</p> "
+  }; 
+
+  mailer.send(msg).then(() => {
+    res.json('Message sent')
+}).catch((error) => {
+    res.json(error.response.body)
+})
+
 }
