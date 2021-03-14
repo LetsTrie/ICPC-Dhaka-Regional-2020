@@ -57,7 +57,7 @@ function Home() {
             <Button
               variant="contained"
               className={classes.root}
-              onClick={() => showFile('/informations-for-participants.pdf')}
+              onClick={() => showFile('/information-for-participants.pdf')}
             >
               Contest Guideline
             </Button>
