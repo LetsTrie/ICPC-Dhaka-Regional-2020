@@ -1,8 +1,6 @@
 const nodemailer = require('nodemailer');
 const getHostname = require('../utils/getHostname');
-const Team = require('../models/team')
-const apiKey = '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'
-// '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'
+const Team = require('../models/team');
 
 const Transport = nodemailer.createTransport({
   pool: true,
@@ -38,7 +36,7 @@ exports.sendEmail = async (address, data) => {
 
 const sendCustomMail = async (address, subject, body) => {
   let mailOptions = {
-    from: 'ICPC 2020',
+    from: '"ICPC Dhaka Regional 2020" <icpcwebmaster@cse.du.ac.bd>',
     to: address,
     subject: subject,
     html: body,
@@ -46,11 +44,15 @@ const sendCustomMail = async (address, subject, body) => {
   return Transport.sendMail(mailOptions);
 };
 
-
 exports.sendTeamEmail = async (team, req, data) => {
   let { subject, body } = data;
-  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  let names = [team.Coach, team.Member1, team.Member2, team.Member3]
+  let emails = [
+    team.Coach_Email,
+    team.Member1_Email,
+    team.Member2_Email,
+    team.Member3_Email,
+  ];
+  let names = [team.Coach, team.Member1, team.Member2, team.Member3];
   const hostname = getHostname(req, 3000);
   const url = `${hostname}/payment/${team._id}`;
 
@@ -58,13 +60,13 @@ exports.sendTeamEmail = async (team, req, data) => {
   try {
     for (let i = 0; i < emails.length; i++) {
       const replacedBody = body
-      .replace(/<team>/g, team.Team_Name)
-      .replace(/<name>/g, names[i])
-      .replace(/<coach>/g, team.Coach)
-      .replace(/<member1>/g, team.Member1)
-      .replace(/<member2>/g, team.Member2)
-      .replace(/<member3>/g, team.Member3)
-      .replace(/<payment_link>/g, url)
+        .replace(/<team>/g, team.Team_Name)
+        .replace(/<name>/g, names[i])
+        .replace(/<coach>/g, team.Coach)
+        .replace(/<member1>/g, team.Member1)
+        .replace(/<member2>/g, team.Member2)
+        .replace(/<member3>/g, team.Member3)
+        .replace(/<payment_link>/g, url);
 
       const response = await sendCustomMail(emails[i], subject, replacedBody);
       responses.push(response.accepted[0]);
@@ -76,44 +78,17 @@ exports.sendTeamEmail = async (team, req, data) => {
       // });
       // promises.push(promise);
     }
+    Transport.close();
     return responses;
   } catch (e) {
-    throw e
+    throw e;
   }
-  Transport.close();
 };
 
 exports.confirmationEmail = async (team, data) => {
-  const { subject, body } = data
-  let emails = [team.Coach_Email, team.Member1_Email, team.Member2_Email, team.Member3_Email]
-  let promises = []
-
-  for (let email of emails) {
-    promises.push(new Promise ((resolve, reject) => {
-      sendCustomMail(email, subject, body)
-      resolve(true)
-    }))
-  }
-
-  Promise.all(promises)
-}
-
-exports.bulkEmail = async (req, res) => {
-  const mailer = require("@sendgrid/mail"); 
-
-  mailer.setApiKey(apiKey); 
-    
-  const msg = { 
-    to: new Array(1200).fill('jecile7288@netjook.com'), 
-    from: "safwan.du16@gmail.com", 
-    subject: "Message sent for demo purpose", 
-    html:  "<h1>New message from Geeksforgeeks</h1>  <p>Some demo text from geeksforgeeks.</p> "
-  }; 
-
-  mailer.send(msg).then(() => {
-    res.json('Message sent')
-}).catch((error) => {
-    res.json(error.response.body)
-})
-
-}
+  const { subject, body } = data;
+  await sendCustomMail(team.Coach_Email, subject, body);
+  await sendCustomMail(team.Member1_Email, subject, body);
+  await sendCustomMail(team.Member2_Email, subject, body);
+  await sendCustomMail(team.Member3_Email, subject, body);
+};

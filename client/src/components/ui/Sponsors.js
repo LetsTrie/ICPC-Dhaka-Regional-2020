@@ -22,9 +22,9 @@ function Sponsors() {
           <div className='sponsor_img'>
             <img src={ACM} alt='sponsor' />
           </div> */}
-          <div className="sponsor_img">
+          {/* <div className="sponsor_img">
             <img src={AcmICPC} alt="sponsor" />
-          </div>
+          </div> */}
           <div className="sponsor_img">
             <img src={ICPC_Foundation} alt="sponsor" />
           </div>

@@ -44,9 +44,9 @@ exports.teamPaymentInitiate = async (req, res) => {
 };
 
 exports.paymentIpnListener = async (req, res) => {
+  console.log('IPN is listening');
   let hostname = getHostname(req, 3000);
-  const { teamId, teamName, country, institution, coach } = req.query;
-  const { val_id } = req.body;
+  const { val_id, value_a: teamId } = req.body;
   const info = await sslcommerz.validate_transaction_order(val_id);
   const { status, tran_id, tran_date, amount, currency } = info;
   if (status === 'INVALID_TRANSACTION ') {
@@ -88,7 +88,52 @@ exports.paymentIpnListener = async (req, res) => {
   );
 };
 
+exports.paymentSuccess = async (req, res) => {
+  console.log(req.body);
+  let hostname = getHostname(req, 3000);
+  const { val_id, value_a: teamId } = req.body;
+  const info = await sslcommerz.validate_transaction_order(val_id);
+  const { status, tran_id, tran_date } = info;
+  if (status === 'INVALID_TRANSACTION ') {
+    return res.send('<h1>INVALID TRANSACTION</h1>');
+  }
+  const team = await Team.findById(teamId);
+  team.payment_transition_id = tran_id;
+  team.payment_status = 'Paid';
+  team.payment_date = tran_date;
+  await team.save();
+
+  // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
+
+  const data = {
+    subject: `ICPC Dhaka Regional 2020 payment confirmation for the
+    preliminary contest`,
+    body: `
+    
+    Dear <strong> ${team.Team_Name} </strong> Team Members, <br>
+    Thank you for making payment for participating in the preliminary contest
+    of ICPC Dhaka Regional 2020. Your place for the preliminary contest is
+    now confirmed. 
+    <br> <br>
+    Team Name: <strong> ${team.Team_Name} </strong> <br>
+    Transaction ID: <strong> ${tran_id} </strong>
+    <br><br>
+    We look forward to seeing you at the event.
+    <br><br>
+    Best regards, <br>
+    Professor Dr. Md Mustafizur Rahman <br>
+    Regional Contest Director <br>
+    ICPC Dhaka Regional 2020
+    `,
+  };
+  await confirmationEmail(team, data);
+  return res.send(
+    `<script>window.location="${hostname}/payment/${teamId}"</script>`
+  );
+};
+
 exports.paymentUnseccessful = async (req, res) => {
+  console.log(req.body);
   let hostname = getHostname(req, 3000);
   return res.send(
     `<script>window.location="${hostname}/payment/failed"</script>`
@@ -96,6 +141,7 @@ exports.paymentUnseccessful = async (req, res) => {
 };
 
 exports.paymentFailed = async (req, res) => {
+  console.log(req.body);
   let hostname = getHostname(req, 3000);
   return res.send(
     `<script>window.location="${hostname}/payment/cancel"</script>`
@@ -223,7 +269,7 @@ exports.teamLogin = async (req, res) => {
         { id: teamDetails._id },
         process.env.JWT_SECRET,
         {
-          expiresIn: '420h',
+          expiresIn: '420d',
         }
       );
 
