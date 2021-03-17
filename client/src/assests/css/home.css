@@ -509,6 +509,12 @@ button.MuiButtonBase-root:active {
   font-size: 1.6rem;
 }
 
+.important_infos .flex_child_list ul li:not(:last-child) {
+  padding-bottom: 5px;
+  margin-bottom: 7px;
+  border-bottom: 1px solid gray;
+}
+
 .important_infos .flex_child_list a {
   display: block;
   text-decoration: none;

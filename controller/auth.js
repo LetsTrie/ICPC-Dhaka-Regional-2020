@@ -44,7 +44,6 @@ exports.teamPaymentInitiate = async (req, res) => {
 };
 
 exports.paymentIpnListener = async (req, res) => {
-  console.log('IPN is listening');
   let hostname = getHostname(req, 3000);
   const { val_id, value_a: teamId } = req.body;
   const info = await sslcommerz.validate_transaction_order(val_id);
@@ -57,6 +56,7 @@ exports.paymentIpnListener = async (req, res) => {
   team.payment_status = 'Paid';
   team.payment_date = tran_date;
   await team.save();
+  console.log(team);
 
   // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
 
@@ -89,7 +89,6 @@ exports.paymentIpnListener = async (req, res) => {
 };
 
 exports.paymentSuccess = async (req, res) => {
-  console.log(req.body);
   let hostname = getHostname(req, 3000);
   const { val_id, value_a: teamId } = req.body;
   const info = await sslcommerz.validate_transaction_order(val_id);
@@ -102,6 +101,7 @@ exports.paymentSuccess = async (req, res) => {
   team.payment_status = 'Paid';
   team.payment_date = tran_date;
   await team.save();
+  console.log('in payment success: ', team);
 
   // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
 
@@ -133,7 +133,6 @@ exports.paymentSuccess = async (req, res) => {
 };
 
 exports.paymentUnseccessful = async (req, res) => {
-  console.log(req.body);
   let hostname = getHostname(req, 3000);
   return res.send(
     `<script>window.location="${hostname}/payment/failed"</script>`
@@ -141,7 +140,6 @@ exports.paymentUnseccessful = async (req, res) => {
 };
 
 exports.paymentFailed = async (req, res) => {
-  console.log(req.body);
   let hostname = getHostname(req, 3000);
   return res.send(
     `<script>window.location="${hostname}/payment/cancel"</script>`

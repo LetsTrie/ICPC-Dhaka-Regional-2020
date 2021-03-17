@@ -30,6 +30,7 @@ const ImportantInfos = () => {
           <div className="flex_child_list">
             <ul>
               <li>Preliminary contest registration started.</li>
+              <li>Payment for preliminary contest registration is open.</li>
             </ul>
           </div>
         </div>
