@@ -72,12 +72,27 @@ const Payment = ({ match }) => {
                   <p>Coach:</p>
                   <p>{team.Coach}</p>
                 </div>
+
+                <div className="td">
+                  <p>Member 1:</p>
+                  <p>{team.Member1}</p>
+                </div>
+
+                <div className="td">
+                  <p>Member 2:</p>
+                  <p>{team.Member2}</p>
+                </div>
+
+                <div className="td">
+                  <p>Member 3:</p>
+                  <p>{team.Member3}</p>
+                </div>
               </div>
 
               {!success ? (
                 <div className="RegFee">
                   <p>Registration Fee</p>
-                  <p>300 BDT per team</p>
+                  <p>300 BDT</p>
                 </div>
               ) : (
                 <div className="RegFee">
@@ -87,8 +102,17 @@ const Payment = ({ match }) => {
                 </div>
               )}
             </div>
-
-            <div style={{ textAlign: 'center', marginTop: 28, padding: 10 }}>
+            {success && (
+              <div
+                style={{ textAlign: 'center', paddingTop: 20, fontSize: 20 }}
+              >
+                <p>
+                  <span style={{ fontWeight: 'bold' }}>Transition ID:</span>{' '}
+                  {team.payment_transition_id}
+                </p>
+              </div>
+            )}
+            <div style={{ textAlign: 'center', marginTop: 10, padding: 10 }}>
               <Button
                 variant="contained"
                 color={success ? 'primary' : 'secondary'}

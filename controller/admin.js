@@ -17,7 +17,7 @@ const { Parser } = require('json2csv');
 
 const getHostname = require('../utils/getHostname');
 
-const { sendTeamEmail } = require('../config/sendMail')
+const { sendTeamEmail } = require('../config/sendMail');
 
 const updatePaymentField = (container) => {
   return container.map((t) => {
@@ -60,7 +60,8 @@ exports.login = asyncHandler(async (req, res) => {
 
 // Team Information from DB...
 exports.teamInfo = asyncHandler(async (req, res) => {
-  let teams = await Team.find();
+  let teams = await Team.find().sort({ Team_Name: 1 });
+
   if (!teams) return res.status(404).json({ success: false });
   let modifyTeams = updatePaymentField(teams);
   modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
@@ -74,11 +75,20 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
 
   const teamsFromDb = await Team.find();
   let mapping = {};
-  const allteams = [...teamsFromDb];
-  if (teamsFromDb) for (let t of teamsFromDb) mapping[t.Team_Name] = true;
+  let indexMapping = {};
+  let resTeam = {};
+  const allteams = [];
+  if (teamsFromDb) {
+    let index = 0;
+    for (let t of teamsFromDb) {
+      mapping[t.Team_Name] = true;
+      indexMapping[t.Team_Name] = index++;
+    }
+  }
   let hostname = getHostname(req, 3000);
   for (let i = 0; i < teams.length; i++) {
     const team = teams[i];
+    resTeam[team.Team_Name] = true;
     if (!mapping[team.Team_Name]) {
       let newTeam = new Team(team);
       await newTeam.save();
@@ -88,21 +98,37 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       const url = `${hostname}/payment/${newTeam._id}`;
       console.log(url);
 
-      // TODO: SAFWAN [Send mail to these emails] -- DONE
-      // Need to know: kader kader mail pathate hobe
-      // Unique Team Id: team.team_id
-      // send email: team.Coach_Email
-      // send email: team.Member1_Email
-      // send email: team.Member2_Email
-      // send email: team.Member3_Email
-
-      const data = {
-        subject: `ICPC Payment`,
-        body: `Please click on the following link, ${url}`
+      /* -- Email section, commented out -- */
+      // const data = {
+      //   subject: `ICPC Payment`,
+      //   body: `Please click on the following link, ${url}`
+      // }
+      // sendTeamEmail(newTeam, req, data)
+    } else {
+      let teamFromDb = teamsFromDb[indexMapping[team.Team_Name]];
+      let anyChange = false;
+      for (let key in team) {
+        if (key !== 'Team_Name') {
+          if (teamFromDb[key] !== team[key]) {
+            teamFromDb[key] = team[key];
+            anyChange = true;
+          }
+        }
       }
-      sendTeamEmail(newTeam, data)
+      allteams.push(teamFromDb);
+      if (anyChange) {
+        await teamFromDb.save();
+      }
     }
   }
+  if (teamsFromDb) {
+    for (let t of teamsFromDb) {
+      if (!resTeam[t.Team_Name]) {
+        allteams.push(t);
+      }
+    }
+  }
+  console.log(updatePaymentField(allteams));
   return res
     .status(200)
     .json({ success: true, teams: updatePaymentField(allteams) });
@@ -130,68 +156,93 @@ exports.setContestTime = asyncHandler(async (req, res, next) => {
 
 exports.uploadFAQ = async (req, res, next) => {
   return res.status(200).json({ success: true });
-}
+};
 
 exports.email = async (req, res) => {
-  const { data } = req.body
-  const { teams, receipents, teamName, subject, body } = data
+  const { data } = req.body;
+  const { teams, teamName, subject, body } = data;
 
   if (teams == 'Single team') {
-    const team = await Team.findOne({ Team_Name: teamName })
-    await sendTeamEmail(team, { subject, body })
-    res.status(200).json({ success: true, msg: 'Emails sent successfully' })
+    const team = await Team.findOne({ Team_Name: teamName });
+    const P = await sendTeamEmail(team, req, { subject, body });
+    console.log(P);
+    res.status(200).json({ success: true, msg: 'Emails sent successfully' });
+  } else if (teams == 'Unpaid teams') {
+    const unpaidTeams = await Team.find({ payment_status: 'Not Paid Yet' });
+    const promises = [];
 
-} else if (teams == 'Unpaid teams') {
-  const unpaidTeams = await Team.find({ payment_status: 'Not Paid Yet' })
-  const promises = []
+    for (let team of unpaidTeams) {
+      const promise = new Promise((resolve, reject) => {
+        sendTeamEmail(team, req, { subject, body });
+        resolve(true);
+      });
+      promises.push(promise);
+    }
 
-  for (let team of unpaidTeams) {
-    const promise = new Promise((resolve, reject) => {
-      sendTeamEmail(team, {subject, body})
-      resolve(true)
-    })
-    promises.push(promise)
+    Promise.all(promises)
+      .then((data) =>
+        res.status(200).json({ success: true, msg: 'Emails sent successfully' })
+      )
+      .catch((data) =>
+        res.status(200).json({ success: false, msg: 'Error sending emails' })
+      );
+  } else if (teams == 'Paid teams') {
+    // const paidTeams = await Team.find({ payment_status: 'Paid' })
+    const promises = [];
+    const paidTeams = new Array(50).fill('team');
+    console.log(paidTeams);
+    let t = 0;
+    for (let team of paidTeams) {
+      const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          sendTeamEmail(team, req, { subject, body })
+            .then((data) => {
+              resolve(true);
+            })
+            .catch((e) => {
+              reject(e);
+            });
+          console.log(t);
+        }, t * 30);
+        t++;
+      });
+      promises.push(promise);
+    }
+
+    Promise.all(promises)
+      .then((data) =>
+        res.status(200).json({ success: true, msg: 'Emails sent successfully' })
+      )
+      .catch((data) =>
+        res.status(200).json({ success: false, msg: 'Error sending emails' })
+      );
+  } else {
+    let allTeams = await Team.find();
+
+    const promises = [];
+
+    for (let team of allTeams) {
+      const promise = new Promise((resolve, reject) => {
+        sendTeamEmail(team, req, { subject, body });
+        resolve(true);
+      });
+      promises.push(promise);
+    }
+
+    Promise.all(promises)
+      .then((data) =>
+        res.status(200).json({ success: true, msg: 'Emails sent successfully' })
+      )
+      .catch((data) =>
+        res.status(200).json({ success: false, msg: 'Error sending emails' })
+      );
   }
-  
-  Promise.all(promises).then(data => res.status(200).json({ success: true, msg: 'Emails sent successfully' })).catch(data => res.status(200).json({ success: false, msg: 'Error sending emails' }))
-
-} else if (teams == 'Paid teams') {
-  const paidTeams = await Team.find({ payment_status: 'Paid' })
-  const promises = []
-
-  for (let team of paidTeams) {
-    const promise = new Promise((resolve, reject) => {
-      sendTeamEmail(team, {subject, body})
-      resolve(true)
-    })
-    promises.push(promise)
-  }
-  
-  Promise.all(promises).then(data => res.status(200).json({ success: true, msg: 'Emails sent successfully' })).catch(data => res.status(200).json({ success: false, msg: 'Error sending emails' }))
-
-} else {
-  let allTeams = await Team.find()
-
-  const promises = []
-
-  for (let team of allTeams) {
-    const promise = new Promise((resolve, reject) => {
-      sendTeamEmail(team, {subject, body})
-      resolve(true)
-    })
-    promises.push(promise)
-  }
-  
-  Promise.all(promises).then(data => res.status(200).json({ success: true, msg: 'Emails sent successfully' })).catch(data => res.status(200).json({ success: false, msg: 'Error sending emails' }))
-
-}
-
-}
+};
 
 exports.getTeams = async (req, res) => {
-  const teams = await Team.find()
+  const teams = await Team.find();
   res.status(200).json({
     success: true,
-    teams
-  })
-}
+    teams,
+  });
+};

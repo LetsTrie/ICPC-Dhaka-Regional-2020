@@ -24,9 +24,11 @@ var registerUpload = multer({ storage }).fields([
 router.post('/register/info', C.registerInfo);
 router.post('/register/upload', registerUpload, C.registerUpload);
 router.get('/register/payment/init', C.paymentInitiate);
-router.post('/register/payment/IpnListener', C.paymentIpnListener);
+
+router.post('/register/payment/success', C.paymentSuccess);
 router.post('/register/payment/unsuccessful', C.paymentUnseccessful);
 router.post('/register/payment/failed', C.paymentFailed);
+router.post('/register/payment/IpnListener', C.paymentIpnListener);
 
 router.post('/login', C.teamLogin);
 
