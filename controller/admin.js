@@ -60,7 +60,7 @@ exports.login = asyncHandler(async (req, res) => {
 
 // Team Information from DB...
 exports.teamInfo = asyncHandler(async (req, res) => {
-  let teams = await Team.find().sort({ 'Team_Name': 1 });
+  let teams = await Team.find().sort({ Team_Name: 1 });
 
   if (!teams) return res.status(404).json({ success: false });
   let modifyTeams = updatePaymentField(teams);
@@ -75,11 +75,20 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
 
   const teamsFromDb = await Team.find();
   let mapping = {};
-  const allteams = [...teamsFromDb];
-  if (teamsFromDb) for (let t of teamsFromDb) mapping[t.Team_Name] = true;
+  let indexMapping = {};
+  let resTeam = {};
+  const allteams = [];
+  if (teamsFromDb) {
+    let index = 0;
+    for (let t of teamsFromDb) {
+      mapping[t.Team_Name] = true;
+      indexMapping[t.Team_Name] = index++;
+    }
+  }
   let hostname = getHostname(req, 3000);
   for (let i = 0; i < teams.length; i++) {
     const team = teams[i];
+    resTeam[team.Team_Name] = true;
     if (!mapping[team.Team_Name]) {
       let newTeam = new Team(team);
       await newTeam.save();
@@ -89,14 +98,37 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       const url = `${hostname}/payment/${newTeam._id}`;
       console.log(url);
 
-      /* -- Email senction, commented out -- */
+      /* -- Email section, commented out -- */
       // const data = {
       //   subject: `ICPC Payment`,
       //   body: `Please click on the following link, ${url}`
       // }
       // sendTeamEmail(newTeam, req, data)
+    } else {
+      let teamFromDb = teamsFromDb[indexMapping[team.Team_Name]];
+      let anyChange = false;
+      for (let key in team) {
+        if (key !== 'Team_Name') {
+          if (teamFromDb[key] !== team[key]) {
+            teamFromDb[key] = team[key];
+            anyChange = true;
+          }
+        }
+      }
+      allteams.push(teamFromDb);
+      if (anyChange) {
+        await teamFromDb.save();
+      }
     }
   }
+  if (teamsFromDb) {
+    for (let t of teamsFromDb) {
+      if (!resTeam[t.Team_Name]) {
+        allteams.push(t);
+      }
+    }
+  }
+  console.log(updatePaymentField(allteams));
   return res
     .status(200)
     .json({ success: true, teams: updatePaymentField(allteams) });
