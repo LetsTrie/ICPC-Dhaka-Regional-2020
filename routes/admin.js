@@ -31,7 +31,7 @@ const committee = [
   'Steering Committee',
   'Executive Committee',
   'Judging Panel',
-  'Sub-Committee',
+  'Sub-committees',
 ];
 
 const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
@@ -48,8 +48,8 @@ for (let com of committee) {
 // Contest Info
 const contestInfo = [
   'Rules of ICPC Dhaka Regional',
-  'Informations for participants',
-  'Accomodation',
+  'Information for participants',
+  'Accommodation',
   'Payment',
   'Program Schedule',
 ];
@@ -74,6 +74,6 @@ faqStore = multer({ storage }).single('faq');
 router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ);
 // Get request handled in controller/contact.js
 
-router.post('/email', C.email)
-router.get('/getTeams', C.getTeams)
+router.post('/email', C.email);
+router.get('/getTeams', C.getTeams);
 module.exports = router;

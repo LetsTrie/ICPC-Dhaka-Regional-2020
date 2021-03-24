@@ -33,6 +33,20 @@ app.use(express.urlencoded({ extended: true }));
 // Static Files
 app.use(express.static('uploads'));
 
+app.get('/bingo', async (req, res, next) => {
+  const Team = require('./models/team');
+  const teams = await Team.find();
+  for (let t of teams) {
+    if (t.payment_transition_id) {
+      t.payment_status = 'Paid';
+    } else {
+      t.payment_status = 'Not Paid Yet';
+    }
+    await t.save();
+  }
+  return res.json({ success: true });
+});
+
 app.use('/api/v1', require('./index.route'));
 
 if (process.env.NODE_ENV === 'production') {
