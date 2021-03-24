@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField'
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -47,7 +48,7 @@ const useStyles2 = makeStyles({
   },
   root: {
     width: '100%',
-    marginTop: 25,
+    marginTop: 0,
     borderRadius: 5,
   },
   container: {
@@ -58,7 +59,7 @@ const useStyles2 = makeStyles({
 const SubHeading = () => {
   return (
     <div className="registeredTeams__subheader">
-      <h3> No teams have registered yet</h3>
+      <h3> No teams found with this keyword</h3>
     </div>
   );
 };
@@ -96,10 +97,11 @@ const CustomTableCell = ({ columns, row }) => {
 const Teams = (props) => {
   const [error, setError] = useState(null);
   const [teams, setTeams] = useState([]);
+  const [displayTeams, setDisplayTeams] = useState([])
   const [isLoading, setIsLoading] = useState(true);
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
   const classes = useStyles2();
 
@@ -110,11 +112,12 @@ const Teams = (props) => {
       setIsLoading(false);
       if (success) {
         teams.sort((a, b) => {
-          if (a.Team_Name < b.Team_Name) return -1
-          if (b.Team_Name < a.Team_Name) return 1
+          if (a.Team_Name.toLowerCase() < b.Team_Name.toLowerCase()) return -1
+          if (b.Team_Name.toLowerCase() < a.Team_Name.toLowerCase()) return 1
           return 0
         })
         setTeams(teams);
+        setDisplayTeams(teams)
       } else {
       }
     });
@@ -128,6 +131,14 @@ const Teams = (props) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const filterTeams = e => {
+    const value = e.target.value.toLowerCase()
+    console.log(value)
+    let temp = [...displayTeams]
+    temp = teams.filter(team => team.Team_Name.toLowerCase().startsWith(value) || team.Coach.toLowerCase().startsWith(value) || team.University.toLowerCase().startsWith(value)) 
+    setDisplayTeams(temp)
+  }
 
   return (
     <div className="registeredTeamsWrapper">
@@ -147,7 +158,11 @@ const Teams = (props) => {
               soon.
             </p>
           </div>
+          
           <div className="registeredTeams__table">
+          <div className='top-row'>
+                <TextField variant='outlined' style={{backgroundColor: '#fff', width: '100%', }} placeholder='Search for your team information' onInput={filterTeams} />
+            </div>
             {error && (
               <Alert
                 severity="error"
@@ -156,7 +171,7 @@ const Teams = (props) => {
                 {error}
               </Alert>
             )}
-            {teams.length === 0 ? (
+            {displayTeams.length === 0 ? (
               <SubHeading />
             ) : (
               <Paper className={classes.root}>
@@ -176,7 +191,7 @@ const Teams = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {teams
+                      {displayTeams
                         .slice(
                           page * rowsPerPage,
                           page * rowsPerPage + rowsPerPage
@@ -203,7 +218,7 @@ const Teams = (props) => {
                   </Table>
                 </TableContainer>
                 <TablePagination
-                  rowsPerPageOptions={[100, 200, 300]}
+                  rowsPerPageOptions={[100, 200, 300, 500, 1000, 1500]}
                   colSpan={4}
                   component="div"
                   count={teams.length}
