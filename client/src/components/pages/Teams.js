@@ -8,7 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField'
+import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 import '../../assests/css/adminTeams.css';
 import Header from '../ui/Header';
 import Loader from '../ui/Loader';
+import LinearProgressWithLabel from '../ui/ProgressBar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const columns = [
   { id: 'Serial', label: 'Serial', minWidth: 100 },
@@ -54,6 +56,9 @@ const useStyles2 = makeStyles({
   container: {
     maxHeight: 1000,
   },
+  progressRoot: {
+    width: '100%',
+  },
 });
 
 const SubHeading = () => {
@@ -81,7 +86,6 @@ const CustomTableCell = ({ columns, row }) => {
                 Proceed to pay
               </Link>
             </Button>
-            
           </TableCell>
         );
       }
@@ -97,30 +101,64 @@ const CustomTableCell = ({ columns, row }) => {
 const Teams = (props) => {
   const [error, setError] = useState(null);
   const [teams, setTeams] = useState([]);
-  const [displayTeams, setDisplayTeams] = useState([])
+  const [displayTeams, setDisplayTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
   const classes = useStyles2();
+  const [progress, setProgress] = React.useState(10);
+
+  function getSortedTeam(teams) {
+    teams.sort((a, b) => {
+      if (a.Team_Name.toLowerCase() < b.Team_Name.toLowerCase()) return -1;
+      if (b.Team_Name.toLowerCase() < a.Team_Name.toLowerCase()) return 1;
+      return 0;
+    });
+    return teams;
+  }
+
+  function showTeams(res) {
+    let { success, teams } = res.data;
+    if (success) {
+      setTeams((prev) => getSortedTeam([...prev, ...teams]));
+      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams]));
+    } else {
+      setTeams([]);
+      setDisplayTeams([]);
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get('/api/v1/admin/team-file-xlsx').then((res) => {
-      const { success, teams } = res.data;
-      setIsLoading(false);
-      if (success) {
-        teams.sort((a, b) => {
-          if (a.Team_Name.toLowerCase() < b.Team_Name.toLowerCase()) return -1
-          if (b.Team_Name.toLowerCase() < a.Team_Name.toLowerCase()) return 1
-          return 0
-        })
-        setTeams(teams);
-        setDisplayTeams(teams)
-      } else {
-      }
-    });
+    axios
+      .get('/api/v1/admin/par-team-info/0')
+      .then(async (res) => {
+        setIsLoading(false);
+        showTeams(res);
+        setProgress((prevProgress) => {
+          let now = prevProgress + 16.6;
+          if (now >= 95) now = 100;
+          return now;
+        });
+        for (let i = 1; i <= 5; i++) {
+          let r = await axios.get(`/api/v1/admin/par-team-info/${i}`);
+          showTeams(r);
+          // setInterval(() => {
+          setProgress((prevProgress) => {
+            let now = prevProgress + 16.6;
+            if (now >= 95) now = 100;
+            return now;
+          });
+          // }, 800);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setTeams([]);
+        setDisplayTeams([]);
+      });
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -132,13 +170,18 @@ const Teams = (props) => {
     setPage(0);
   };
 
-  const filterTeams = e => {
-    const value = e.target.value.toLowerCase()
-    console.log(value)
-    let temp = [...displayTeams]
-    temp = teams.filter(team => team.Team_Name.toLowerCase().startsWith(value) || team.Coach.toLowerCase().startsWith(value) || team.University.toLowerCase().startsWith(value)) 
-    setDisplayTeams(temp)
-  }
+  const filterTeams = (e) => {
+    const value = e.target.value.toLowerCase();
+    console.log(value);
+    let temp = [...displayTeams];
+    temp = teams.filter(
+      (team) =>
+        team.Team_Name.toLowerCase().includes(value) ||
+        team.Coach.toLowerCase().includes(value) ||
+        team.University.toLowerCase().includes(value)
+    );
+    setDisplayTeams(temp);
+  };
 
   return (
     <div className="registeredTeamsWrapper">
@@ -158,11 +201,30 @@ const Teams = (props) => {
               soon.
             </p>
           </div>
-          
-          <div className="registeredTeams__table">
-          <div className='top-row'>
-                <TextField variant='outlined' style={{backgroundColor: '#fff', width: '100%', }} placeholder='Search for your team information' onInput={filterTeams} />
+
+          {progress !== 100 && (
+            <div
+              className="registeredTeams__table"
+              style={{ marginTop: 15, marginBottom: 26 }}
+            >
+              <div style={{ textAlign: 'center', marginBottom: 7 }}>
+                <CircularProgress />
+              </div>
+              <LinearProgressWithLabel value={progress} variant="determinate" />
             </div>
+          )}
+
+          <div className="registeredTeams__table" style={{ marginTop: -10 }}>
+            {progress === 100 && (
+              <div className="top-row">
+                <TextField
+                  variant="outlined"
+                  style={{ backgroundColor: '#fff', width: '100%' }}
+                  placeholder="Search for your team information"
+                  onInput={filterTeams}
+                />
+              </div>
+            )}
             {error && (
               <Alert
                 severity="error"
