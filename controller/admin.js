@@ -61,11 +61,28 @@ exports.login = asyncHandler(async (req, res) => {
 // Team Information from DB...
 exports.teamInfo = asyncHandler(async (req, res) => {
   let teams = await Team.find().sort({ Team_Name: 1 });
-
   if (!teams) return res.status(404).json({ success: false });
   let modifyTeams = updatePaymentField(teams);
   modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
   return res.status(200).json({ success: true, teams: modifyTeams });
+});
+
+exports.partialTeamInformation = asyncHandler(async (req, res) => {
+  let level = parseInt(req.params.level) || 0;
+  const rules = {
+    0: { skip: 0, limit: 50 },
+    1: { skip: 50, limit: 350 },
+    2: { skip: 400, limit: 400 },
+    3: { skip: 800, limit: 400 },
+    4: { skip: 1200, limit: 400 },
+    5: { skip: 1600, limit: 400 },
+  };
+  const teams = await Team.find()
+    .skip(rules[level].skip)
+    .limit(rules[level].limit);
+
+  console.log(teams.length);
+  return res.status(200).json({ success: true, teams });
 });
 
 // Store Information from File to DB
@@ -73,7 +90,7 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
   const teams = await parseFile();
   if (!teams) return res.status(404).json({ success: false });
 
-  const teamsFromDb = await Team.find();
+  const teamsFromDb = await Team.find().sort({ Team_Name: 1 });
   let mapping = {};
   let indexMapping = {};
   let resTeam = {};
@@ -93,26 +110,29 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       let newTeam = new Team(team);
       await newTeam.save();
       allteams.push(newTeam);
-
-      // Client Side URL is: [send this link to the mail for payment.]
-      const url = `${hostname}/payment/${newTeam._id}`;
-      console.log(url);
-
-      /* -- Email section, commented out -- */
-      // const data = {
-      //   subject: `ICPC Payment`,
-      //   body: `Please click on the following link, ${url}`
-      // }
-      // sendTeamEmail(newTeam, req, data)
     } else {
       let teamFromDb = teamsFromDb[indexMapping[team.Team_Name]];
       let anyChange = false;
+      const notChangeFields = [
+        'Team_Name',
+        'payment_transition_id',
+        'teamPaymentMailSend',
+        'teamPaymentMailSendTime',
+        'payment_status',
+        'payment_date',
+      ];
       for (let key in team) {
-        if (key !== 'Team_Name') {
-          if (teamFromDb[key] !== team[key]) {
-            teamFromDb[key] = team[key];
-            anyChange = true;
+        let found = false;
+        for (let ch of notChangeFields) {
+          if (ch === key) {
+            found = true;
+            break;
           }
+        }
+        if (found) continue;
+        if (teamFromDb[key] !== team[key]) {
+          teamFromDb[key] = team[key];
+          anyChange = true;
         }
       }
       allteams.push(teamFromDb);
@@ -128,10 +148,10 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       }
     }
   }
-  console.log(updatePaymentField(allteams));
-  return res
-    .status(200)
-    .json({ success: true, teams: updatePaymentField(allteams) });
+  // console.log(updatePaymentField(allteams));
+  let modifyTeams = updatePaymentField(allteams);
+  modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
+  return res.status(200).json({ success: true, teams: modifyTeams });
 });
 
 // Team Information from Database...
@@ -165,7 +185,6 @@ exports.email = async (req, res) => {
   if (teams == 'Single team') {
     const team = await Team.findOne({ Team_Name: teamName });
     const P = await sendTeamEmail(team, req, { subject, body });
-    console.log(P);
     res.status(200).json({ success: true, msg: 'Emails sent successfully' });
   } else if (teams == 'Unpaid teams') {
     const unpaidTeams = await Team.find({ payment_status: 'Not Paid Yet' });

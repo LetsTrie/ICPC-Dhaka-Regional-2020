@@ -18,6 +18,7 @@ let teamInfoFile = multer({ storage }).single('file');
 router.post('/login', C.login);
 // router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
 router.get('/team-file-xlsx', C.teamInfo);
+router.get('/par-team-info/:level', C.partialTeamInformation);
 router.post(
   '/team-file-xlsx-upload',
   [M.AdminAccess, teamInfoFile],

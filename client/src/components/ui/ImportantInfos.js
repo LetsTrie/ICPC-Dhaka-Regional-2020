@@ -30,6 +30,8 @@ const ImportantInfos = () => {
           <div className="flex_child_list">
             <ul>
               <li>Preliminary contest registration started.</li>
+              <li>Payment for preliminary contest registration is open.</li>
+              <li>Preliminary contest registration extended upto March 27, 2021</li>
             </ul>
           </div>
         </div>
@@ -48,7 +50,7 @@ const ImportantInfos = () => {
             </div>
             <div className="each_imp_dates">
               <p>Registration ends</p>
-              <p>March 25, 2021</p>
+              <p>March 27, 2021</p>
             </div>
             <div className="each_imp_dates">
               <p>Preliminary fee collection end date</p>

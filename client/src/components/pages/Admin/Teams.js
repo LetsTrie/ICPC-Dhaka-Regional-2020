@@ -12,6 +12,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import SaveIcon from '@material-ui/icons/Save';
 import Alert from '@material-ui/lab/Alert';
+import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
@@ -20,6 +21,9 @@ import useFormFields from '../../HandleForms';
 import Header from '../../ui/AdminHeader';
 import Loader from '../../ui/Loader';
 import moment from 'moment';
+
+import LinearProgressWithLabel from '../../ui/ProgressBar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const columns = [
   { id: 'Team_Name', label: 'Team', minWidth: 170 },
@@ -71,7 +75,7 @@ const useStyles2 = makeStyles({
 const SubHeading = () => {
   return (
     <div className="registeredTeams__subheader">
-      <h3> No teams have registered yet</h3>
+      <h3> No teams found with this keyword</h3>
     </div>
   );
 };
@@ -79,6 +83,7 @@ const SubHeading = () => {
 const Teams = (props) => {
   const { accessToken } = props.cred;
   const [teams, setTeams] = useState([]);
+  const [displayTeams, setDisplayTeams] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -86,9 +91,28 @@ const Teams = (props) => {
   const { formFields, createChangeHandler } = useFormFields({ file: null });
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
+  const [progress, setProgress] = React.useState(10);
 
   const classes = useStyles2();
+
+  function getSortedTeam(teams) {
+    teams.sort((a, b) => {
+      if (a.Team_Name.toLowerCase() < b.Team_Name.toLowerCase()) return -1;
+      if (b.Team_Name.toLowerCase() < a.Team_Name.toLowerCase()) return 1;
+      return 0;
+    });
+    console.log(teams);
+    return teams;
+  }
+
+  function showTeams(res) {
+    let { success, teams } = res.data;
+    if (success) {
+      setTeams((prev) => getSortedTeam([...prev, ...teams]));
+      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams]));
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -140,26 +164,29 @@ const Teams = (props) => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get('/api/v1/admin/team-file-xlsx')
-      .then((res) => {
-        const { success, teams } = res.data;
+      .get('/api/v1/admin/par-team-info/0')
+      .then(async (res) => {
         setIsLoading(false);
-        if (success) {
-          teams.sort((a, b) => {
-            if (a.Team_Name < b.Team_Name) return -1
-            if (b.Team_Name < a.Team_Name) return 1
-            return 0
-          })
-          for (let team of teams) {
-            console.log(team.Team_Name)
-          }
-          setTeams(teams);
+        showTeams(res);
+        setProgress((prevProgress) => {
+          let now = prevProgress + 16.6;
+          if (now >= 95) now = 100;
+          return now;
+        });
+        for (let i = 1; i <= 5; i++) {
+          let r = await axios.get(`/api/v1/admin/par-team-info/${i}`);
+          showTeams(r);
+          setProgress((prevProgress) => {
+            let now = prevProgress + 16.6;
+            if (now >= 95) now = 100;
+            return now;
+          });
         }
-        else setTeams([]);
       })
       .catch((err) => {
         setIsLoading(false);
         setTeams([]);
+        setDisplayTeams([]);
       });
   }, []);
 
@@ -170,6 +197,19 @@ const Teams = (props) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const filterTeams = (e) => {
+    const value = e.target.value.toLowerCase();
+    console.log(value);
+    let temp = [...displayTeams];
+    temp = teams.filter(
+      (team) =>
+        team.Team_Name.toLowerCase().includes(value) ||
+        team.Coach.toLowerCase().includes(value) ||
+        team.University.toLowerCase().includes(value)
+    );
+    setDisplayTeams(temp);
   };
 
   return (
@@ -183,7 +223,28 @@ const Teams = (props) => {
             <h1> Registered Teams </h1>
             <h4> (For preliminary) </h4>
           </div>
+          {progress !== 100 && (
+            <div
+              className="registeredTeams__table"
+              style={{ marginTop: 15, marginBottom: 26 }}
+            >
+              <div style={{ textAlign: 'center', marginBottom: 7 }}>
+                <CircularProgress />
+              </div>
+              <LinearProgressWithLabel value={progress} variant="determinate" />
+            </div>
+          )}
           <div className="registeredTeams__table">
+            {progress === 100 && (
+              <div className="top-row">
+                <TextField
+                  variant="outlined"
+                  style={{ backgroundColor: '#fff', width: '100%' }}
+                  placeholder="Type to search"
+                  onInput={filterTeams}
+                />
+              </div>
+            )}
             <form onSubmit={handleSubmit} style={{ textAlign: 'right' }}>
               <div>
                 <input
@@ -251,7 +312,7 @@ const Teams = (props) => {
                 {fileError}
               </Alert>
             )}
-            {teams.length === 0 ? (
+            {displayTeams.length === 0 ? (
               <SubHeading />
             ) : (
               <Paper className={classes.root}>
@@ -271,7 +332,7 @@ const Teams = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {teams
+                      {displayTeams
                         .slice(
                           page * rowsPerPage,
                           page * rowsPerPage + rowsPerPage
@@ -308,7 +369,7 @@ const Teams = (props) => {
                   </Table>
                 </TableContainer>
                 <TablePagination
-                  rowsPerPageOptions={[100, 200, 300]}
+                  rowsPerPageOptions={[100, 200, 300, 500, 1000, 1500]}
                   colSpan={4}
                   component="div"
                   count={teams.length}
