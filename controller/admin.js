@@ -69,19 +69,9 @@ exports.teamInfo = asyncHandler(async (req, res) => {
 
 exports.partialTeamInformation = asyncHandler(async (req, res) => {
   let level = parseInt(req.params.level) || 0;
-  const rules = {
-    0: { skip: 0, limit: 50 },
-    1: { skip: 50, limit: 350 },
-    2: { skip: 400, limit: 400 },
-    3: { skip: 800, limit: 400 },
-    4: { skip: 1200, limit: 400 },
-    5: { skip: 1600, limit: 400 },
-  };
   const teams = await Team.find()
-    .skip(rules[level].skip)
-    .limit(rules[level].limit);
-
-  console.log(teams.length);
+    .skip(level * 100)
+    .limit(100);
   return res.status(200).json({ success: true, teams });
 });
 

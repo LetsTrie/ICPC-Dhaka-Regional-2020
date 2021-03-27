@@ -108,7 +108,7 @@ const Teams = (props) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
   const classes = useStyles2();
-  const [progress, setProgress] = React.useState(10);
+  const [progress, setProgress] = React.useState(0);
 
   function getSortedTeam(teams) {
     teams.sort((a, b) => {
@@ -138,20 +138,22 @@ const Teams = (props) => {
         setIsLoading(false);
         showTeams(res);
         setProgress((prevProgress) => {
-          let now = prevProgress + 16.6;
-          if (now >= 95) now = 100;
+          let now = prevProgress + 7;
+          if (now >= 100) now = 100;
           return now;
         });
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 19; i++) {
           let r = await axios.get(`/api/v1/admin/par-team-info/${i}`);
           showTeams(r);
-          // setInterval(() => {
+          if (r.data.teams.length === 0) {
+            setProgress((prevProgress) => 100);
+            break;
+          }
           setProgress((prevProgress) => {
-            let now = prevProgress + 16.6;
-            if (now >= 95) now = 100;
+            let now = prevProgress + 7;
+            if (now >= 100) now = 100;
             return now;
           });
-          // }, 800);
         }
       })
       .catch((err) => {
