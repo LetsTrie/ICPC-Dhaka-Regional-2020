@@ -76,16 +76,8 @@ const CustomTableCell = ({ columns, row }) => {
     if (column.id === 'payment_status') {
       if (value === 'Not Paid Yet') {
         return (
-          <TableCell key={column.id} align={'center'} style={{ fontSize: 18 }}>
-            <Button variant="contained" color="secondary">
-              <Link
-                to={`/payment/${row._id}`}
-                // /payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}
-                style={{ textDecoration: 'none', color: 'black' }}
-              >
-                Proceed to pay
-              </Link>
-            </Button>
+          <TableCell key={column.id} align={'center'} style={{ fontSize: 16 }}>
+            Unpaid
           </TableCell>
         );
       }

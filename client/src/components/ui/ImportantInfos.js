@@ -29,9 +29,12 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list">
             <ul>
-              <li>Preliminary contest registration started.</li>
-              <li>Payment for preliminary contest registration is open.</li>
-              <li>Preliminary contest registration extended upto March 27, 2021</li>
+              <li>Team Registration for Preliminary Contest Closed</li>
+              <li>Preliminary Contest Registration Fee Payment Closed</li>
+              <li>Mock Contest on April 6, 2021, 07:00 PM-09.00 PM BST</li>
+              <li>
+                Preliminary Contest on April 7, 2021, 03.00 PM-08.00 PM BST
+              </li>
             </ul>
           </div>
         </div>

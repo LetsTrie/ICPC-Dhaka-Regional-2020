@@ -145,6 +145,11 @@ const Teams = (props) => {
   };
 
   const modifyDate = (key, value) => {
+    if (key === 'payment_status') {
+      if (value != 'Paid') {
+        return 'Unpaid';
+      }
+    }
     if (key === 'payment_date') {
       if (value && value != '-') {
         return moment(value).format('MMMM Do YYYY, h:mm:ss a');

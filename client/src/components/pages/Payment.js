@@ -14,15 +14,15 @@ const Payment = ({ match }) => {
   const [success, setSuccess] = useState(false);
 
   let paymentInitiate = async () => {
-    try {
-      const { data: response } = await axios.get(
-        `/api/v1/auth/teamPaymentInitiate/${teamId}`
-      );
-      // console.log(response); //GatewayPageURL, success, transactionId
-      window.location.replace(response.GatewayPageURL);
-    } catch (e) {
-      console.error(e);
-    }
+    // try {
+    //   const { data: response } = await axios.get(
+    //     `/api/v1/auth/teamPaymentInitiate/${teamId}`
+    //   );
+    //   // console.log(response); //GatewayPageURL, success, transactionId
+    //   window.location.replace(response.GatewayPageURL);
+    // } catch (e) {
+    //   console.error(e);
+    // }
   };
 
   useEffect(() => {
