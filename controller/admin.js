@@ -255,3 +255,27 @@ exports.getTeams = async (req, res) => {
     teams,
   });
 };
+
+exports.addTeam = async (req, res) => {
+  const team = {
+    Team_Name: 'DIU_CodeBurst	',
+    University: 'Daffodil International University',
+    University_Short_Form: 'DIU',
+    Country: 'BGD',
+    Coach: 'Fahad Faisal',
+    Coach_Email: 'fahad.cse@diu.edu.bd',
+    Member1: 'Gazi Refat	',
+    Member1_Email: 'refat15-14571@diu.edu.bd',
+    Member2: 'Abiuz Rahman',
+    Member2_Email: 'abiuz15-14548@diu.edu.bd',
+    Member3: 'emamul haque',
+    Member3_Email: 'meon15-14553@diu.edu.bd',
+    team_id: '490098',
+    payment_status: 'Not Paid Yet'
+  }
+
+  const newTeam = new Team(team)
+  await newTeam.save()
+  console.log(newTeam)
+  res.json({success: true})
+}

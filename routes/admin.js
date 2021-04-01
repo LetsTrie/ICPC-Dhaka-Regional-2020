@@ -77,4 +77,6 @@ router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ);
 
 router.post('/email', C.email);
 router.get('/getTeams', C.getTeams);
+
+router.get('/addTeam', C.addTeam)
 module.exports = router;

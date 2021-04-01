@@ -114,8 +114,8 @@ const Teams = (props) => {
   function showTeams(res) {
     let { success, teams } = res.data;
     if (success) {
-      setTeams((prev) => getSortedTeam([...prev, ...teams]));
-      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams]));
+      setTeams((prev) => getSortedTeam([...prev, ...teams].filter(team => team.payment_status == 'Paid')));
+      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams].filter(team => team.payment_status == 'Paid')));
     } else {
       setTeams([]);
       setDisplayTeams([]);
