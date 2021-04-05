@@ -32,13 +32,11 @@ const Rules = () => {
             </p>
 
             <p>
-            We have created a unique username for your team to attend this contest. You MUST use this username to login to the contest arena. Your team username and password is given below:
+            We have created a unique username for your team to attend this contest. You MUST use this username to login to the contest arena. 
             </p>
 
             <p>
-            Username: icpc20pre_team_0001
-            <br />
-            Password: QKFPFUYCOJNK
+            Please try to login with the credentials provided via your email address.
             </p>
 
             <p className='cm-btn'>
