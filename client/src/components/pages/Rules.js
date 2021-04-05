@@ -8,7 +8,7 @@ const Rules = () => {
       <Header />
         <div className='container'>
         <div className='each_gallery__header'>
-            <h2>ICPC Preliminary Contest 2019</h2>
+            <h2>ICPC Preliminary Contest 2020</h2>
           </div>
           <div className='content-wrapper'>
             <p>
@@ -44,7 +44,7 @@ const Rules = () => {
             </p>
 
             <p>
-            Please try to login using the provided username and password above. If successful, you should be able to see your Team Name on the right side of the topbar. In any kind of login issues, contact <a href='mailto:baps.bgd@gmail.com'>baps.bgd@gmail.com</a>.
+            If logged successfully, you should be able to see your Team Name on the right side of the topbar. In any kind of login issues, contact <a href='mailto:baps.bgd@gmail.com'>baps.bgd@gmail.com</a>.
             </p>
 
             <p>
