@@ -12,7 +12,11 @@ import FileUploadBlock from './Customization/FileUploadBlock';
 const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
 
 const getInfos = (name) => {
-  return navOptions.find((n) => n.name === name).submenu.map((sm) => sm.name);
+  return navOptions
+    .find((n) => n.name === name)
+    .submenu.map((sm) => ({ name: sm.name, notPage: sm.notPage }))
+    .filter((sm) => sm.notPage === true)
+    .map((s) => s.name);
 };
 
 const createState = (arr) => {

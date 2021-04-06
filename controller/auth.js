@@ -56,7 +56,6 @@ exports.paymentIpnListener = async (req, res) => {
   team.payment_status = 'Paid';
   team.payment_date = tran_date;
   await team.save();
-  console.log(team);
 
   // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
 
@@ -101,7 +100,6 @@ exports.paymentSuccess = async (req, res) => {
   team.payment_status = 'Paid';
   team.payment_date = tran_date;
   await team.save();
-  console.log('in payment success: ', team);
 
   // TODO: SAFWAN [4 jon k confirmation mail diye dite hobe...] -- DONE
 

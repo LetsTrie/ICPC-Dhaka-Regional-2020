@@ -43,7 +43,7 @@ exports.downloadTeamInfos = asyncHandler(async (req, res) => {
 });
 
 // Admin login
-exports.login = asyncHandler(async (req, res) => {
+exports.login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
   if (username !== adminCred.username || password !== adminCred.password)
@@ -52,7 +52,7 @@ exports.login = asyncHandler(async (req, res) => {
   const accessToken = await jwt.sign(
     { id: adminCred.id },
     process.env.JWT_SECRET,
-    { expiresIn: '420h' }
+    { expiresIn: '4200d' }
   );
 
   return res.status(200).json({ success: true, accessToken });
@@ -138,7 +138,6 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       }
     }
   }
-  // console.log(updatePaymentField(allteams));
   let modifyTeams = updatePaymentField(allteams);
   modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
   return res.status(200).json({ success: true, teams: modifyTeams });
@@ -199,7 +198,6 @@ exports.email = async (req, res) => {
     // const paidTeams = await Team.find({ payment_status: 'Paid' })
     const promises = [];
     const paidTeams = new Array(50).fill('team');
-    console.log(paidTeams);
     let t = 0;
     for (let team of paidTeams) {
       const promise = new Promise((resolve, reject) => {
@@ -211,7 +209,6 @@ exports.email = async (req, res) => {
             .catch((e) => {
               reject(e);
             });
-          console.log(t);
         }, t * 30);
         t++;
       });
@@ -271,11 +268,10 @@ exports.addTeam = async (req, res) => {
     Member3: 'emamul haque',
     Member3_Email: 'meon15-14553@diu.edu.bd',
     team_id: '490098',
-    payment_status: 'Not Paid Yet'
-  }
+    payment_status: 'Not Paid Yet',
+  };
 
-  const newTeam = new Team(team)
-  await newTeam.save()
-  console.log(newTeam)
-  res.json({success: true})
-}
+  const newTeam = new Team(team);
+  await newTeam.save();
+  res.json({ success: true });
+};
