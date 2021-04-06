@@ -54,7 +54,7 @@ button.MuiButtonBase-root:active {
           transform: none;
 }
 
-h2 {
+.each_gallery_header h2 {
   font-family: 'Libre Franklin', sans-serif;
   padding: 1.5rem 0.5rem 2rem 0.5rem;
   text-align: center;
@@ -64,7 +64,7 @@ h2 {
 }
 
 @media (max-width: 750px) {
-  h2 {
+  .each_gallery_header h2 {
     font-size: 4rem;
     padding: 0.8rem 0.2rem 2.2rem 0.2rem;
   }

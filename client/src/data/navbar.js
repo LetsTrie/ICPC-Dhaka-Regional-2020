@@ -12,9 +12,9 @@ const contestInfo = [
   'Accommodation',
   'Payment',
   'Program schedule',
+  'Qualification Criteria',
   'Online Preliminary Contest Rules'
 ];
-
 export default [
   {
     name: 'Home',
@@ -35,16 +35,15 @@ export default [
     link: '/contest-info',
     submenu: contestInfo.map((c, i) => (
 
-      i == 5 ? {
-        name: c,
-        link: `/contest-info/rules-of-preli`,
-        notPage: false,
-        // external: `/${urlSlug(c)}.pdf`,
-      } : {
+      i < 6 ? {
         name: c,
         link: `/contest-info/${urlSlug(c)}`,
         notPage: true,
         external: `/${urlSlug(c)}.pdf`,
+      } : {
+        name: c,
+        link: `/contest-info/Rules`,
+        notPage: false,
       }
 
     )),
