@@ -29,11 +29,8 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list">
             <ul>
-              <li>Team Registration for Preliminary Contest Closed</li>
-              <li>Preliminary Contest Registration Fee Payment Closed</li>
-              <li>Mock Contest on April 6, 2021, 07:00 PM-09.00 PM BST</li>
               <li>
-                Preliminary Contest on April 7, 2021, 03.00 PM-08.00 PM BST
+                List of Selected Teams for ICPC Regional 2020 Has Been Published
               </li>
             </ul>
           </div>
