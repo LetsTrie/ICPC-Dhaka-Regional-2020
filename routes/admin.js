@@ -62,6 +62,14 @@ for (let con of contestInfo) {
   );
 }
 
+router.post(
+  `/teams/${urlSlug('Selected Teams for Dhaka Regional')}`,
+  multer({ storage }).single(urlSlug('Selected Teams for Dhaka Regional')),
+  (req, res, next) => {
+    return res.status(200).json({ success: true });
+  }
+);
+
 // Contest Time
 router.get('/contest-time', C.getContestTime);
 router.post('/contest-time', C.setContestTime);

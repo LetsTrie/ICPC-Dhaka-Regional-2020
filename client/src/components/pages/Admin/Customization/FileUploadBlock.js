@@ -18,7 +18,7 @@ const FileUploadBlock = ({
 }) => {
   const { accessToken } = props.cred;
   let slugTitle = urlSlug(title) + `.${extension}`;
-
+  console.log(slugTitle);
   const [formSuccess, setFormSuccess] = useState(null);
   const [formError, setFormError] = useState(null);
 

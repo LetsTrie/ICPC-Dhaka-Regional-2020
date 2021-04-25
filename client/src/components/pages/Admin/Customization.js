@@ -31,6 +31,9 @@ const committeeInitialObject = createState(committeeArray);
 const contestInfoArray = getInfos('Contest Info');
 const contestInfoInitialObject = createState(contestInfoArray);
 
+const teamsArray = getInfos('Teams');
+const teamsInitialObject = createState(teamsArray);
+
 const Customization = (props) => {
   const { accessToken } = props.cred;
 
@@ -38,6 +41,7 @@ const Customization = (props) => {
   const [dateChanged, setDateChanged] = useState(false);
   const [committee, setCommittee] = useState(committeeInitialObject);
   const [contestInfo, setContestInfo] = useState(contestInfoInitialObject);
+  const [teamsInfo, setTeamsInfo] = useState(teamsInitialObject);
 
   const handleDateChange = (date) => {
     setDateChanged(true);
@@ -113,6 +117,22 @@ const Customization = (props) => {
               container={contestInfo}
               setContainer={setContestInfo}
               section={'contestInfo'}
+              extension={'pdf'}
+            />
+          ))}
+        </div>
+
+        <div className="block">
+          <h2 className="block__heading">
+            Selected Teams for ICPC Dhaka Regional 2020
+          </h2>
+          {teamsArray.map((c) => (
+            <FileUploadBlock
+              title={c}
+              key={c}
+              container={teamsInfo}
+              setContainer={setTeamsInfo}
+              section={'teams'}
               extension={'pdf'}
             />
           ))}

@@ -15,6 +15,9 @@ const contestInfo = [
   'Qualification Criteria',
   'Online Preliminary Contest Rules',
 ];
+
+const teamInfo = ['Preliminary Teams', 'Selected Teams for Dhaka Regional'];
+
 export default [
   {
     name: 'Home',
@@ -51,6 +54,19 @@ export default [
   {
     name: 'Teams',
     link: '/teams',
+    submenu: [
+      {
+        name: teamInfo[0],
+        link: `/teams`,
+        notPage: false,
+      },
+      {
+        name: teamInfo[1],
+        link: `/teams/${urlSlug(teamInfo[1])}.pdf`,
+        notPage: true,
+        external: `/${urlSlug(teamInfo[1])}.pdf`,
+      },
+    ],
   },
   {
     name: 'Gallery',
