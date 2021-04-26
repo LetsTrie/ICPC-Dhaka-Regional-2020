@@ -26,12 +26,18 @@ export default [
   {
     name: 'Committee',
     link: '/committee',
-    submenu: committee.map((c) => ({
-      name: c,
-      link: `/committee/${urlSlug(c)}`,
-      notPage: true,
-      external: `/${urlSlug(c)}.pdf`,
-    })),
+    submenu: committee.map((c, i) => (
+      i%2 == 0 ? {
+        name: c,
+        link: `/committee/${urlSlug(c)}`,
+        notPage: false,
+      } : {
+        name: c,
+        link: `/committee/${urlSlug(c)}`,
+        notPage: true,
+        external: `/${urlSlug(c)}.pdf`
+      }
+    )),
   },
   {
     name: 'Contest Info',

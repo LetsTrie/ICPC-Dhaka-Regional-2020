@@ -24,7 +24,8 @@ import FailedPayment from './components/pages/FailedPayment';
 import CancelPayment from './components/pages/CancelPayment';
 
 import Rules from './components/pages/Rules'
-import Qualification from './components/pages/Qualification'
+import SteeringCommittee from './components/pages/SteeringCommittee'
+import JudgePanel from './components/pages/JudgePanel'
 
 function App(props) {
   const { isAuthenticated, isAdmin } = props.cred;
@@ -48,7 +49,8 @@ function App(props) {
               <Route exact path="/contact" component={ContactUs} />
               <Route exact path="/admin/login" component={AdminLogin} />
               <Route exact path = "/contest-info/Rules" component={Rules} />
-              {/* <Route exact path = "/contest-info/qualification-criteria" component={Qualification} /> */}
+              <Route exact path = "/committee/steering-committee" component={SteeringCommittee} />
+              <Route exact path = "/committee/judging-panel" component={JudgePanel} />
               <Route
                 exact
                 path={['/admin/teams', '/admin']}

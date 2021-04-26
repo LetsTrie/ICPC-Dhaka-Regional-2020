@@ -2,7 +2,7 @@
 @import '_mixin';
 
 .each_gallery_header {
-  h2 {
+  h2, h1 {
     font-family: 'Libre Franklin', sans-serif;
     padding: 1.5rem 0.5rem 2rem 0.5rem;
     text-align: center;

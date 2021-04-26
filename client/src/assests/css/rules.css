@@ -28,15 +28,11 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
-      -ms-transform: translateY(3px);
-       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -55,12 +51,10 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
-      -ms-transform: none;
-       -o-transform: none;
           transform: none;
 }
 
-.each_gallery_header h2 {
+.each_gallery_header h2, .each_gallery_header h1 {
   font-family: 'Libre Franklin', sans-serif;
   padding: 1.5rem 0.5rem 2rem 0.5rem;
   text-align: center;
@@ -70,7 +64,7 @@ button.MuiButtonBase-root:active {
 }
 
 @media (max-width: 750px) {
-  .each_gallery_header h2 {
+  .each_gallery_header h2, .each_gallery_header h1 {
     font-size: 4rem;
     padding: 0.8rem 0.2rem 2.2rem 0.2rem;
   }
@@ -117,3 +111,4 @@ button.MuiButtonBase-root:active {
   text-decoration: none;
   border-radius: 10px;
 }
+/*# sourceMappingURL=rules.css.map */
