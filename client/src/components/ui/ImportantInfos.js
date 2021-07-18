@@ -62,11 +62,11 @@ const ImportantInfos = () => {
             </div> 
             <div className="each_imp_dates">
               <p>Mock Contest date</p>
-              <p>July 09, 2021</p>
+              <p>August 20, 2021</p>
             </div> 
             <div className="each_imp_dates">
               <p>Final Contest date</p>
-              <p>July 10, 2021</p>
+              <p>August 21, 2021</p>
             </div>
           </div>
         </div>
