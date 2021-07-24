@@ -57,16 +57,20 @@ const ImportantInfos = () => {
               <p>March 31, 2021</p>
   </div> */}
             <div className="each_imp_dates">
-              <p>Preliminary Contest date</p>
-              <p>April 07, 2021</p>
+              <p>Registration Start Date</p>
+              <p>July 27, 2021</p>
             </div> 
             <div className="each_imp_dates">
-              <p>Mock Contest date</p>
-              <p>August 20, 2021</p>
+              <p>Registration End Date</p>
+              <p>August 03, 2021</p>
             </div> 
             <div className="each_imp_dates">
-              <p>Final Contest date</p>
-              <p>August 21, 2021</p>
+              <p>Mock Contest Date</p>
+              <p>August 07, 2021</p>
+            </div>
+            <div className="each_imp_dates">
+              <p>Contest Date</p>
+              <p>August 14, 2021</p>
             </div>
           </div>
         </div>
