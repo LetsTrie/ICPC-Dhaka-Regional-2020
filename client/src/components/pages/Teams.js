@@ -76,16 +76,8 @@ const CustomTableCell = ({ columns, row }) => {
     if (column.id === 'payment_status') {
       if (value === 'Not Paid Yet') {
         return (
-          <TableCell key={column.id} align={'center'} style={{ fontSize: 18 }}>
-            <Button variant="contained" color="secondary">
-              <Link
-                to={`/payment/${row._id}`}
-                // /payment/${row.teamId}?Team=${row.Team}&Country=${row.Country}&Institution=${row.Institution}&Coach=${row.Coach}
-                style={{ textDecoration: 'none', color: 'black' }}
-              >
-                Proceed to pay
-              </Link>
-            </Button>
+          <TableCell key={column.id} align={'center'} style={{ fontSize: 16 }}>
+            Unpaid
           </TableCell>
         );
       }
@@ -108,7 +100,7 @@ const Teams = (props) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
   const classes = useStyles2();
-  const [progress, setProgress] = React.useState(10);
+  const [progress, setProgress] = React.useState(0);
 
   function getSortedTeam(teams) {
     teams.sort((a, b) => {
@@ -122,8 +114,8 @@ const Teams = (props) => {
   function showTeams(res) {
     let { success, teams } = res.data;
     if (success) {
-      setTeams((prev) => getSortedTeam([...prev, ...teams]));
-      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams]));
+      setTeams((prev) => getSortedTeam([...prev, ...teams].filter(team => team.payment_status == 'Paid')));
+      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams].filter(team => team.payment_status == 'Paid')));
     } else {
       setTeams([]);
       setDisplayTeams([]);
@@ -138,20 +130,22 @@ const Teams = (props) => {
         setIsLoading(false);
         showTeams(res);
         setProgress((prevProgress) => {
-          let now = prevProgress + 16.6;
-          if (now >= 95) now = 100;
+          let now = prevProgress + 7;
+          if (now >= 100) now = 100;
           return now;
         });
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 19; i++) {
           let r = await axios.get(`/api/v1/admin/par-team-info/${i}`);
           showTeams(r);
-          // setInterval(() => {
+          if (r.data.teams.length === 0) {
+            setProgress((prevProgress) => 100);
+            break;
+          }
           setProgress((prevProgress) => {
-            let now = prevProgress + 16.6;
-            if (now >= 95) now = 100;
+            let now = prevProgress + 7;
+            if (now >= 100) now = 100;
             return now;
           });
-          // }, 800);
         }
       })
       .catch((err) => {

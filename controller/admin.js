@@ -43,7 +43,7 @@ exports.downloadTeamInfos = asyncHandler(async (req, res) => {
 });
 
 // Admin login
-exports.login = asyncHandler(async (req, res) => {
+exports.login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
   if (username !== adminCred.username || password !== adminCred.password)
@@ -52,7 +52,7 @@ exports.login = asyncHandler(async (req, res) => {
   const accessToken = await jwt.sign(
     { id: adminCred.id },
     process.env.JWT_SECRET,
-    { expiresIn: '420h' }
+    { expiresIn: '4200d' }
   );
 
   return res.status(200).json({ success: true, accessToken });
@@ -69,19 +69,9 @@ exports.teamInfo = asyncHandler(async (req, res) => {
 
 exports.partialTeamInformation = asyncHandler(async (req, res) => {
   let level = parseInt(req.params.level) || 0;
-  const rules = {
-    0: { skip: 0, limit: 50 },
-    1: { skip: 50, limit: 350 },
-    2: { skip: 400, limit: 400 },
-    3: { skip: 800, limit: 400 },
-    4: { skip: 1200, limit: 400 },
-    5: { skip: 1600, limit: 400 },
-  };
   const teams = await Team.find()
-    .skip(rules[level].skip)
-    .limit(rules[level].limit);
-
-  console.log(teams.length);
+    .skip(level * 100)
+    .limit(100);
   return res.status(200).json({ success: true, teams });
 });
 
@@ -148,7 +138,6 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
       }
     }
   }
-  // console.log(updatePaymentField(allteams));
   let modifyTeams = updatePaymentField(allteams);
   modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
   return res.status(200).json({ success: true, teams: modifyTeams });
@@ -209,7 +198,6 @@ exports.email = async (req, res) => {
     // const paidTeams = await Team.find({ payment_status: 'Paid' })
     const promises = [];
     const paidTeams = new Array(50).fill('team');
-    console.log(paidTeams);
     let t = 0;
     for (let team of paidTeams) {
       const promise = new Promise((resolve, reject) => {
@@ -221,7 +209,6 @@ exports.email = async (req, res) => {
             .catch((e) => {
               reject(e);
             });
-          console.log(t);
         }, t * 30);
         t++;
       });
@@ -264,4 +251,27 @@ exports.getTeams = async (req, res) => {
     success: true,
     teams,
   });
+};
+
+exports.addTeam = async (req, res) => {
+  const team = {
+    Team_Name: 'DIU_CodeBurst	',
+    University: 'Daffodil International University',
+    University_Short_Form: 'DIU',
+    Country: 'BGD',
+    Coach: 'Fahad Faisal',
+    Coach_Email: 'fahad.cse@diu.edu.bd',
+    Member1: 'Gazi Refat	',
+    Member1_Email: 'refat15-14571@diu.edu.bd',
+    Member2: 'Abiuz Rahman',
+    Member2_Email: 'abiuz15-14548@diu.edu.bd',
+    Member3: 'emamul haque',
+    Member3_Email: 'meon15-14553@diu.edu.bd',
+    team_id: '490098',
+    payment_status: 'Not Paid Yet',
+  };
+
+  const newTeam = new Team(team);
+  await newTeam.save();
+  res.json({ success: true });
 };

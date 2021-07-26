@@ -17,8 +17,8 @@ const FileUploadBlock = ({
   ...props
 }) => {
   const { accessToken } = props.cred;
-  let slugTitle = urlSlug(title)+`.${extension}`;
-
+  let slugTitle = urlSlug(title) + `.${extension}`;
+  console.log(slugTitle);
   const [formSuccess, setFormSuccess] = useState(null);
   const [formError, setFormError] = useState(null);
 
@@ -26,6 +26,7 @@ const FileUploadBlock = ({
 
   const handleFileChange = async (e) => {
     if (e.target.files[0].name !== slugTitle) {
+      console.log(e.target.files[0].name, slugTitle);
       setFormError(`File name should be "${slugTitle}"`);
     } else {
       setShowSubmitButton(true);
@@ -37,7 +38,7 @@ const FileUploadBlock = ({
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    slugTitle = slugTitle.split('.')[0]
+    slugTitle = slugTitle.split('.')[0];
     const reqFiles = new FormData();
     reqFiles.append(slugTitle, container[slugTitle]);
     const headers = { Authorization: `Bearer ${accessToken}` };

@@ -16,14 +16,10 @@ let storage = multer.diskStorage({
 let teamInfoFile = multer({ storage }).single('file');
 
 router.post('/login', C.login);
-// router.get('/teams', M.AdminAccess, C.fetchRegisteredTeams);
+// router.get('/teams', C.fetchRegisteredTeams);
 router.get('/team-file-xlsx', C.teamInfo);
 router.get('/par-team-info/:level', C.partialTeamInformation);
-router.post(
-  '/team-file-xlsx-upload',
-  [M.AdminAccess, teamInfoFile],
-  C.storeTeamInfo
-);
+router.post('/team-file-xlsx-upload', teamInfoFile, C.storeTeamInfo);
 router.get('/download-team', C.downloadTeamInfos);
 router.get('/teamInfo/:id', C.getATeamInfo);
 
@@ -39,7 +35,7 @@ const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
 for (let com of committee) {
   router.post(
     `/committee/${urlSlug(com)}`,
-    [M.AdminAccess, multer({ storage }).single(urlSlug(com))],
+    multer({ storage }).single(urlSlug(com)),
     (req, res, next) => {
       return res.status(200).json({ success: true });
     }
@@ -53,28 +49,39 @@ const contestInfo = [
   'Accommodation',
   'Payment',
   'Program Schedule',
+  'Qualification Criteria',
 ];
 
 for (let con of contestInfo) {
   router.post(
     `/contestInfo/${urlSlug(con)}`,
-    [M.AdminAccess, multer({ storage }).single(urlSlug(con))],
+    multer({ storage }).single(urlSlug(con)),
     (req, res, next) => {
       return res.status(200).json({ success: true });
     }
   );
 }
 
+router.post(
+  `/teams/${urlSlug('Selected Teams for Dhaka Regional')}`,
+  multer({ storage }).single(urlSlug('Selected Teams for Dhaka Regional')),
+  (req, res, next) => {
+    return res.status(200).json({ success: true });
+  }
+);
+
 // Contest Time
 router.get('/contest-time', C.getContestTime);
-router.post('/contest-time', M.AdminAccess, C.setContestTime);
+router.post('/contest-time', C.setContestTime);
 
 // FAQ file
 faqStore = multer({ storage }).single('faq');
 // Post the faq.xls file
-router.post('/faq/faq', [M.AdminAccess, faqStore], C.uploadFAQ);
+router.post('/faq/faq', faqStore, C.uploadFAQ);
 // Get request handled in controller/contact.js
 
 router.post('/email', C.email);
 router.get('/getTeams', C.getTeams);
+
+router.get('/addTeam', C.addTeam);
 module.exports = router;

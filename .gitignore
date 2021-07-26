@@ -110,3 +110,5 @@ todo.txt
 /client/build
 
 uploads/*
+
+# mongodb+srv://safwan:safwan@cluster0-wzrlv.mongodb.net/test?retryWrites=true&w=majority

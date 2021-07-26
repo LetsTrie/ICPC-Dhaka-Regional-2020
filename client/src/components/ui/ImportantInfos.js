@@ -29,9 +29,9 @@ const ImportantInfos = () => {
           </div>
           <div className="flex_child_list">
             <ul>
-              <li>Preliminary contest registration started.</li>
-              <li>Payment for preliminary contest registration is open.</li>
-              <li>Preliminary contest registration extended upto March 27, 2021</li>
+              <li>
+                List of Selected Teams for ICPC Regional 2020 Has Been Published
+              </li>
             </ul>
           </div>
         </div>
@@ -44,7 +44,7 @@ const ImportantInfos = () => {
             <p>Important Dates </p>
           </div>
           <div className="flex_child_list imp_dates">
-            <div className="each_imp_dates">
+            {/* <div className="each_imp_dates">
               <p>Registration starts</p>
               <p>March 05, 2021</p>
             </div>
@@ -55,14 +55,22 @@ const ImportantInfos = () => {
             <div className="each_imp_dates">
               <p>Preliminary fee collection end date</p>
               <p>March 31, 2021</p>
+  </div> */}
+            <div className="each_imp_dates">
+              <p>Registration Start Date</p>
+              <p>July 27, 2021</p>
+            </div> 
+            <div className="each_imp_dates">
+              <p>Registration End Date</p>
+              <p>August 03, 2021</p>
+            </div> 
+            <div className="each_imp_dates">
+              <p>Mock Contest Date</p>
+              <p>August 07, 2021</p>
             </div>
             <div className="each_imp_dates">
-              <p>Preliminary contest date</p>
-              <p>April 07, 2021</p>
-            </div>
-            <div className="each_imp_dates">
-              <p>Final contest date</p>
-              <p>May 29, 2021</p>
+              <p>Contest Date</p>
+              <p>August 14, 2021</p>
             </div>
           </div>
         </div>
