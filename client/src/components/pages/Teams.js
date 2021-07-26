@@ -203,7 +203,7 @@ const Teams = (props) => {
             style={{ userSelect: 'none' }}
           >
             <h1> Registered Teams </h1>
-            <h4> (For preliminary) </h4>
+            <h4> (For Dhaka Regional Selected Teams) </h4>
             <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}>
               If you don't find your team, please wait. It'll be updated very
               soon.

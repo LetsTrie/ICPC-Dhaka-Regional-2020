@@ -90,7 +90,7 @@ const Customization = (props) => {
             </Button>
           )}
         </div>
-        <div className="block" style={{ paddingBottom: 30 }}>
+        <div className="block">
           <h2 className="block__heading">Contest Info</h2>
 
           {contestInfoArray.map((c) => (
@@ -100,6 +100,22 @@ const Customization = (props) => {
               container={contestInfo}
               setContainer={setContestInfo}
               section={'contestInfo'}
+              extension={'pdf'}
+            />
+          ))}
+        </div>
+
+        <div className="block" style={{ paddingBottom: 30 }}>
+          <h2 className="block__heading">
+            Selected Teams for ICPC Dhaka Regional 2020
+          </h2>
+          {teamsArray.map((c) => (
+            <FileUploadBlock
+              title={c}
+              key={c}
+              container={teamsInfo}
+              setContainer={setTeamsInfo}
+              section={'teams'}
               extension={'pdf'}
             />
           ))}

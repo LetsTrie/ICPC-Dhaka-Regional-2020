@@ -6,7 +6,7 @@ module.exports = (req, team) => {
   console.log({ team });
   const host = getHostname(req, 5000);
   return {
-    total_amount: parseInt(process.env.Fee),
+    total_amount: parseInt(process.env.FINAL_CONTEST_FEE),
     currency: 'BDT',
     tran_id: uuidv4(),
     success_url: `${host}/api/v1/auth/register/payment/success`,
