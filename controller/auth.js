@@ -81,7 +81,7 @@ exports.paymentIpnListener = async (req, res) => {
     ICPC Dhaka Regional 2020
     `,
   };
-  // await confirmationEmail(team, data);
+  await confirmationEmail(team, data);
 
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`
@@ -125,7 +125,7 @@ exports.paymentSuccess = async (req, res) => {
     ICPC Dhaka Regional 2020
     `,
   };
-  // await confirmationEmail(team, data);
+  await confirmationEmail(team, data);
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`
   );

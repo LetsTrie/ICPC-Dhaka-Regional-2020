@@ -133,6 +133,7 @@ const Teams = (props) => {
           headers,
         }
       );
+      console.log(response.teams);
       setTeams(response.teams);
       setShowSubmitButton(false);
       setIsLoading(false);
