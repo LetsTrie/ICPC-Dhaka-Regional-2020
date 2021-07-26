@@ -1,0 +1,79 @@
+.Admin .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Admin .container .active {
+  background-color: #eee;
+}
+
+.Admin .container .top-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px 0;
+}
+
+.Admin .container .top-row .header {
+  padding: 3px 0;
+}
+
+.Admin .container .top-row .header h3 {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding: 5px 0;
+}
+
+.Admin .container .top-row .numbers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Admin .container .left {
+  width: 15%;
+  padding: 0 10px;
+}
+
+.Admin .container .right {
+  width: 70%;
+  padding: 30px 0;
+}
+
+.AdminGallery input[type='file'] {
+  display: none;
+}
+
+.AdminClusterEmail .mail-box {
+  width: 80%;
+  margin: auto;
+}
+
+.AdminClusterEmail .mail-box select {
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.AdminClusterEmail .mail-box .main-body {
+  margin-top: 30px;
+}
+
+.AdminClusterEmail .mail-box .main-body textarea {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #fff;
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+.AdminClusterEmail .mail-box .main-body textarea:focus {
+  outline: none;
+}
+/*# sourceMappingURL=admin.css.map */
