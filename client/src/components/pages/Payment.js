@@ -107,7 +107,7 @@ const Payment = ({ match }) => {
                 style={{ textAlign: 'center', paddingTop: 20, fontSize: 20 }}
               >
                 <p>
-                  <span style={{ fontWeight: 'bold' }}>Transition ID:</span>{' '}
+                  <span style={{ fontWeight: 'bold' }}>Transaction ID:</span>{' '}
                   {team.payment_transition_id}
                 </p>
               </div>
