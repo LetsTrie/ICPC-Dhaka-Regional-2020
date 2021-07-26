@@ -16,20 +16,27 @@ let storage = multer.diskStorage({
 let teamInfoFile = multer({ storage }).single('file');
 
 router.post('/login', C.login);
-// router.get('/teams', C.fetchRegisteredTeams);
+
 router.get('/team-file-xlsx', C.teamInfo);
-router.get('/par-team-info/:level', C.partialTeamInformation);
-router.post('/team-file-xlsx-upload', teamInfoFile, C.storeTeamInfo);
-router.get('/download-team', C.downloadTeamInfos);
+router.get('/selected-team-file-xlsx', C.selectedTeamInfo);
+
 router.get('/teamInfo/:id', C.getATeamInfo);
+router.get('/selectedTeamInfo/:id', C.getASelectedTeamInfo);
+
+router.get('/par-team-info/:level', C.partialTeamInformation);
+router.get('/par-selected-team-info/:level', C.partialSelectedTeamInformation);
+
+router.post('/team-file-xlsx-upload', teamInfoFile, C.storeTeamInfo);
+router.post(
+  '/selected-team-file-xlsx-upload',
+  teamInfoFile,
+  C.storeSelectedTeamInfo
+);
+router.get('/download-team', C.downloadTeamInfos);
+router.get('/download-selected-team', C.downloadSelectedTeamInfos);
 
 // Committee
-const committee = [
-  'Steering Committee',
-  'Executive Committee',
-  'Judging Panel',
-  'Sub-committees',
-];
+const committee = ['Steering Committee', 'Judging Panel', 'Sub-committees'];
 
 const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
 for (let com of committee) {
@@ -46,8 +53,6 @@ for (let com of committee) {
 const contestInfo = [
   'Rules of ICPC Dhaka Regional',
   'Information for participants',
-  'Accommodation',
-  'Payment',
   'Program Schedule',
   'Qualification Criteria',
 ];

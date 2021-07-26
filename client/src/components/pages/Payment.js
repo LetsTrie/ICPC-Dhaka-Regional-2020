@@ -14,21 +14,21 @@ const Payment = ({ match }) => {
   const [success, setSuccess] = useState(false);
 
   let paymentInitiate = async () => {
-    // try {
-    //   const { data: response } = await axios.get(
-    //     `/api/v1/auth/teamPaymentInitiate/${teamId}`
-    //   );
-    //   // console.log(response); //GatewayPageURL, success, transactionId
-    //   window.location.replace(response.GatewayPageURL);
-    // } catch (e) {
-    //   console.error(e);
-    // }
+    try {
+      const { data: response } = await axios.get(
+        `/api/v1/auth/teamPaymentInitiate/${teamId}`
+      );
+      // console.log(response); //GatewayPageURL, success, transactionId
+      window.location.replace(response.GatewayPageURL);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`/api/v1/admin/teamInfo/${teamId}`)
+      .get(`/api/v1/admin/selectedTeamInfo/${teamId}`)
       .then((res) => {
         setTeam(res.data.team);
         setIsLoading(false);
@@ -92,7 +92,7 @@ const Payment = ({ match }) => {
               {!success ? (
                 <div className="RegFee">
                   <p>Registration Fee</p>
-                  <p>300 BDT</p>
+                  <p>3,500 BDT</p>
                 </div>
               ) : (
                 <div className="RegFee">

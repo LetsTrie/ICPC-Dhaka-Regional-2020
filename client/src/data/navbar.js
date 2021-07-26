@@ -9,7 +9,7 @@ const contestInfo = [
   'Online Preliminary Contest Rules',
 ];
 
-const teamInfo = ['Preliminary Teams', 'Selected Teams for Dhaka Regional'];
+const teamInfo = ['Selected Teams for Dhaka Regional', 'Preliminary Teams'];
 
 export default [
   {
@@ -54,9 +54,8 @@ export default [
       },
       {
         name: teamInfo[1],
-        link: `/teams/${urlSlug(teamInfo[1])}.pdf`,
-        notPage: true,
-        external: `/${urlSlug(teamInfo[1])}.pdf`,
+        link: `/preliminary-teams`,
+        notPage: false,
       },
     ],
   },

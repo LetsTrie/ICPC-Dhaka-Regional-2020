@@ -9,6 +9,7 @@ import Gallery from './components/pages/Gallery';
 import Footer from './components/ui/Footer';
 import ContactUs from './components/pages/ContactUs';
 import NotFound from './components/pages/NotFound';
+import PreliTeams from './components/pages/PreliTeams';
 import Teams from './components/pages/Teams';
 import Payment from './components/pages/Payment';
 
@@ -18,14 +19,14 @@ import { connect } from 'react-redux';
 import RegisteredTeams from './components/pages/Admin/Teams';
 import AdminCustomization from './components/pages/Admin/Customization';
 import AdminFAQ from './components/pages/Admin/FAQ';
-import AdminEmails from './components/pages/Admin/Emails'
+import AdminEmails from './components/pages/Admin/Emails';
 
 import FailedPayment from './components/pages/FailedPayment';
 import CancelPayment from './components/pages/CancelPayment';
 
-import Rules from './components/pages/Rules'
-import SteeringCommittee from './components/pages/SteeringCommittee'
-import JudgePanel from './components/pages/JudgePanel'
+import Rules from './components/pages/Rules';
+import SteeringCommittee from './components/pages/SteeringCommittee';
+import JudgePanel from './components/pages/JudgePanel';
 
 function App(props) {
   const { isAuthenticated, isAdmin } = props.cred;
@@ -46,11 +47,20 @@ function App(props) {
               <Route exact path="/payment/cancel" component={CancelPayment} />
               <Route exact path="/payment/:teamId" component={Payment} />
               <Route exact path="/teams" component={Teams} />
+              <Route exact path="/preliminary-teams" component={PreliTeams} />
               <Route exact path="/contact" component={ContactUs} />
               <Route exact path="/admin/login" component={AdminLogin} />
-              <Route exact path = "/contest-info/Rules" component={Rules} />
-              <Route exact path = "/committee/steering-committee" component={SteeringCommittee} />
-              <Route exact path = "/committee/judging-panel" component={JudgePanel} />
+              <Route exact path="/contest-info/Rules" component={Rules} />
+              <Route
+                exact
+                path="/committee/steering-committee"
+                component={SteeringCommittee}
+              />
+              <Route
+                exact
+                path="/committee/judging-panel"
+                component={JudgePanel}
+              />
               <Route
                 exact
                 path={['/admin/teams', '/admin']}

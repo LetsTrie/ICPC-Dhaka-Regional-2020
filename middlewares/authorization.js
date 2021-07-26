@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const Team = require('../models/team');
+const SelectedTeam = require('../models/selectedTeam');
 const adminCred = require('../config/adminCredentials');
 
 exports.verifyToken = async (req, res, next) => {
@@ -15,7 +15,7 @@ exports.verifyToken = async (req, res, next) => {
 
     try {
       const decoded = await jwt.verify(accessToken, process.env.JWT_SECRET);
-      const team = await Team.findById(decoded.id);
+      const team = await SelectedTeam.findById(decoded.id);
       if (!team) {
         return res.status(401).json({
           success: false,

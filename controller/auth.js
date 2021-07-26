@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs').promises;
 const path = require('path');
 const Team = require('../models/team');
+const SelectedTeam = require('../models/selectedTeam');
 const Payment = require('../models/payment');
 
 const getHostname = require('../utils/getHostname');
@@ -22,7 +23,7 @@ let sslcommerz = new SSLCommerz(settings);
 
 exports.teamPaymentInitiate = async (req, res) => {
   try {
-    const team = await Team.findById(req.params.id);
+    const team = await SelectedTeam.findById(req.params.id);
     if (!team) return res.send('<h1> Team not found with this ID </h1>');
     if (team.payment_status === 'Paid') {
       return res.send('<h1> Your payment is already completed. </h1>');
@@ -51,7 +52,7 @@ exports.paymentIpnListener = async (req, res) => {
   if (status === 'INVALID_TRANSACTION ') {
     return res.send('<h1>INVALID TRANSACTION</h1>');
   }
-  const team = await Team.findById(teamId);
+  const team = await SelectedTeam.findById(teamId);
   team.payment_transition_id = tran_id;
   team.payment_status = 'Paid';
   team.payment_date = tran_date;
@@ -80,7 +81,7 @@ exports.paymentIpnListener = async (req, res) => {
     ICPC Dhaka Regional 2020
     `,
   };
-  await confirmationEmail(team, data);
+  // await confirmationEmail(team, data);
 
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`
@@ -95,7 +96,7 @@ exports.paymentSuccess = async (req, res) => {
   if (status === 'INVALID_TRANSACTION ') {
     return res.send('<h1>INVALID TRANSACTION</h1>');
   }
-  const team = await Team.findById(teamId);
+  const team = await SelectedTeam.findById(teamId);
   team.payment_transition_id = tran_id;
   team.payment_status = 'Paid';
   team.payment_date = tran_date;
@@ -124,7 +125,7 @@ exports.paymentSuccess = async (req, res) => {
     ICPC Dhaka Regional 2020
     `,
   };
-  await confirmationEmail(team, data);
+  // await confirmationEmail(team, data);
   return res.send(
     `<script>window.location="${hostname}/payment/${teamId}"</script>`
   );
@@ -172,7 +173,7 @@ exports.registerInfo = async (req, res) => {
     RB.password = await bcrypt.hash(RB.password, 10);
 
     // Checking the Team name
-    const alreadyTaken = await Team.findOne({ team: RB.team });
+    const alreadyTaken = await SelectedTeam.findOne({ team: RB.team });
     if (alreadyTaken) {
       return res.status(400).json({
         message: 'Team name has already been taken !!',
@@ -232,7 +233,7 @@ exports.paymentInitiate = async (req, res) => {
     data.transactionId = payload.tran_id;
     data.transactionSuccess = false;
     // Saving to Database
-    const team = new Team(data);
+    const team = new SelectedTeam(data);
     await team.save();
 
     // Deleting the Local data
@@ -256,7 +257,7 @@ exports.teamLogin = async (req, res) => {
   team = team.toLowerCase().trim();
   password = password.toLowerCase().trim();
 
-  const teamDetails = await Team.findOne({ team });
+  const teamDetails = await SelectedTeam.findOne({ team });
 
   if (teamDetails) {
     const isMatched = await bcrypt.compare(password, teamDetails.password);
@@ -310,7 +311,7 @@ exports.updatePassword = async (req, res) => {
       });
     }
 
-    const team = await Team.findById(req.team._id);
+    const team = await SelectedTeam.findById(req.team._id);
     const isMatched = await bcrypt.compare(RB.previousPassword, team.password);
     if (isMatched) {
       // Hashing the password
