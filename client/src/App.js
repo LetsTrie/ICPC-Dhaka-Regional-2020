@@ -25,6 +25,7 @@ import CancelPayment from './components/pages/CancelPayment';
 
 import Rules from './components/pages/Rules'
 import SteeringCommittee from './components/pages/SteeringCommittee'
+import Subcommittees from './components/pages/Subcommittees'
 import JudgePanel from './components/pages/JudgePanel'
 
 function App(props) {
@@ -50,6 +51,7 @@ function App(props) {
               <Route exact path="/admin/login" component={AdminLogin} />
               <Route exact path = "/contest-info/Rules" component={Rules} />
               <Route exact path = "/committee/steering-committee" component={SteeringCommittee} />
+              <Route exact path = "/committee/sub-committees" component={Subcommittees} />
               <Route exact path = "/committee/judging-panel" component={JudgePanel} />
               <Route
                 exact

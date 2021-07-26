@@ -53,3 +53,17 @@
     }
   }
 }
+
+.side {
+  padding: 50px 100px;
+  @media (max-width: 900px) {
+    width: 98%;
+    padding: 10px;
+    h2 {
+      font-size: 20px;
+    }
+    p {
+      font-size: 15px;
+    }
+  }
+}
