@@ -1,22 +1,14 @@
-// Packages
 const fs = require('fs').promises;
 const jwt = require('jsonwebtoken');
 const path = require('path');
-// Models
 const Team = require('../models/team');
-// Config
+const SelectedTeam = require('../models/selectedTeam');
 const adminCred = require('../config/adminCredentials');
-// Utils
 const ErrRes = require('../utils/errorResponse');
-// Middlewares
 const asyncHandler = require('../middlewares/asyncHandler');
-// Helper Functions
 const { parseFile } = require('./helpers');
-
 const { Parser } = require('json2csv');
-
 const getHostname = require('../utils/getHostname');
-
 const { sendTeamEmail } = require('../config/sendMail');
 
 const updatePaymentField = (container) => {
@@ -32,8 +24,23 @@ exports.getATeamInfo = asyncHandler(async (req, res) => {
   return res.json({ success: true, team });
 });
 
+exports.getASelectedTeamInfo = asyncHandler(async (req, res) => {
+  let team = await SelectedTeam.findById(req.params.id);
+  return res.json({ success: true, team });
+});
+
 exports.downloadTeamInfos = asyncHandler(async (req, res) => {
   let teams = await Team.find();
+  const modifiedTeam = updatePaymentField([...teams]);
+  const json2csvParser = new Parser();
+  const csv = await json2csvParser.parse(modifiedTeam);
+  res.setHeader('Content-disposition', 'attachment; filename=Teams.csv');
+  res.set('Content-Type', 'text/csv');
+  res.status(200).send(csv);
+});
+
+exports.downloadSelectedTeamInfos = asyncHandler(async (req, res) => {
+  let teams = await SelectedTeam.find();
   const modifiedTeam = updatePaymentField([...teams]);
   const json2csvParser = new Parser();
   const csv = await json2csvParser.parse(modifiedTeam);
@@ -67,11 +74,31 @@ exports.teamInfo = asyncHandler(async (req, res) => {
   return res.status(200).json({ success: true, teams: modifyTeams });
 });
 
+exports.selectedTeamInfo = asyncHandler(async (req, res) => {
+  let teams = await SelectedTeam.find().sort({ Team_Name: 1 });
+  if (!teams) return res.status(404).json({ success: false });
+  let modifyTeams = updatePaymentField(teams);
+  modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
+  return res.status(200).json({ success: true, teams: modifyTeams });
+});
+
 exports.partialTeamInformation = asyncHandler(async (req, res) => {
   let level = parseInt(req.params.level) || 0;
   const teams = await Team.find()
     .skip(level * 100)
     .limit(100);
+  return res.status(200).json({ success: true, teams });
+});
+
+exports.partialSelectedTeamInformation = asyncHandler(async (req, res) => {
+  console.log('I am here...');
+  let level = parseInt(req.params.level) || 0;
+  console.log(level);
+  console.log(SelectedTeam);
+  const teams = await SelectedTeam.find()
+    .skip(level * 100)
+    .limit(100);
+  console.log({ teams });
   return res.status(200).json({ success: true, teams });
 });
 
@@ -98,6 +125,73 @@ exports.storeTeamInfo = asyncHandler(async (req, res) => {
     resTeam[team.Team_Name] = true;
     if (!mapping[team.Team_Name]) {
       let newTeam = new Team(team);
+      await newTeam.save();
+      allteams.push(newTeam);
+    } else {
+      let teamFromDb = teamsFromDb[indexMapping[team.Team_Name]];
+      let anyChange = false;
+      const notChangeFields = [
+        'Team_Name',
+        'payment_transition_id',
+        'teamPaymentMailSend',
+        'teamPaymentMailSendTime',
+        'payment_status',
+        'payment_date',
+      ];
+      for (let key in team) {
+        let found = false;
+        for (let ch of notChangeFields) {
+          if (ch === key) {
+            found = true;
+            break;
+          }
+        }
+        if (found) continue;
+        if (teamFromDb[key] !== team[key]) {
+          teamFromDb[key] = team[key];
+          anyChange = true;
+        }
+      }
+      allteams.push(teamFromDb);
+      if (anyChange) {
+        await teamFromDb.save();
+      }
+    }
+  }
+  if (teamsFromDb) {
+    for (let t of teamsFromDb) {
+      if (!resTeam[t.Team_Name]) {
+        allteams.push(t);
+      }
+    }
+  }
+  let modifyTeams = updatePaymentField(allteams);
+  modifyTeams.sort((a, b) => a.Team_Name < b.Team_Name);
+  return res.status(200).json({ success: true, teams: modifyTeams });
+});
+
+exports.storeSelectedTeamInfo = asyncHandler(async (req, res) => {
+  const teams = await parseFile();
+  if (!teams) return res.status(404).json({ success: false });
+
+  const teamsFromDb = await SelectedTeam.find().sort({ Team_Name: 1 });
+  let mapping = {};
+  let indexMapping = {};
+  let resTeam = {};
+  const allteams = [];
+  if (teamsFromDb) {
+    let index = 0;
+    for (let t of teamsFromDb) {
+      mapping[t.Team_Name] = true;
+      indexMapping[t.Team_Name] = index++;
+    }
+  }
+  let hostname = getHostname(req, 3000);
+  for (let i = 0; i < teams.length; i++) {
+    const team = teams[i];
+    resTeam[team.Team_Name] = true;
+    if (!mapping[team.Team_Name]) {
+      let newTeam = new SelectedTeam(team);
       await newTeam.save();
       allteams.push(newTeam);
     } else {
@@ -172,11 +266,13 @@ exports.email = async (req, res) => {
   const { teams, teamName, subject, body } = data;
 
   if (teams == 'Single team') {
-    const team = await Team.findOne({ Team_Name: teamName });
+    const team = await SelectedTeam.findOne({ Team_Name: teamName });
     const P = await sendTeamEmail(team, req, { subject, body });
     res.status(200).json({ success: true, msg: 'Emails sent successfully' });
   } else if (teams == 'Unpaid teams') {
-    const unpaidTeams = await Team.find({ payment_status: 'Not Paid Yet' });
+    const unpaidTeams = await SelectedTeam.find({
+      payment_status: 'Not Paid Yet',
+    });
     const promises = [];
 
     for (let team of unpaidTeams) {
@@ -223,7 +319,7 @@ exports.email = async (req, res) => {
         res.status(200).json({ success: false, msg: 'Error sending emails' })
       );
   } else {
-    let allTeams = await Team.find();
+    let allTeams = await SelectedTeam.find();
 
     const promises = [];
 
@@ -247,10 +343,12 @@ exports.email = async (req, res) => {
 
 exports.getTeams = async (req, res) => {
   const teams = await Team.find();
-  res.status(200).json({
-    success: true,
-    teams,
-  });
+  res.status(200).json({ success: true, teams });
+};
+
+exports.getSelectedTeams = async (req, res) => {
+  const teams = await SelectedTeam.find();
+  res.status(200).json({ success: true, teams });
 };
 
 exports.addTeam = async (req, res) => {

@@ -3,6 +3,7 @@ const getHostname = require('../utils/getHostname');
 
 module.exports = (req, team) => {
   const { _id, Team_Name, Country, University, Coach, Coach_Email } = team;
+  console.log({ team });
   const host = getHostname(req, 5000);
   return {
     total_amount: parseInt(process.env.Fee),

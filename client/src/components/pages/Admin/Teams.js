@@ -127,12 +127,13 @@ const Teams = (props) => {
       reqFiles.append('file', formFields.file);
       const headers = { Authorization: `Bearer ${accessToken}` };
       const { data: response } = await axios.post(
-        '/api/v1/admin/team-file-xlsx-upload',
+        '/api/v1/admin/selected-team-file-xlsx-upload',
         reqFiles,
         {
           headers,
         }
       );
+      console.log(response.teams);
       setTeams(response.teams);
       setShowSubmitButton(false);
       setIsLoading(false);
@@ -162,14 +163,14 @@ const Teams = (props) => {
     setIsLoading(true);
     let url = window.location.protocol + '//' + window.location.host;
     if (process.env.NODE_ENV === 'development') url = 'http://localhost:5000';
-    window.location = `${url}/api/v1/admin/download-team`;
+    window.location = `${url}/api/v1/admin/download-selected-team`;
     setIsLoading(false);
   };
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get('/api/v1/admin/par-team-info/0')
+      .get('/api/v1/admin/par-selected-team-info/0')
       .then(async (res) => {
         setIsLoading(false);
         showTeams(res);
@@ -179,7 +180,7 @@ const Teams = (props) => {
           return now;
         });
         for (let i = 1; i <= 19; i++) {
-          let r = await axios.get(`/api/v1/admin/par-team-info/${i}`);
+          let r = await axios.get(`/api/v1/admin/par-selected-team-info/${i}`);
           showTeams(r);
           if (r.data.teams.length === 0) {
             setProgress((prevProgress) => 100);

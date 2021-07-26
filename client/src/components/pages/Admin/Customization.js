@@ -71,7 +71,6 @@ const Customization = (props) => {
       <Header />
       <div className="container">
         <h1 className="mainHeader"> Page Customization </h1>
-
         <div className="block">
           <h2 className="block__heading">Contest Time</h2>
           <DateTime
@@ -91,23 +90,7 @@ const Customization = (props) => {
             </Button>
           )}
         </div>
-
-        <div className="block">
-          <h2 className="block__heading">Committee</h2>
-
-          {committeeArray.map((c) => (
-            <FileUploadBlock
-              title={c}
-              key={c}
-              container={committee}
-              setContainer={setCommittee}
-              section={'committee'}
-              extension={'pdf'}
-            />
-          ))}
-        </div>
-
-        <div className="block">
+        <div className="block" style={{ paddingBottom: 30 }}>
           <h2 className="block__heading">Contest Info</h2>
 
           {contestInfoArray.map((c) => (
@@ -117,22 +100,6 @@ const Customization = (props) => {
               container={contestInfo}
               setContainer={setContestInfo}
               section={'contestInfo'}
-              extension={'pdf'}
-            />
-          ))}
-        </div>
-
-        <div className="block">
-          <h2 className="block__heading">
-            Selected Teams for ICPC Dhaka Regional 2020
-          </h2>
-          {teamsArray.map((c) => (
-            <FileUploadBlock
-              title={c}
-              key={c}
-              container={teamsInfo}
-              setContainer={setTeamsInfo}
-              section={'teams'}
               extension={'pdf'}
             />
           ))}

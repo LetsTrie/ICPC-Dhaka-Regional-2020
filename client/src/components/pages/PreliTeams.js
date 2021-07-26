@@ -76,15 +76,8 @@ const CustomTableCell = ({ columns, row }) => {
     if (column.id === 'payment_status') {
       if (value === 'Not Paid Yet') {
         return (
-          <TableCell key={column.id} align={'center'} style={{ fontSize: 18 }}>
-            <Button variant="contained" color="secondary">
-              <Link
-                to={`/payment/${row._id}?Team=${row.Team_Name}&Country=${row.Country}&Institution=${row.University}&Coach=${row.Coach}`}
-                style={{ textDecoration: 'none', color: 'black' }}
-              >
-                Proceed to pay
-              </Link>
-            </Button>
+          <TableCell key={column.id} align={'center'} style={{ fontSize: 16 }}>
+            Unpaid
           </TableCell>
         );
       }
@@ -120,10 +113,17 @@ const Teams = (props) => {
 
   function showTeams(res) {
     let { success, teams } = res.data;
-    console.log({ success, teams });
     if (success) {
-      setTeams((prev) => getSortedTeam([...prev, ...teams]));
-      setDisplayTeams((prev) => getSortedTeam([...prev, ...teams]));
+      setTeams((prev) =>
+        getSortedTeam(
+          [...prev, ...teams].filter((team) => team.payment_status == 'Paid')
+        )
+      );
+      setDisplayTeams((prev) =>
+        getSortedTeam(
+          [...prev, ...teams].filter((team) => team.payment_status == 'Paid')
+        )
+      );
     } else {
       setTeams([]);
       setDisplayTeams([]);
@@ -133,9 +133,8 @@ const Teams = (props) => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get('/api/v1/admin/par-selected-team-info/0')
+      .get('/api/v1/admin/par-team-info/0')
       .then(async (res) => {
-        console.log(res);
         setIsLoading(false);
         showTeams(res);
         setProgress((prevProgress) => {
@@ -144,7 +143,7 @@ const Teams = (props) => {
           return now;
         });
         for (let i = 1; i <= 19; i++) {
-          let r = await axios.get(`/api/v1/admin/par-selected-team-info/${i}`);
+          let r = await axios.get(`/api/v1/admin/par-team-info/${i}`);
           showTeams(r);
           if (r.data.teams.length === 0) {
             setProgress((prevProgress) => 100);
@@ -158,16 +157,11 @@ const Teams = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
         setTeams([]);
         setDisplayTeams([]);
       });
   }, []);
-
-  useEffect(() => {
-    console.log(teams);
-  }, [teams]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -204,10 +198,6 @@ const Teams = (props) => {
           >
             <h1> Registered Teams </h1>
             <h4> (For preliminary) </h4>
-            <p style={{ textAlign: 'center', fontSize: 17.5, color: '#444' }}>
-              If you don't find your team, please wait. It'll be updated very
-              soon.
-            </p>
           </div>
 
           {progress !== 100 && (
