@@ -181,22 +181,22 @@ const table = (classes, committee) => {
     <Table className={classes.table} aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>SL</TableCell>
-          <TableCell align="right">Role</TableCell>
-          <TableCell align="right">Name</TableCell>
-          <TableCell align="right">Affiliation</TableCell>
+          <TableCell style={{fontSize: '20px'}}>SL</TableCell>
+          <TableCell style={{fontSize: '20px'}} align="right">Role</TableCell>
+          <TableCell style={{fontSize: '20px'}} align="right">Name</TableCell>
+          <TableCell style={{fontSize: '20px'}} align="right">Affiliation</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
       {
         committee.map((item, i) => (
           <TableRow>
-            <TableCell component="th" scope="row">
+            <TableCell component="th" scope="row" style={{fontSize: '17px'}}>
              {i+1}
             </TableCell>
-            <TableCell align="right">{item.role}</TableCell>
-            <TableCell align="right">{item.name}</TableCell>
-            <TableCell align="right">{item.affiliation}</TableCell>
+            <TableCell style={{fontSize: '17px'}} align="right">{item.role}</TableCell>
+            <TableCell style={{fontSize: '17px'}} align="right">{item.name}</TableCell>
+            <TableCell style={{fontSize: '17px'}} align="right">{item.affiliation}</TableCell>
           </TableRow>
         ))
       }
