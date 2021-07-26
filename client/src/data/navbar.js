@@ -1,16 +1,9 @@
 const urlSlug = (url) => url.toLowerCase().split(' ').join('-');
-const committee = [
-  'Steering committee',
-  'Executive committee',
-  'Judging panel',
-  'Sub-committees',
-];
+const committee = ['Steering committee', 'Judging panel', 'Sub-committees'];
 
 const contestInfo = [
   'Rules of ICPC Dhaka Regional',
   'Information for Participants',
-  'Accommodation',
-  'Payment',
   'Program schedule',
   'Qualification Criteria',
   'Online Preliminary Contest Rules',
@@ -26,18 +19,11 @@ export default [
   {
     name: 'Committee',
     link: '/committee',
-    submenu: committee.map((c, i) => (
-      i%2 == 0 ? {
-        name: c,
-        link: `/committee/${urlSlug(c)}`,
-        notPage: false,
-      } : {
-        name: c,
-        link: `/committee/${urlSlug(c)}`,
-        notPage: true,
-        external: `/${urlSlug(c)}.pdf`
-      }
-    )),
+    submenu: committee.map((c, i) => ({
+      name: c,
+      link: `/committee/${urlSlug(c)}`,
+      notPage: false, // page: true
+    })),
   },
   {
     name: 'Contest Info',
