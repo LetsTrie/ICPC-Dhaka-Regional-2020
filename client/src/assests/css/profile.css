@@ -28,11 +28,15 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -51,6 +55,8 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
+      -ms-transform: none;
+       -o-transform: none;
           transform: none;
 }
 
@@ -79,13 +85,16 @@ button.MuiButtonBase-root:active {
 .profile__wrapper .flex_parent {
   width: 100%;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
   -webkit-box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
@@ -99,6 +108,7 @@ button.MuiButtonBase-root:active {
   .profile__wrapper .flex_parent {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -108,6 +118,8 @@ button.MuiButtonBase-root:active {
   width: 30%;
   display: inline-block;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#28b487));
+  background-image: -webkit-linear-gradient(left top, #7dd56f, #28b487);
+  background-image: -o-linear-gradient(left top, #7dd56f, #28b487);
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 3.3rem 0;
   color: white;
@@ -179,9 +191,11 @@ button.MuiButtonBase-root:active {
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-header {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
+  -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   width: 95%;
@@ -214,9 +228,11 @@ button.MuiButtonBase-root:active {
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .row {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 10px 0;
@@ -228,6 +244,7 @@ button.MuiButtonBase-root:active {
     margin-left: 12px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
     padding: 0;
@@ -264,6 +281,7 @@ button.MuiButtonBase-root:active {
 
 .profile__wrapper .flex_parent .flex_child:last-child .info-container .section-body .each-user {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 90%;
@@ -322,9 +340,11 @@ button.MuiButtonBase-root:active {
 .tabs .tab {
   cursor: pointer;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
+  -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 12.5px 10px 12.5px 2.5rem;
@@ -345,4 +365,3 @@ button.MuiButtonBase-root:active {
   padding-left: 1.8rem;
   color: white;
 }
-/*# sourceMappingURL=profile.css.map */

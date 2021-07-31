@@ -28,11 +28,15 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -51,6 +55,8 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
+      -ms-transform: none;
+       -o-transform: none;
           transform: none;
 }
 
@@ -150,9 +156,11 @@ button.MuiButtonBase-root:active {
 
 .register_flex {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
@@ -169,6 +177,7 @@ button.MuiButtonBase-root:active {
   .register_flex {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -194,6 +203,7 @@ button.MuiButtonBase-root:active {
 
 .register_flex .flex_row {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -202,6 +212,7 @@ button.MuiButtonBase-root:active {
   .register_flex .flex_row {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -231,16 +242,20 @@ button.MuiButtonBase-root:active {
 
 .auth-pending-wrapper .auth-pending {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
   -webkit-box-pack: center;
+  -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
+  -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   font-size: 3.4rem;
@@ -486,4 +501,3 @@ button.MuiButtonBase-root:active {
 .admin_login_container {
   margin-top: 10px;
 }
-/*# sourceMappingURL=auth.css.map */
