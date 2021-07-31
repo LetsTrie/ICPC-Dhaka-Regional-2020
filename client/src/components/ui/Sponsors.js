@@ -6,6 +6,7 @@ import ICPC_Foundation from '../../assests/images/ICPC-Foundation.png';
 import BCC from '../../assests/images/BCC_logo.png';
 import BDGOV from '../../assests/images/Bangladesh_government_logo.jpeg';
 import ICT from '../../assests/images/ICT_Division_Logo.png';
+import DBBL from '../../assests/images/DBBL.jpg';
 
 function Sponsors() {
   return (
@@ -30,6 +31,9 @@ function Sponsors() {
           </div>
           <div className="sponsor_img">
             <img src={ICT} alt="ICT Division Logo" />
+          </div>
+          <div className="sponsor_img ">
+            <img src={DBBL} alt="DBBL Logo" className={'special'} />
           </div>
         </div>
       </section>

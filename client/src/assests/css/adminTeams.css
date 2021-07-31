@@ -28,11 +28,15 @@ li {
 
 button:focus {
   -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+       -o-transform: translateY(0px);
           transform: translateY(0px);
 }
 
 button:active {
   -webkit-transform: translateY(3px);
+      -ms-transform: translateY(3px);
+       -o-transform: translateY(3px);
           transform: translateY(3px);
 }
 
@@ -51,6 +55,8 @@ ul {
 
 button.MuiButtonBase-root:active {
   -webkit-transform: none;
+      -ms-transform: none;
+       -o-transform: none;
           transform: none;
 }
 
@@ -110,9 +116,11 @@ button.MuiButtonBase-root:active {
 
 .top-row {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
   white-space: nowrap;
@@ -123,6 +131,7 @@ button.MuiButtonBase-root:active {
   .top-row {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -154,4 +163,3 @@ button.MuiButtonBase-root:active {
     width: 100%;
   }
 }
-/*# sourceMappingURL=adminTeams.css.map */

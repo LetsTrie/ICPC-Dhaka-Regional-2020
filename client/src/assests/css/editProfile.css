@@ -17,6 +17,7 @@
 
 .EditProfile .logo {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   padding: 10px 0;
@@ -44,6 +45,7 @@
   .EditProfile .register-box {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
@@ -84,10 +86,11 @@
 .EditProfile .side {
   margin-top: 15px;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-/*# sourceMappingURL=editProfile.css.map */
