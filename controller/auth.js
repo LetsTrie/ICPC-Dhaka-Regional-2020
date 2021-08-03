@@ -22,6 +22,7 @@ let settings = {
 let sslcommerz = new SSLCommerz(settings);
 
 exports.teamPaymentInitiate = async (req, res) => {
+  return res.json({ success: false });
   try {
     const team = await SelectedTeam.findById(req.params.id);
     if (!team) return res.send('<h1> Team not found with this ID </h1>');
@@ -220,6 +221,8 @@ exports.registerUpload = async (req, res) => {
 };
 
 exports.paymentInitiate = async (req, res) => {
+  return res.json({ success: false });
+
   try {
     const SECRET_KEY = req.query.key;
     const payload = require('../data/paymentInit');
