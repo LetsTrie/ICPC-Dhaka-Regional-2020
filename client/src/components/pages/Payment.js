@@ -112,7 +112,7 @@ const Payment = ({ match }) => {
                 </p>
               </div>
             )}
-            <div style={{ textAlign: 'center', marginTop: 10, padding: 10 }}>
+            {/* <div style={{ textAlign: 'center', marginTop: 10, padding: 10 }}>
               <Button
                 variant="contained"
                 color={success ? 'primary' : 'secondary'}
@@ -121,7 +121,7 @@ const Payment = ({ match }) => {
               >
                 {success ? 'Payment Successful' : 'Proceed to pay'}
               </Button>
-            </div>
+            </div> */}
           </div>
         </>
       )}
