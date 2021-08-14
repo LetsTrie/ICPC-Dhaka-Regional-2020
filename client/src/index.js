@@ -5,12 +5,15 @@ import App from './App';
 
 import { Provider } from 'react-redux';
 import store from './store';
+import SimpleReactLightbox from 'simple-react-lightbox';
 
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <SimpleReactLightbox>
+      <App />
+    </SimpleReactLightbox>
   </Provider>,
   document.getElementById('root')
 );
