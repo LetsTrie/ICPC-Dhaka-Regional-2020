@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../assests/css/home.css';
 import Countdown from '../ui/CountDown';
 import Header from '../ui/Header';
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 function Home() {
   const classes = useStyles();
+  const history = useHistory()
 
   const showFile = async (url) => {
     try {
@@ -57,9 +59,9 @@ function Home() {
             <Button
               variant="contained"
               className={classes.root}
-              onClick={() => showFile('/information-for-participants.pdf')}
+              onClick={() => window.location.replace('https://algo.codemarshal.org/contests/icpc-dhaka-20/standings')}
             >
-              Contest Guideline
+              ICPC Results
             </Button>
             <Button
               variant="contained"

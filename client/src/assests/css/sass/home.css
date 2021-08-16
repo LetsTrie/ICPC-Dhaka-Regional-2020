@@ -275,7 +275,8 @@ button.MuiButtonBase-root:active {
 }
 
 .sponsors .sponsor_img {
-  width: 20%;
+  width: 30%;
+  padding-bottom: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -306,13 +307,25 @@ button.MuiButtonBase-root:active {
 }
 
 .sponsors .sponsor_img img {
-  width: 80%;
+  width: 75%;
   height: auto;
   margin-bottom: 1.5rem;
 }
 
 .sponsors .sponsor_img img:not(:first-child) {
   margin-left: 1rem;
+}
+
+.sponsors .sponsor_img img.special {
+  width: 100%;
+  height: 50px;
+}
+
+@media (max-width: 700px) {
+  .sponsors .sponsor_img img.special {
+    width: 100%;
+    height: auto;
+  }
 }
 
 @media (max-width: 772px) {
